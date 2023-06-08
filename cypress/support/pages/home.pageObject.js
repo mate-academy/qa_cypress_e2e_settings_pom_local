@@ -6,6 +6,11 @@ class homePageObject extends PageObject {
   get usernameLink() {
     return cy.getByDataCy('/profile/');
   }
+
+  get settingsLink() {
+    return cy.getByDataCy('/settings')
+      .click();
+  }
 }
 
 export default homePageObject;
