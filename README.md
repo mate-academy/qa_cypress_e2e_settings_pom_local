@@ -11,7 +11,7 @@
 1. Create a pull request.
 1. Do not forget to click on `Re-request review` if you submit the homework after previous review.
 
-## Task
+## Task 1
 
 Go to `e2e` folder and cover listed functionality with e2e tests:
 
