@@ -26,8 +26,6 @@ class settingsPageObject extends PageObject {
   submitSettings () {
     cy.getByDataCy('submitSettings')
       .click();
-    cy.wait(3000);
-
   };
 
   assertUsername(username) {
@@ -47,7 +45,6 @@ class settingsPageObject extends PageObject {
       .click();
     cy.get('.btn-outline-danger')
       .click();
-    cy.wait(3000);
   };
 
   assertLogOut() {
