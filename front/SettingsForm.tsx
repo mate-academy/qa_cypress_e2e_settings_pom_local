@@ -85,6 +85,7 @@ const SettingsForm = () => {
               value={userInfo.bio}
               onChange={updateState('bio')}
               data-cy="bio/settings"
+              
             />
           </fieldset>
           <fieldset className="form-group">

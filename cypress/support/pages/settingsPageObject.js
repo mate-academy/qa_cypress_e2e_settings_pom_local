@@ -29,7 +29,7 @@ export default class SettingsPageObject extends PageObject {
     cy.getByDataCy('/settings')
       .click()
     cy.getByDataCy('bio/settings')  
-      .should('contain',bio);
+      .should('contain', bio);
   }
 
   editEmail(email) {
@@ -53,13 +53,13 @@ export default class SettingsPageObject extends PageObject {
 
   assertNewEmail(username, newEmail, password) {
     cy.getByDataCy('/user/login')
-      .click();
+      .click()
     cy.getByDataCy('email-sign-in')
-      .type(newEmail);
+      .type(newEmail)
     cy.getByDataCy('password-sign-in')
-      .type(password);
+      .type(password)
     cy.getByDataCy('sign-in-btn')
-      .click();
+      .click()
     cy.getByDataCy(`/profile/${username}`)
       .should('contain', username);
   }
@@ -67,7 +67,7 @@ export default class SettingsPageObject extends PageObject {
   editPassword(password) {
     cy.getByDataCy('password/settings')
       .clear()
-      .type(`${newPassword}`);
+      .type(`${password}`);
   }
 
   assertNewPassword(username, email, newPassword) {

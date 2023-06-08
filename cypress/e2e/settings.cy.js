@@ -31,7 +31,7 @@ describe('Settings page', () => {
   settingsPage.editBio(user.bio);
   settingsPage.updateSettingsBtn();
   settingsPage.assertNewBio(user.bio)
-  });
+ });
 
   it('should provide an ability to update an email', () => {
   settingsPage.editEmail(user.newEmail);
