@@ -10,10 +10,6 @@ const profilePage = new profilePageObject();
 let user;
 
 describe('Settings page', () => {
-  before(() => {
-    
-  });
-
   beforeEach(() => {
     cy.task('db:clear');
     cy.register();
