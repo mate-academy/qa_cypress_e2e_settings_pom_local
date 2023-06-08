@@ -15,7 +15,7 @@ module.exports = defineConfig({
             email: 'test'+`${randomNumber}`+'@mail.com',
             password: '12345Qwert!',
           };
-        },
+        },     
         generateArticle() {
           return {
             title: faker.lorem.word(),
@@ -27,6 +27,17 @@ module.exports = defineConfig({
         'db:clear'() {
           clear();
           return null;
+        },
+      });
+
+      on('task', {
+        generateTestData() {
+          return {
+            edited_username: faker.name.firstName(),
+            edited_bio: faker.lorem.word(5),
+            edited_email: faker.internet.email(),
+            edited_password:  faker.internet.password({ length: 8 }),
+          };
         },
       });
     },

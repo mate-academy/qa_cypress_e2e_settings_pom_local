@@ -6,6 +6,10 @@ class homePageObject extends PageObject {
   get usernameLink() {
     return cy.getByDataCy('/profile/');
   }
+
+  get navbar() {
+    return cy.get('.navbar');
+  }
 }
 
 export default homePageObject;
