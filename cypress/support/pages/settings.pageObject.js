@@ -1,43 +1,43 @@
-import PageObject from '../PageObject';
+import PageObject from '../PageObject'
 
 class SettingsPageObject extends PageObject {
-  url = '/settings';
+  url = '/settings'
 
   get usernameField() {
-    return cy.getByDataCy('username-settings');
+    return cy.getByDataCy('username-input-settings');
   }
   updateUsernameField(username) {
-    this.usernameField.clear().type(username)
+    this.usernameField.clear().type(username);
   }
   get bioField() {
-    return cy.getByDataCy('bio-settings');
+    return cy.getByDataCy('bio-textarea-settings');
   }
   updateBioField(bio) {
-    this.bioField.clear().type(bio)
+    this.bioField.clear().type(bio);
   }
   get emailField() {
-    return cy.getByDataCy('email-settings');
+    return cy.getByDataCy('email-inut-settings');
   }
   updateEmailField(email) {
-    this.emailField.clear().type(email)
+    this.emailField.clear().type(email);
   }
   get passwordField() {
-    return cy.getByDataCy('new-password-settings');
+    return cy.getByDataCy('new-password-input-settings');
   }
   updatePasswordField(password) {
-    this.passwordField.clear().type(password)
+    this.passwordField.clear().type(password);
   }
   get updateBtnSet() {
-    return cy.getByDataCy('update-btn-settings');
+    return cy.getByDataCy('update-settings-submit-btn');
   }
   clickOnUpdateBtnSet() {
-    this.updateBtnSet.click()
+    this.updateBtnSet.click();
   }
   get logOutBtnSet() {
-    return cy.getByDataCy('logout-btn-settings');
+    return cy.get('.btn-outline-danger');
   }
   clickOnLogOutBtnSet() {
-    this.logOutBtnSet.click()
+    this.logOutBtnSet.click();
   }
 }
-export default SettingsPageObject;
+export default SettingsPageObject

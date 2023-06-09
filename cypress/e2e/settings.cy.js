@@ -20,7 +20,6 @@ describe('Settings page', () => {
   }
 
   before(() => {
-    cy.task('db:clear');
     cy.task('generateUser').then(generateUser => {
       user = generateUser;
     });
@@ -38,8 +37,7 @@ describe('Settings page', () => {
     settingsPage.updateUsernameField(newUser.username);
     settingsPage.clickOnUpdateBtnSet();
 
-    cy.getByDataCy('username-profile').contains(newUser.username);
-
+    cy.getByDataCy('username-profile').should('contain' , newUser.username);
   });
 
   it('should provide an ability to update bio', () => {
@@ -47,7 +45,7 @@ describe('Settings page', () => {
     settingsPage.updateBioField(newUser.bio);
     settingsPage.clickOnUpdateBtnSet();
 
-    cy.getByDataCy('bio-profile').contains(newUser.bio);
+    cy.getByDataCy('bio-profile').should('contain' , newUser.bio);
   });
 
   it('should provide an ability to update an email', () => {
@@ -55,7 +53,6 @@ describe('Settings page', () => {
     settingsPage.updateEmailField(newUser.email);
     settingsPage.clickOnUpdateBtnSet();
 
-    cy.getByDataCy('/settings').click();
     settingsPage.emailField.should('have.value', newUser.email);
   });
 
@@ -64,16 +61,23 @@ describe('Settings page', () => {
     settingsPage.updatePasswordField(newUser.password);
     settingsPage.clickOnUpdateBtnSet();
 
-    cy.getByDataCy('/settings').click();
-    settingsPage.logOutBtnSet.click();
+    settingsPage.passwordField.should('have.value', newUser.password);
 
+    cy.clearCookies();
+    cy.reload();
+
+    signInPage.visit();
     cy.login(user.email, user.username, newUser.password);
-    settingsPage.visit();
+
+    cy.get('.nav-link').should('contain', user.username);
   });
 
   it('should provide an ability to log out', () => {
 
     settingsPage.clickOnLogOutBtnSet();
-    cy.getByDataCy('/user/login').should('be.visible');
+
+    cy.get('.navbar-nav')
+      .should('contain', 'Sign in')
+      .and('contain', 'Sign up');
   });
 });
