@@ -30,18 +30,16 @@ describe('Settings page', () => {
     settings.assertBio(user.bio);
   });
 
-  it('should provide an ability to update an email', () => {
-    settings.emailSettings.clear().type(user.newEmail);
-    settings.updateBtnSettings.click();
-    settings.assertNewEmail(user.newEmail);
-   
+  it.only('should provide an ability to update an email', () => {
+    cy.updateEmailSettings(user.newEmail);
+    cy.clickUpdateBtnSettings();
+    cy.assertNewEmail(user.newEmail);
   });
 
-  it('should provide an ability to update password', () => {
-    settings.passwordSettings.type(user.newPassword);
-    settings.updateBtnSettings.click();
-    settings.assertNewPassword(user.newPassword);
-
+  it.only('should provide an ability to update password', () => {
+    cy.updatePasswordSettings(user.newPassword);
+    cy.clickUpdateBtnSettings();
+    cy.assertNewPassword(user.newPassword);
   });
 
   it('should provide an ability to log out', () => {

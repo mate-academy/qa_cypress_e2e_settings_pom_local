@@ -23,10 +23,6 @@ class SettingsPageObject extends PageObject {
     return cy.getByDataCy('password-settings');
   }
 
-  get updateBtnSettings() {
-    return cy.getByDataCy('btnUpdate-settings');
-  }
-
   assertUsername(usernameUpdate) {
     cy.contains('h4', usernameUpdate )
       .should('exist');
@@ -42,20 +38,6 @@ class SettingsPageObject extends PageObject {
   get logoutSettings() {
     return cy.getByDataCy('logout-settings');
   }
-
-  assertNewEmail(newEmail) {
-   cy.getByDataCy('/settings')
-    .click()
-  cy.getByDataCy('email-settings')
-    .should('have.value', newEmail)
-  }
-
-  assertNewPassword(newPassword) {
-    cy.getByDataCy('/settings')
-     .click()
-   cy.getByDataCy('password-settings')
-     .should('have.value', newPassword)
-   }
 
   asserLogout() {
     cy.getByDataCy('/user/login')
