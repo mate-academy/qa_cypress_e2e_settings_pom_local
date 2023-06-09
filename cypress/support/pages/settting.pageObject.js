@@ -1,5 +1,5 @@
 import PageObject from "../PageObject";
-const faker = require('faker');
+import faker from "faker";
 
 class SettingsPage extends PageObject {
   url ='/settings';
@@ -19,7 +19,7 @@ class SettingsPage extends PageObject {
   }
   
   typeUsername(userName) {
-    cy.getByDataCy('input-name')
+    cy.getByDataCy('input-username')
       .clear()
       .type(userName);
     cy.getByDataCy('update-setting-btn').click();
@@ -27,7 +27,7 @@ class SettingsPage extends PageObject {
 
   checkUserNameData(userName) {
     cy.visit(this.url);
-    cy.getByDataCy('input-name')
+    cy.getByDataCy('input-username')
       .should('have.value', userName);
   }
 
@@ -52,12 +52,17 @@ class SettingsPage extends PageObject {
   checkPassword(email, password, userName) {
     cy.login(password, email);
     cy.visit(this.url);
-    cy.getByDataCy('/profile/')
+    cy.getByDataCy(`/profile/${userName}`)
       .should('contain', userName)
   }
 
   clickLogoutButton() {
     cy.getByDataCy("logout-btn").click();
+  }
+
+  assertLogout() {
+    cy.getByDataCy('/user/register')
+      .should('contain', 'Sign up')
   }
 }
 

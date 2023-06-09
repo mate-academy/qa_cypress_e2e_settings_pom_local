@@ -40,7 +40,7 @@ Cypress.Commands.add('register', (email = 'riot@qa.team', username = 'riot', pas
   }).then(response => {
     const user = {
       bio: response.body.user.bio,
-      effectiveImage: "https://static.productionready.io/images/smiley-cyrus.jpg",
+      effectiveImage: response.body.user.image,
       email: response.body.user.email,
       image: response.body.user.image,
       token: response.body.user.token,
@@ -60,7 +60,7 @@ Cypress.Commands.add('login', (email = 'riot@qa.team', password = '12345Qwert!')
   }).then(response => {
     const user = {
       bio: response.body.user.bio,
-      effectiveImage: "https://static.productionready.io/images/smiley-cyrus.jpg",
+      effectiveImage: response.body.user.image,
       email: response.body.user.email,
       image: response.body.user.image,
       token: response.body.user.token,

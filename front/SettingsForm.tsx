@@ -74,7 +74,7 @@ const SettingsForm = () => {
               placeholder="Username"
               value={userInfo.username}
               onChange={updateState('username')}
-              data-cy="input-name"
+              data-cy="input-username"
             />
           </fieldset>
           <fieldset className="form-group">

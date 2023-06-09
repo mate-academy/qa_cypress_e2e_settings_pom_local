@@ -2,13 +2,13 @@
 /// <reference types="../support" />
 import SettingsPage from '../support/pages/settting.pageObject';
 import SignInPageObject from '../support/pages/signIn.pageObject';
-const faker = require('faker');
+import faker from 'faker';
 
 const signInPage = new SignInPageObject();
 const settingPage = new SettingsPage();
 
 let user;
-
+let testData;
 describe('Settings page', () => {
   before(() => {
     cy.task('generateUser').then(generateUser => {
@@ -16,14 +16,13 @@ describe('Settings page', () => {
     });
   });
 
-  const testData = {
-    bio: faker.lorem.words(),
-    userName: faker.name.firstName().toLowerCase(),
-    email: faker.internet.email().toLowerCase(),
-    password: faker.internet.password()
-  }
-
   beforeEach(() => {
+  testData = {
+      bio: faker.lorem.words(),
+      userName: faker.name.firstName().toLowerCase(),
+      email: faker.internet.email().toLowerCase(),
+      password: faker.internet.password()
+    }
     cy.task('db:clear');
     cy.register(user.email, user.username, user.password);
     settingPage.visit();
@@ -55,5 +54,6 @@ describe('Settings page', () => {
 
   it('should provide an ability to log out', () => {
     settingPage.clickLogoutButton();
+    settingPage.assertLogout()
   });
 });
