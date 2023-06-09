@@ -17,8 +17,8 @@ describe('Settings page', () => {
   });
 
   let user;
-  const newBio = 'New test bio';
-  const newPassword = '123qwe123!';
+  const newBio = 'My new bio';
+  const newPassword = 'newpassword123!';
 
   beforeEach(() => {
     cy.task('db:clear');
