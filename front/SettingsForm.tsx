@@ -1,13 +1,11 @@
 import axios from 'axios'
 import Router from 'next/router'
 import React from 'react'
-
 import { setupUserLocalStorage } from 'front'
 import { apiPath } from 'front/config'
 import ListErrors from 'front/ListErrors'
 import useLoggedInUser from 'front/useLoggedInUser'
 import { useCtrlEnterSubmit } from 'front/ts'
-
 const SettingsForm = () => {
   const [isLoading, setLoading] = React.useState(false)
   const [errors, setErrors] = React.useState([])
@@ -72,6 +70,7 @@ const SettingsForm = () => {
               className="form-control form-control-lg"
               type="text"
               placeholder="Username"
+              data-cy="settings-username"
               value={userInfo.username}
               onChange={updateState('username')}
             />
@@ -81,6 +80,7 @@ const SettingsForm = () => {
               className="form-control form-control-lg"
               rows={8}
               placeholder="Short bio about you"
+              data-cy="settings-bio"
               value={userInfo.bio}
               onChange={updateState('bio')}
             />
@@ -90,6 +90,7 @@ const SettingsForm = () => {
               className="form-control form-control-lg"
               type="email"
               placeholder="Email"
+              data-cy="settings-email"
               value={userInfo.email}
               onChange={updateState('email')}
             />
@@ -99,6 +100,7 @@ const SettingsForm = () => {
               className="form-control form-control-lg"
               type="password"
               placeholder="New Password"
+              data-cy="settings-password"
               value={userInfo.password}
               onChange={updateState('password')}
               autoComplete="new-password"
@@ -107,6 +109,7 @@ const SettingsForm = () => {
           <button
             className="btn btn-lg btn-primary pull-xs-right"
             type="submit"
+            data-cy="settings-submit"
             disabled={isLoading}
           >
             Update Settings
@@ -116,5 +119,4 @@ const SettingsForm = () => {
     </React.Fragment>
   )
 }
-
-export default SettingsForm
+export default SettingsForm;
