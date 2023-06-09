@@ -30,13 +30,13 @@ describe('Settings page', () => {
     settings.assertBio(user.bio);
   });
 
-  it.only('should provide an ability to update an email', () => {
+  it('should provide an ability to update an email', () => {
     cy.updateEmailSettings(user.newEmail);
     cy.clickUpdateBtnSettings();
     cy.assertNewEmail(user.newEmail);
   });
 
-  it.only('should provide an ability to update password', () => {
+  it('should provide an ability to update password', () => {
     cy.updatePasswordSettings(user.newPassword);
     cy.clickUpdateBtnSettings();
     cy.assertNewPassword(user.newPassword);
