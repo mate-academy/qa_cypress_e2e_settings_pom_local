@@ -13,7 +13,7 @@ const userData = {
   username: faker.name.firstName().toLowerCase(),
   userBio: 'I am a QA Engineer',
   email: faker.internet.email(),
-  password: faker.random.number()
+  password: faker.internet.password()
 };
 
 describe('Settings page', () => {
@@ -64,7 +64,7 @@ describe('Settings page', () => {
       .should('have.value', userData.email);
   });
 
-  it.only('should provide an ability to update password', () => {
+  it('should provide an ability to update password', () => {
     settingsPage.passwordField
       .type(userData.password);
     settingsPage.updateBtn
@@ -87,7 +87,7 @@ describe('Settings page', () => {
       .should('contain', user.username);
   });
 
-  it.only('should provide an ability to log out', () => {
+  it('should provide an ability to log out', () => {
     settingsPage.logoutBtn
       .click();
     cy.getCookies().should('be.empty').visit('/');
