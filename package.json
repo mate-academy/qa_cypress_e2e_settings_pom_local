@@ -9,7 +9,7 @@
     "build-dev": "./bin/sync-db.js && NEXT_PUBLIC_NODE_ENV=development npm run build",
     "build-prod": "./prod.sh ./bin/sync-db.js && ./prod.sh npm run build",
     "deploy": "npm run test-next && npm run test-pg-next && git push -f heroku-next next:master && git push && git push origin next:deploy",
-    "dev": "set NODE_OPTIONS=--unhandled-rejections=strict && nodemon ./app.js",
+    "dev": "NODE_OPTIONS='--unhandled-rejections=strict' nodemon ./app.js",
     "dev-demo": "NEXT_PUBLIC_DEMO=true npm run dev",
     "dev-pg": "REALWORLD_PG=true npm run dev",
     "format": "prettier --ignore-path .prettierignore --write .",

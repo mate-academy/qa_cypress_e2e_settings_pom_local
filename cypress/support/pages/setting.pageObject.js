@@ -3,30 +3,37 @@ import PageObject from '../PageObject';
 class SettingPageObject extends PageObject {
   url = '/settings';
 
-  get usernameField() {
-    return cy.getByDataCy('username-setting');
+  FillUsernameField(data) {
+    cy.getByDataCy('username-setting')
+      .clear()
+      .type(data);
   }
 
-  get bioField() {
-    return cy.getByDataCy('bio-setting');
+  FillBioField(data) {
+    cy.getByDataCy('bio-setting')
+      .type(data);
   }
 
-  get emailField() {
-    return cy.getByDataCy('email-setting');
+  FillEmailField(data) {
+    cy.getByDataCy('email-setting')
+      .clear()
+      .type(data);
   }
 
-  get passwordField() {
-    return cy.getByDataCy('newPassword-setting');
+  FillPasswordField(data) {
+    cy.getByDataCy('newPassword-setting')
+      .type(data);
   }
 
-  get updateSettingsBtn() {
-    return cy.getByDataCy('update-settings-btn');
+  clickOnUpdate() {
+    cy.getByDataCy('update-settings-btn')
+      .click();
   }
 
-  get logoutBtn() {
-    return cy.getByDataCy('logout-btn');
-  }
-  
+  clickOnLogOut() {
+    cy.getByDataCy('log-out-btn')
+      .click();
+  }  
 }
 
 export default SettingPageObject;

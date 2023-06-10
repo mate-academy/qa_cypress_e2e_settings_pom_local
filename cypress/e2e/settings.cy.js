@@ -12,6 +12,7 @@ const homePage = new homePageObject();
 describe('Settings page', () => {
   let user;
   let newUser;
+
   before(() => {
     cy.task('db:clear');
   });
@@ -23,68 +24,53 @@ describe('Settings page', () => {
     cy.task('generateNewUser').then(generateNewUser => {
         newUser = generateNewUser;
     });
+    signInPage.visit();
   });
 
   it('should provide an ability to update username', () => {
-    signInPage.visit();
     cy.login(user.email, user.username, user.password);
-
     settingPage.visit();
-    settingPage.usernameField
-      .clear()
-      .type(newUser.username)
+    
+    settingPage.FillUsernameField(newUser.username);
 
-    settingPage.updateSettingsBtn
-      .click();
+    settingPage.clickOnUpdate();
     
     homePage.usernameLink
       .should('contain', newUser.username);
   });
 
   it('should provide an ability to update bio', () => {
-    signInPage.visit();
     cy.login(user.email, user.username, user.password);
 
     settingPage.visit();
-    settingPage.bioField
-      .type(newUser.bio)
+    settingPage.FillBioField(newUser.bio);
 
-    settingPage.updateSettingsBtn
-      .click();
+    settingPage.clickOnUpdate();
   });
 
   it('should provide an ability to update an email', () => {
-    signInPage.visit();
     cy.login(user.email, user.username, user.password);
 
     settingPage.visit();
-    settingPage.emailField
-      .clear()
-      .type(newUser.email)
+    settingPage.FillEmailField(newUser.email);
 
-    settingPage.updateSettingsBtn
-      .click();
+    settingPage.clickOnUpdate();
   });
 
   it('should provide an ability to update password', () => {
-    signInPage.visit();
     cy.login(user.email, user.username, user.password);
 
     settingPage.visit();
-    settingPage.passwordField
-      .type(newUser.password)
+    settingPage.FillPasswordField(newUser.password);
 
-    settingPage.updateSettingsBtn
-      .click();
+    settingPage.clickOnUpdate();
   });
 
   it('should provide an ability to log out', () => {
-    signInPage.visit();
     cy.login(user.email, user.username, user.password);
 
     settingPage.visit();
 
-    settingPage.logoutBtn
-      .click();
+    settingPage.clickOnLogOut();
   });
 });
