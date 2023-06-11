@@ -110,7 +110,7 @@ const SettingsForm = () => {
           </fieldset>
           <button
             className="btn btn-lg btn-primary pull-xs-right"
-            data-cy="updateSettingsBtn"
+            data-cy="update-settings-btn"
             type="submit"
             disabled={isLoading}
           >

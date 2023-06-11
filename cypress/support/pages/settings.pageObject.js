@@ -36,12 +36,11 @@ class settingPageObject extends PageObject {
   }
 
   get updateSetBtn() {
-    return cy.getByDataCy('updateSettingsBtn');
+    return cy.getByDataCy('update-settings-btn');
   }
 
   clickUpdateSetBtn() {
-    this.updateSetBtn.click()
-    cy.wait(3000);
+    this.updateSetBtn.click();
   }
 
   get logOutBtn() {
