@@ -12,7 +12,7 @@ module.exports = defineConfig({
           let userName = faker.name.firstName() + `${randomNumber}`
           return {
             username: userName.toLowerCase(),
-            email: 'test'+`${randomNumber}`+'@mail.com',
+            email: userName.toLowerCase() +'@qa.team',
             password: '12345Qwert!',
           };
         },
