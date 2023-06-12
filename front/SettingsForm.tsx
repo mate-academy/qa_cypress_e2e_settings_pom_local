@@ -92,7 +92,7 @@ const SettingsForm = () => {
               className="form-control form-control-lg"
               type="email"
               placeholder="Email"
-              data-cy="settings-Email"
+              data-cy="settings-email"
               value={userInfo.email}
               onChange={updateState('email')}
             />

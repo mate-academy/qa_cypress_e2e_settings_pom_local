@@ -1,6 +1,6 @@
 import PageObject from '../PageObject';
 
-class settingsPageObject extends PageObject {
+class SettingsPageObject extends PageObject {
   url = '/settings';
 
   clickOnUpdate() {
@@ -20,18 +20,19 @@ class settingsPageObject extends PageObject {
 
   typeBio(bio) {
     cy.getByDataCy('settings-bio')
+      .clear()
       .type(bio);
   }
 
 
   typeEmail(email) {
-    cy.getByDataCy('settings-Email')
+    cy.getByDataCy('settings-email')
       .clear()
       .type(email);
   }
 
   checkEmailValue(email) {
-    cy.getByDataCy('settings-Email')
+    cy.getByDataCy('settings-email')
       .should('have.value', email)
   }
 
@@ -47,4 +48,4 @@ class settingsPageObject extends PageObject {
 
 }
 
-export default settingsPageObject;
+export default SettingsPageObject;

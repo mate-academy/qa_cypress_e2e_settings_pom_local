@@ -29,6 +29,8 @@ const ProfileHoc = (tab) => {
     }
     const username = profile?.username
     const bio = profile?.bio
+    const email = profile?.email
+    const password = profile?.password
     const image = profile?.image
     const loggedInUser = useLoggedInUser()
     const isCurrentUser = loggedInUser && username === loggedInUser?.username
@@ -57,6 +59,8 @@ const ProfileHoc = (tab) => {
                   />
                   <h4 data-cy="profile-username">{username}</h4>
                   <p data-cy="profile-bio">{bio}</p>
+                  <p data-cy="profile-email">{email}</p>
+                  <p data-cy="profile-password">{password}</p>
                   <EditProfileButton isCurrentUser={isCurrentUser} />
                   <FollowUserButtonContext.Provider
                     value={{ following, setFollowing }}

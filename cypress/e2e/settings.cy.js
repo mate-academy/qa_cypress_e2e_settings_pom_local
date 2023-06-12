@@ -36,7 +36,7 @@ describe('Settings page', () => {
 
     settingsPage.clickUpdateBtn();
 
-    profilePage.usernameValue(user.username);
+    profilePage.checkUsernameValue(user.username);
   });
 
   it('should provide an ability to update bio', () => {
@@ -48,7 +48,7 @@ describe('Settings page', () => {
 
     settingsPage.clickOnUpdate();
 
-    profilePage.bioValue(newBio);
+    profilePage.checkBioValue(newBio);
   });
 
   it('should provide an ability to update an email', () => {
@@ -77,14 +77,14 @@ describe('Settings page', () => {
     signInPage.visit();
 
     signInPage.emailField
-      .type('riot@qa.team');
+      .type(user.email);
     signInPage.passwordField
       .type(newPassword);
     signInPage.signInBtn
       .click();
 
     homePage.usernameLink
-      .should('contain', 'riot');
+      .should('contain', user.username);
   });
 
   it('should provide an ability to log out', () => {
