@@ -31,7 +31,7 @@ describe('Sign In page', () => {
     homePage.usernameLink
       .should('contain', user.username);
   });
-
+  
   it('should not provide an ability to log in with wrong credentials', () => {
 
   });
