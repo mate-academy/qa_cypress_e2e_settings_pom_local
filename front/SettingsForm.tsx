@@ -74,7 +74,7 @@ const SettingsForm = () => {
               placeholder="Username"
               value={userInfo.username}
               onChange={updateState('username')}
-              data-cy="usernameSettings"
+              data-cy="username-settings"
             />
           </fieldset>
           <fieldset className="form-group">
@@ -84,7 +84,7 @@ const SettingsForm = () => {
               placeholder="Short bio about you"
               value={userInfo.bio}
               onChange={updateState('bio')}
-              data-cy="bioSettings"
+              data-cy="bio-settings"
             />
           </fieldset>
           <fieldset className="form-group">
@@ -94,7 +94,7 @@ const SettingsForm = () => {
               placeholder="Email"
               value={userInfo.email}
               onChange={updateState('email')}
-              data-cy="emailSettings"
+              data-cy="email-settings"
             />
           </fieldset>
           <fieldset className="form-group">
@@ -105,14 +105,14 @@ const SettingsForm = () => {
               value={userInfo.password}
               onChange={updateState('password')}
               autoComplete="new-password"
-              data-cy="passwordSettings"
+              data-cy="password-settings"
             />
           </fieldset>
           <button
             className="btn btn-lg btn-primary pull-xs-right"
             type="submit"
             disabled={isLoading}
-            data-cy="sumbitSettings"
+            data-cy="sumbit-settings"
           >
             Update Settings
           </button>

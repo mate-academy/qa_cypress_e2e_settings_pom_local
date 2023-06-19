@@ -49,7 +49,7 @@ let user;
   });
 
   it('should provide an ability to update password', () => {
-    settingsPage.editEmail(testData.newPassword);
+    settingsPage.editPassword(testData.newPassword);
     settingsPage.sumbitSettings();
     settingsPage.logOut();
     settingsPage.assertNewEmail(testData.newUsername, user.email, testData.newPassword);

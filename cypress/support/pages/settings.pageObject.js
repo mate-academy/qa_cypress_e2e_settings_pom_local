@@ -4,33 +4,33 @@ class settingsPageObject extends PageObject {
  url = '/settings';
 
  editUsername (username) {
-  cy.getByDataCy('usernameSettings')
+  cy.getByDataCy('username-settings')
     .type('{selectAll}' + username)
  };
 
  editBio (bio) {
-  cy.getByDataCy('bioSettings')
+  cy.getByDataCy('bio-settings')
     .type('{selectAll}' + bio)
  };
 
  editEmail (email) {
-  cy.getByDataCy('emailSettings')
+  cy.getByDataCy('email-ettings')
     .type('{selectAll}' + email)
  };
 
  editPassword (password) {
-  cy.getByDataCy('passwordSettings')
+  cy.getByDataCy('password-settings')
     .type('{selectAll}' + password)
  };
 
  sumbitSettings () {
-  cy.getByDataCy('sumbitSettings')
+  cy.getByDataCy('sumbit-settings')
     .click();
  };
 
  logOut () {
   cy.getByDataCy('/settings')
-    .click();
+  .click();
   cy.get('.btn-outline-danger')
     .click();
  };
