@@ -19,8 +19,8 @@ describe('Sign Up page', () => {
     cy.task('generateUser').then(generateUser => {
       user = generateUser;
     });
-    cy.task('generateWrongCredentialsUser').then(generateWrongCredentialsUser => {
-      wrongUser = generateWrongCredentialsUser;
+    cy.task('generateAnotherUser').then(generateAnotherUser => {
+      wrongUser = generateAnotherUser;
     });
   });
 

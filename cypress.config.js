@@ -17,7 +17,7 @@ module.exports = defineConfig({
             bio: faker.lorem.words()
           };
         },
-        generateWrongCredentialsUser() {
+        generateAnotherUser() {
           let randomNumber = Math.ceil(Math.random(1000) * 1000);
           let fakeUserName = faker.name.firstName() + `${randomNumber}`;
           return {

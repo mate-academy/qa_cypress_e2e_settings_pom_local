@@ -15,8 +15,8 @@ describe('Settings page', () => {
     cy.task('generateUser').then(generateUser => {
       user = generateUser;
     });
-    cy.task('generateWrongCredentialsUser').then(generateWrongCredentialsUser => {
-      newUser = generateWrongCredentialsUser;
+    cy.task('generateAnotherUser').then(generateAnotherUser => {
+      newUser = generateAnotherUser;
     });
   });
 
