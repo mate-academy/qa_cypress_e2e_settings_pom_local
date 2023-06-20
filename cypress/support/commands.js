@@ -60,3 +60,25 @@ Cypress.Commands.add('login', (email = 'riot@qa.team', username = 'riot', passwo
     cy.setCookie('auth', response.body.user.token);
   });
 });
+
+Cypress.Commands.add('createArticle', (title, description, body) => {
+  cy.getCookie('auth').then((token) => {
+    const authToken = token.value;
+
+    cy.request({
+      method: 'POST',
+      url: '/api/articles',
+      body: {
+        article: {
+          title,
+          description,
+          body,
+          tagList: []
+        }
+      },
+      headers: {
+        Authorization: `Token ${authToken}`
+      }
+    });
+  });
+});

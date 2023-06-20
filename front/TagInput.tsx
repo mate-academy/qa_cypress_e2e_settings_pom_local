@@ -31,6 +31,7 @@ const TagInput = ({ tagList, addTag, removeTag }) => {
         <input
           className="form-control"
           type="text"
+          data-cy="article-tag"
           placeholder={
             isDemo ? 'Press Enter, Tab or Comma to add a tag' : 'Enter tags'
           }

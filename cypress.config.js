@@ -14,6 +14,16 @@ module.exports = defineConfig({
             username: userName.toLowerCase(),
             email: 'test'+`${randomNumber}`+'@mail.com',
             password: '12345Qwert!',
+            bio: faker.lorem.words()
+          };
+        },
+        generateAnotherUser() {
+          let randomNumber = Math.ceil(Math.random(1000) * 1000);
+          let fakeUserName = faker.name.firstName() + `${randomNumber}`;
+          return {
+            username: fakeUserName.toLowerCase(),
+            email: 'testmail'+`${randomNumber}`+'@mail.com',
+            password: '12345Qwert',
           };
         },
         generateArticle() {
@@ -22,7 +32,7 @@ module.exports = defineConfig({
             description: faker.lorem.words(),
             body: faker.lorem.words(),
             tag: faker.lorem.word()
-          };;
+          };
         },
         'db:clear'() {
           clear();

@@ -112,6 +112,7 @@ export default function ArticleEditorHoc(isnew = false) {
                         className="form-control form-control-lg"
                         type="text"
                         placeholder="Article Title"
+                        data-cy="article-title"
                         value={posting.title}
                         onChange={handleTitle}
                       />
@@ -121,6 +122,7 @@ export default function ArticleEditorHoc(isnew = false) {
                         className="form-control"
                         type="text"
                         placeholder="What's this article about?"
+                        data-cy="article-description"
                         value={posting.description}
                         onChange={handleDescription}
                       />
@@ -130,11 +132,13 @@ export default function ArticleEditorHoc(isnew = false) {
                         className="form-control"
                         rows={8}
                         placeholder="Write your article (in markdown)"
+                        data-cy="article-body"
                         value={posting.body}
                         onChange={handleBody}
                       />
                     </fieldset>
                     <TagInput
+                      data-cy="article-tag"
                       tagList={posting.tagList}
                       addTag={addTag}
                       removeTag={removeTag}
@@ -142,6 +146,7 @@ export default function ArticleEditorHoc(isnew = false) {
                     <button
                       className="btn btn-lg pull-xs-right btn-primary"
                       type="button"
+                      data-cy="article-publish"
                       disabled={isLoading}
                       onClick={handleSubmit}
                     >

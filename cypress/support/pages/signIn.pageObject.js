@@ -14,6 +14,14 @@ class SignInPageObject extends PageObject {
   get signInBtn() {
     return cy.getByDataCy('sign-in-btn');
   }
+
+  get errorType() {
+    return cy.getByDataCy('wrong-credentials');
+  }
+
+  get errorMessage() {
+    return cy.getByDataCy('error-message');
+  }
 }
 
 export default SignInPageObject;
