@@ -59,6 +59,7 @@ const LoginForm = ({ register = false }) => {
                 className="form-control form-control-lg"
                 type="text"
                 placeholder="Username"
+                data-cy="username-signUp"
                 value={username}
                 onChange={handleUsernameChange}
               />
