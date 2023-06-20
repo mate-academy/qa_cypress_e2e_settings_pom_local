@@ -35,7 +35,7 @@ describe('Follow/unfollow button', () => {
     userProfilePage.assertFollowing();
   });
 
-  it.only('should provide an ability to unfollow the another user', () => {
+  i('should provide an ability to unfollow the another user', () => {
     cy.login(user.email, user.username, user.password);
     settingsPage.visit();
 
