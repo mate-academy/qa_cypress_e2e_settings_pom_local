@@ -14,6 +14,7 @@ module.exports = defineConfig({
             username: userName.toLowerCase(),
             email: 'test'+`${randomNumber}`+'@mail.com',
             password: '12345Qwert!',
+            bio: faker.lorem.words()
           };
         },
         generateWrongCredentialsUser() {
@@ -31,7 +32,7 @@ module.exports = defineConfig({
             description: faker.lorem.words(),
             body: faker.lorem.words(),
             tag: faker.lorem.word()
-          };;
+          };
         },
         'db:clear'() {
           clear();

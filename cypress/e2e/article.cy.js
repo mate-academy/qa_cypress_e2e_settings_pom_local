@@ -66,7 +66,7 @@ describe('Article', () => {
     articlePage.assertArticleUpdated(article.title);
   });
 
-  it.only('should be deleted using Delete button', () => {
+  it('should be deleted using Delete button', () => {
     cy.login(user.email, user.username, user.password);
 
     cy.visit('/editor');

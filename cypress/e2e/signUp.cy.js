@@ -72,7 +72,7 @@ describe('Sign Up page', () => {
       .should('contain', errorMessageEmail);
   });
 
-  it.only('should not provide an ability to register with empty password field', () => {
+  it('should not provide an ability to register with empty password field', () => {
     signUpPage.visit();
 
     signUpPage.usernameField
