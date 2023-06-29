@@ -3,12 +3,12 @@ import PageObject from '../PageObject';
 class homePageObject extends PageObject {
   url = '/#/';
 
-    usernameLink(username) {
+    verifyUsernameLink(username) {
       cy.getByDataCy(`/profile/${username}`)
         .should('contain', username);
     }
   
-    newUsernameLink(username) {
+    verifyNewUsernameLink(username) {
       cy.getByDataCy(`/profile/${username}`)
         .should('contain', username);
     }

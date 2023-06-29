@@ -1,6 +1,6 @@
 import PageObject from '../PageObject';
 
-class settingsPageObject extends PageObject {
+class SettingsPageObject extends PageObject {
   url = '/settings';
 
   loggedUser() {
@@ -65,4 +65,4 @@ submitSignInForm(username, email, password) {
 };
 }
 
-export default settingsPageObject;
+export default SettingsPageObject;

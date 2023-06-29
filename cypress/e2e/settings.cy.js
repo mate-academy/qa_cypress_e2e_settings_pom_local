@@ -30,7 +30,7 @@ describe('Settings page', () => {
   it('should provide an ability to update username', () => {
     settingsPage.updateUsername(user.username);
     settingsPage.clickSubmitButton();
-    homePage.newUsernameLink(user.username);
+    homePage.verifyNewUsernameLink(user.username);
   });
 
   it('should provide an ability to update bio', () => {
@@ -47,10 +47,10 @@ describe('Settings page', () => {
     settingsPage.logOut();
     settingsPage.assertLogOut();
     signInPage.visit();
-    signInPage.emailField(user.email);
-    signInPage.passwordField(userData.password);
-    signInPage.signInBtn();
-    homePage.usernameLink(userData.username);
+    signInPage.enterEmail(user.email);
+    signInPage.enterPassword(userData.password);
+    signInPage.clickSignInBtn();
+    homePage.verifyUsernameLink(userData.username);
   });
 
   it('should provide an ability to update password', () => {
@@ -60,10 +60,10 @@ describe('Settings page', () => {
     settingsPage.logOut();
     settingsPage.assertLogOut();
     signInPage.visit();
-    signInPage.emailField(userData.email);
-    signInPage.passwordField(user.password);
-    signInPage.signInBtn();
-    homePage.usernameLink(userData.username);
+    signInPage.enterEmail(userData.email);
+    signInPage.enterPassword(user.password);
+    signInPage.clickSignInBtn();
+    homePage.verifyUsernameLink(userData.username);
   });
 
   it('should provide an ability to log out', () => {
