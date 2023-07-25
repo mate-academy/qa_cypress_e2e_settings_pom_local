@@ -13,9 +13,8 @@ const EditProfileButton = ({ isCurrentUser }: EditProfileButtonProps) => (
     <CustomLink
       href={routes.userEdit()}
       className="btn btn-sm btn-outline-secondary action-btn"
-      data-cy='editSettings'
     >
-      <i className="ion-gear-a" /> Edit Profile Settings
+      <i data-cy='editSettings' className="ion-gear-a" /> Edit Profile Settings
     </CustomLink>
   </Maybe>
 )

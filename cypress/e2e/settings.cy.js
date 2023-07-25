@@ -50,7 +50,7 @@ describe('Settings page', () => {
 
     settingsPage.changeEmail(email);
     settingsPage.clickUpdateSettingsBtn();
-    cy.contains('Edit Profile Settings').click();
+    settingsPage.clickEditSettingsBtn();
     settingsPage.verifyNewEmail(email);
   });
 
