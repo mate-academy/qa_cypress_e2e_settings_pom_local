@@ -12,7 +12,7 @@ class HomePageObject extends PageObject {
       .should('contain', username);
   }
 
-  assertHeaderNotContainUsername() {
+  assertUsernameLinkDoesNotExist() {
     this.usernameLink
       .should('not.exist');
   }

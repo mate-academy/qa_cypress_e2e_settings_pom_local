@@ -20,11 +20,11 @@ class SettingsPageObject extends PageObject {
   }
 
   get updateSettingsBtn() {
-    return cy.getByDataCy('updateSettings');
+    return cy.getByDataCy('update-settings');
   }
 
   get editSettingsBtn() {
-    return cy.getByDataCy('editSettings');
+    return cy.getByDataCy('edit-settings');
   }
 
   get logoutBtn() {

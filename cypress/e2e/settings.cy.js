@@ -73,6 +73,6 @@ describe('Settings page', () => {
   it('should provide an ability to log out', () => {
     settingsPage.clickLogoutBtn();
 
-    homePage.assertHeaderNotContainUsername();
+    homePage.assertUsernameLinkDoesNotExist();
   });
 });
