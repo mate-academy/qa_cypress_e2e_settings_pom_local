@@ -1,4 +1,5 @@
 /// <reference types="cypress" />
+const faker = require('faker');
 // ***********************************************
 // This example commands.ts shows you how to
 // create various custom commands and overwrite
@@ -40,12 +41,12 @@ Cypress.Commands.add('register', (email = 'riot@qa.team', username = 'riot', pas
   });
 });
 
-Cypress.Commands.add('login', (email = 'riot@qa.team', username = 'riot', password = '12345Qwert!') => {
+Cypress.Commands.add('login', (email, username, password) => {
   cy.request('POST', '/api/users', {
     user: {
-      email,
-      username,
-      password
+      email: faker.internet.email(),
+      username: faker.name.firstName(),
+      password: 'Qwerty1234!'
     }
   }).then(response => {
     const user = {
