@@ -71,5 +71,6 @@ describe('Settings page', () => {
     settingsPage.visit();
     settingsPage.clickOnLogoutBtn();
     header.assertHeaderLink('Sign in');
+    header.assertUrlAfterLogout();
   });
 });

@@ -21,17 +21,22 @@ class SettingsPageObject extends PageObject {
     this.getByDataAttr('update-btn').click();
   }
 
-  confirmUpdatedLink(username) {
+  assertUpdatedUsernameInLink(username) {
     cy.url().should('contain', `/profile/${username}`);
   }
 
-  assertUpdatedInfo(updatedInfo) {
+  assertUpdatedInfoOnUserPage(updatedInfo) {
     cy.get('.profile-page .user-info .container')
       .should('contain', updatedInfo);
   }
 
   clickOnLogoutBtn () {
     this.getByDataAttr('logout-btn').click();
+  }
+
+  assertUpdatedField(dataAttr, updatedData) {
+    this.getByDataAttr(dataAttr)
+    .should('have.value', updatedData);
   }
 }
 export default SettingsPageObject;
