@@ -30,6 +30,7 @@ const TagInput = ({ tagList, addTag, removeTag }) => {
       <fieldset className="form-group">
         <input
           className="form-control"
+          data-cy="Article-Tag"
           type="text"
           placeholder={
             isDemo ? 'Press Enter, Tab or Comma to add a tag' : 'Enter tags'
