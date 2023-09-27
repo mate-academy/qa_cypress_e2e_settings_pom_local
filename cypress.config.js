@@ -5,6 +5,8 @@ const { clear } = require("./dataBase");
 module.exports = defineConfig({
   e2e: {
     baseUrl: 'http://localhost:3000',
+    viewportHeight: 1620,
+    viewportWidth: 1080,
     setupNodeEvents(on, config) {
       on("task", {
         generateUser() {
@@ -22,7 +24,19 @@ module.exports = defineConfig({
             description: faker.lorem.words(),
             body: faker.lorem.words(),
             tag: faker.lorem.word()
-          };;
+          };
+        },
+        generateSettingsInfo() {
+          let username = faker.name.firstName();
+          let email = faker.internet.email();
+          return {
+            urlPicture: faker.image.abstract(),
+            username: username.toLowerCase(),
+            bio: faker.random.words(),
+            email: email.toLowerCase(),
+            password: 'strongPassword123!',
+            newPassword: 'newPassword12345!',
+          };
         },
         'db:clear'() {
           clear();

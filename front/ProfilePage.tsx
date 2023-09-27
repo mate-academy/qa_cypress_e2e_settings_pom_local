@@ -49,7 +49,7 @@ const ProfileHoc = (tab) => {
           <div className="user-info">
             <div className="container">
               <div className="row">
-                <div className="col-xs-12 col-md-10 offset-md-1">
+                <div className="col-xs-12 col-md-10 offset-md-1" data-cy="user-information-container">
                   <CustomImage
                     src={image}
                     alt="User's profile image"
@@ -57,11 +57,11 @@ const ProfileHoc = (tab) => {
                   />
                   <h4>{username}</h4>
                   <p>{bio}</p>
-                  <EditProfileButton isCurrentUser={isCurrentUser} />
+                  <EditProfileButton isCurrentUser={isCurrentUser}/>
                   <FollowUserButtonContext.Provider
                     value={{ following, setFollowing }}
                   >
-                    <FollowUserButton profile={profile} />
+                    <FollowUserButton profile={profile}/>
                   </FollowUserButtonContext.Provider>
                 </div>
               </div>
