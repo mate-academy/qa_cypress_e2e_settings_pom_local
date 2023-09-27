@@ -11,6 +11,14 @@ class HomePageObject extends PageObject {
     this.usernameLink
       .should('contain', username);
   }
+
+  assertHeaderLink(link) {
+    cy.get('.nav-link').should('contain', link);
+  }
+
+  assertUrlAfterLogout() {
+    cy.url().should('eq', Cypress.config().baseUrl + '/');
+  }  
 }
 
 export default HomePageObject;
