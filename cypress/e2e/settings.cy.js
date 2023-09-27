@@ -12,7 +12,7 @@ const loginAfterUpdate = new SignInPage();
 describe('Settings page', () => {
   let user;
   let updatedUser;
-  
+
   beforeEach(() => {
     cy.task('db:clear');
     cy.task('generateUser').then((generateUser) => {
@@ -28,9 +28,9 @@ describe('Settings page', () => {
     settingsPage.visit();
     settingsPage.fillField('username-field', updatedUser.username);
     settingsPage.clickOnUpdateSettingBtn();
-    settingsPage.confirmUpdatedLink(updatedUser.username);
-    header.assertHeaderContainUsername(updatedUser.username);
-    settingsPage.assertUpdatedInfo(updatedUser.username);
+    settingsPage.assertUpdatedUsernameInLink(updatedUser.username);
+    header.assertHeaderLink(updatedUser.username);
+    settingsPage.assertUpdatedInfoOnUserPage(updatedUser.username);
   });
 
   it('should provide an ability to update bio', () => {
@@ -39,13 +39,15 @@ describe('Settings page', () => {
     settingsPage.visit();
     settingsPage.fillField('bio-field', updatedBio);
     settingsPage.clickOnUpdateSettingBtn();
-    settingsPage.assertUpdatedInfo(updatedBio);
+    settingsPage.assertUpdatedInfoOnUserPage(updatedBio);
   });
 
   it('should provide an ability to update an email', () => {
     settingsPage.visit();
     settingsPage.fillField('email-field', updatedUser.email);
     settingsPage.clickOnUpdateSettingBtn();
+    settingsPage.assertUpdatedField('email-field', updatedUser.email);
+    settingsPage.clickOnLogoutBtn();
     loginAfterUpdate.visit();
     loginAfterUpdate.typeEmail(updatedUser.email);
     loginAfterUpdate.typePassword(user.password);
@@ -58,6 +60,7 @@ describe('Settings page', () => {
     settingsPage.visit();
     settingsPage.fillField('password-field', updatedPassword);
     settingsPage.clickOnUpdateSettingBtn();
+    settingsPage.clickOnLogoutBtn();
     loginAfterUpdate.visit();
     loginAfterUpdate.typeEmail(user.email);
     loginAfterUpdate.typePassword(updatedPassword);
@@ -67,6 +70,6 @@ describe('Settings page', () => {
   it('should provide an ability to log out', () => {
     settingsPage.visit();
     settingsPage.clickOnLogoutBtn();
-    cy.get('.nav-link').should('contain', 'Sign in');
+    header.assertHeaderLink('Sign in');
   });
 });
