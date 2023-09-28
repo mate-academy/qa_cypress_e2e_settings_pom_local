@@ -17,13 +17,22 @@ describe('Settings page', () => {
   const signInPage = new SignInPageObject();
   let user;
   const bio = faker.lorem.words();
-
+  const newPassword = faker.internet.password();
+  const newEmail = faker.internet.email().toLowerCase();
+  // before(() => {
+  //   cy.task('generateUser')
+  //     .then(generateUser => {
+  //       user = generateUser;
+  //     });
+  // })
+  
   beforeEach(() => {
     cy.task('db:clear');
     cy.task('generateUser')
       .then(generateUser => {
         user = generateUser;
       });
+    cy.register();
     cy.login();
     settingsPage.visit();
   });
@@ -41,23 +50,19 @@ describe('Settings page', () => {
   });
 
   it('should provide an ability to update an email', () => {
-    settingsPage.fillEmailField(user.email);
+    settingsPage.fillEmailField(newEmail);
     settingsPage.clickUpdateBtn();
-    settingsPage.checkEmail(user.email);
+    settingsPage.checkEmail(newEmail);
   });
 
   it('should provide an ability to update password', () => {
-    settingsPage.fillPasswordField(user.password);
+    settingsPage.fillPasswordField(newPassword);
     settingsPage.clickUpdateBtn();
     signInPage.visit();
-    signInPage.emailField
-      .type('riot@qa.team');
-    signInPage.passwordField
-      .type(user.password);
-    signInPage.signInBtn
-    .click();
-    homePage.usernameLink
-      .should('contain', 'riot');
+    signInPage.typeEmail('riot@qa.team');
+    signInPage.typePassword(newPassword);
+    signInPage.clickSignInBtn();
+    homePage.assertHeaderContainUsername('riot');
   });
 
   it('should provide an ability to log out', () => {

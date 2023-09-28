@@ -51,7 +51,6 @@ class SettingsPageObject extends PageObject {
   }
 
   checkEmail(email) {
-    cy.visit(this.url);
     this.emailField
       .should('have.value', email);
   }
