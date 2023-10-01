@@ -25,7 +25,10 @@ class SignInPageObject extends PageObject {
 
   clickSignInBtn() {
     this.signInBtn.click();
-  }
+  } 
+
+  assertWrongLogin() {
+    cy.get('body').should('contain', 'is invalid');  }
 }
 
 export default SignInPageObject;
