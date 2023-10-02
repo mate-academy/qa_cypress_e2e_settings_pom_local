@@ -58,7 +58,7 @@ class SettingsPageObject extends PageObject {
 
   assertPassword() {
     cy.get('[data-cy="profile-link"]').should('contain', user.username);
-}
-}
+} 
+ }
 
 export default SettingsPageObject;

@@ -63,6 +63,7 @@ const SettingsForm = () => {
               className="form-control"
               type="text"
               placeholder="URL of profile picture"
+              data-cy='url-field'
               value={userInfo.image ? userInfo.image : ''}
               onChange={updateState('image')}
             />
@@ -72,7 +73,9 @@ const SettingsForm = () => {
               className="form-control form-control-lg"
               type="text"
               placeholder="Username"
-              data-cy="username-field"
+              data-cy='usermane-field'
+              value={userInfo.username}
+              onChange={updateState('username')}
             />
           </fieldset>
           <fieldset className="form-group">
@@ -80,7 +83,9 @@ const SettingsForm = () => {
               className="form-control form-control-lg"
               rows={8}
               placeholder="Short bio about you"
-              data-cy="user-bio-field"
+              data-cy='short-bio-field'
+              value={userInfo.bio}
+              onChange={updateState('bio')}
             />
           </fieldset>
           <fieldset className="form-group">
@@ -88,7 +93,9 @@ const SettingsForm = () => {
               className="form-control form-control-lg"
               type="email"
               placeholder="Email"
-              data-cy="email-field"
+              data-cy='email-field'
+              value={userInfo.email}
+              onChange={updateState('email')}
             />
           </fieldset>
           <fieldset className="form-group">
@@ -96,14 +103,17 @@ const SettingsForm = () => {
               className="form-control form-control-lg"
               type="password"
               placeholder="New Password"
-              data-cy="new-password-field"
+              data-cy='new-password-field'
+              value={userInfo.password}
+              onChange={updateState('password')}
+              autoComplete="new-password"
             />
           </fieldset>
           <button
             className="btn btn-lg btn-primary pull-xs-right"
+            data-cy='update-settings-btn'
             type="submit"
             disabled={isLoading}
-            data-cy="submitSettings"
           >
             Update Settings
           </button>
@@ -112,5 +122,4 @@ const SettingsForm = () => {
     </React.Fragment>
   )
 }
-
-export default SettingsForm;
+export default SettingsForm
