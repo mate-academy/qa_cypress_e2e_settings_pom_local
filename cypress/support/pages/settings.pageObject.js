@@ -58,12 +58,7 @@ class SettingsPageObject extends PageObject {
 
   assertPassword() {
     cy.get('[data-cy="profile-link"]').should('contain', user.username);
-  }
-
-  logout() {
-    return cy.contains('button', 'Or click here to logout.').click();
-  }
-
+}
 }
 
 export default SettingsPageObject;

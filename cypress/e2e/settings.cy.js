@@ -60,9 +60,5 @@ describe('Settings page', () => {
     settingsPage.clearPassword();
     settingsPage.typePassword(newPassword);
     settingsPage.submitSettings();
-
-    settingsPage.logout(); 
-
-
   }); 
 });
