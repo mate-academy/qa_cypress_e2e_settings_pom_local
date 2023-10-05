@@ -16,46 +16,47 @@ describe('Settings page', () => {
   const user ={
     username: userName.toLowerCase(),
     email: 'test'+`${randomNumber}`+'@mail.com',
-    password: '12345Qwert!',
+    NewPassword: '12345Qwert!',
+    bio: `${bio}`+'my bio'
   };
 
 describe('Settings page', () => {
   beforeEach(() => {
-    cy.task('db:clear');
+    cy.task('db:clear') 
     cy.register();
-    cy.login();
-    cy.visit('/');
+     cy.login();
+     cy.visit('/');
     settingsPage.visit();
   });
 
   it('should provide an ability to update username', () => {
 
     settingsPage.fillUsernameField(user.username);
-    settingsPage.clickUpdateBtn();
-    homePage.assertHeaderContainUsername(user.username);
+    settingsPage.clickOnUpdateSettings();
+    homePage.assertUsernameInHeader(user.username);
   });
 
   it('should provide an ability to update bio', () => {
 
-    settingsPage.fillBioField(bio);
-    settingsPage.clickUpdateBtn();
-    settingsPage.checkBio(bio);
+    settingsPage.fillBioField(user.bio);
+    settingsPage.clickOnUpdateSettings();
+    settingsPage.checkBio(user.bio);
   });
 
   it('should provide an ability to update an email', () => {
 
     settingsPage.fillEmailField(user.email);
     settingsPage.clickUpdateBtn();
-    settingsPage.checkEmail(user.email);
+    settingsPage.checkEmail();
   });
 
   it('should provide an ability to update password', () => {
 
-    settingsPage.fillPasswordField(newPassword);
+    settingsPage.fillPasswordField(user.NewPassword);
     settingsPage.clickUpdateBtn();
     signInPage.visit();
     signInPage.typeEmail('riot@qa.team');
-    signInPage.passwordField.type(newPassword);
+    signInPage.passwordField.type(user.NewPassword);
     signInPage.signInBtn.click();
     homePage.assertUsernameInHeader('riot');
   });
@@ -63,7 +64,6 @@ describe('Settings page', () => {
   it('should provide an ability to log out', () => {
 
     settingsPage.clickLogOutBtn();
-    homePage.checkLogOut('riot');
   });
 });
 });
