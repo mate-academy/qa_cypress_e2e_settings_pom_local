@@ -1,8 +1,12 @@
 /* eslint-disable semi */
 import PageObject from '../PageObject'
 
-class SignInPageObject extends PageObject {
-  url = '/user/login'
+class SignUpPageObject extends PageObject {
+  url = '/user/register'
+
+  get usernameField() {
+    return cy.getByDataCy('username-sign-in')
+  }
 
   get emailField() {
     return cy.getByDataCy('email-sign-in')
@@ -16,6 +20,10 @@ class SignInPageObject extends PageObject {
     return cy.getByDataCy('sign-in-btn')
   }
 
+  typeUserName(username) {
+    this.usernameField.type(username)
+  }
+
   typeEmail(email) {
     this.emailField.type(email)
   }
@@ -27,12 +35,6 @@ class SignInPageObject extends PageObject {
   clickSignInBtn() {
     this.signInBtn.click()
   }
-
-  login(email, password) {
-    this.typeEmail(email)
-    this.typePassword(password)
-    this.clickSignInBtn()
-  }
 }
 
-export default SignInPageObject
+export default SignUpPageObject

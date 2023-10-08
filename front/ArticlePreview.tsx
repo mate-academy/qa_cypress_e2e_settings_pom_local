@@ -36,7 +36,7 @@ const ArticlePreview = ({ article }) => {
         href={routes.articleView(preview.slug)}
         className="preview-link"
       >
-        <h1>{preview.title}</h1>
+        <h1 data-cy="preview-article-title">{preview.title}</h1>
         <p>{preview.description}</p>
         <span>Read more...</span>
         <ul className="tag-list">

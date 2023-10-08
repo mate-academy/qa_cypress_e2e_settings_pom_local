@@ -4,7 +4,7 @@ const ListErrors = ({ errors }) => (
   <ul className="error-messages">
     {Object.keys(errors).map((key) => {
       return (
-        <li key={key}>
+        <li key={key} data-cy="error-messages">
           {key}:
           <ul>
             <li>{errors[key]}</li>
