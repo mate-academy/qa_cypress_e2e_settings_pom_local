@@ -31,6 +31,11 @@ class SettingsPage extends PageObject {
     return cy.get('[class="btn btn-outline-danger"]');
   }
 
+  assertSettingPageContainLogOutButton() {
+    this.logOutBtn
+      .should('contain', "Or click here to logout.");
+  }
+
   visit() {
     cy.visit(this.url);
   }
