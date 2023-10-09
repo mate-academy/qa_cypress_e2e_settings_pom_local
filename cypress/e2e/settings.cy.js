@@ -69,5 +69,6 @@ describe('Settings page', () => {
 
   it('should provide an ability to log out', () => {
     settingsPage.clickOnLogOutBtn();
+    settingsPage.assertSettingPageContainLogOutButton();
   });
 });
