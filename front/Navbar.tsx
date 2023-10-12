@@ -27,7 +27,11 @@ const Navbar = () => {
         </CustomLink>
         <ul className="nav navbar-nav pull-xs-right">
           <NavbarItem>
-            <NavLink dataCy="home-link" href={routes.home()} onClick={clickHandler}>
+            <NavLink
+              dataCy="home-link"
+              href={routes.home()}
+              onClick={clickHandler}
+            >
               Home
             </NavLink>
           </NavbarItem>
@@ -39,13 +43,16 @@ const Navbar = () => {
               </NavLink>
             </NavbarItem>
             <NavbarItem>
-              <NavLink href={routes.userEdit()}>
+              <NavLink href={routes.userEdit()} dataCy="settings-link">
                 <i className="ion-gear-a" />
                 &nbsp;Settings
               </NavLink>
             </NavbarItem>
             <NavbarItem>
-              <NavLink dataCy="profile-link" href={routes.userView(loggedInUser?.username)}>
+              <NavLink
+                dataCy="profile-link"
+                href={routes.userView(loggedInUser?.username)}
+              >
                 <CustomImage
                   className="user-pic"
                   src={loggedInUser?.effectiveImage}
@@ -57,7 +64,9 @@ const Navbar = () => {
           </Maybe>
           <Maybe test={!loggedInUser}>
             <NavbarItem>
-              <NavLink href={routes.userLogin()}>Sign in</NavLink>
+              <NavLink href={routes.userLogin()} dataCy="sign-in-link">
+                Sign in
+              </NavLink>
             </NavbarItem>
             <NavbarItem>
               <NavLink href={routes.userNew()}>Sign up</NavLink>

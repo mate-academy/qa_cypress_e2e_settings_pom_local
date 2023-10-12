@@ -1,34 +1,41 @@
+/* eslint-disable semi */
 /// <reference types='cypress' />
 /// <reference types='../support' />
 
-import SignInPageObject from '../support/pages/signIn.pageObject';
-import homePageObject from '../support/pages/home.pageObject';
+import SignInPageObject from '../support/pages/signIn.pageObject'
+import homePageObject from '../support/pages/home.pageObject'
+import SettingsPageObject from '../support/pages/settings.pageObject'
 
-const signInPage = new SignInPageObject();
-const homePage = new homePageObject();
+const signInPage = new SignInPageObject()
+const homePage = new homePageObject()
+const settingsPage = new SettingsPageObject()
 
 describe('Sign In page', () => {
-  let user;
+  let user
 
   before(() => {
-    cy.task('db:clear');
+    cy.task('db:clear')
     cy.task('generateUser').then((generateUser) => {
-      user = generateUser;
-    });
-  });
-  
+      user = generateUser
+    })
+  })
+
   it('should provide an ability to log in with existing credentials', () => {
-    signInPage.visit();
-    cy.register(user.email, user.username, user.password);
+    signInPage.visit()
+    cy.register(user.email, user.username, user.password)
 
-    signInPage.typeEmail(user.email);
-    signInPage.typePassword(user.password);
-    signInPage.clickSignInBtn();
+    signInPage.typeEmail(user.email)
+    signInPage.typePassword(user.password)
+    signInPage.clickSignInBtn()
 
-    homePage.assertHeaderContainUsername(user.username);
-  });
+    homePage.assertHeaderContainUsername(user.username)
+    homePage.settingsLink.click()
+    settingsPage.logout()
+  })
 
   it('should not provide an ability to log in with wrong credentials', () => {
-
-  });
-});
+    homePage.visit('/user/login')
+    signInPage.login(user.email + 'random', user.password)
+    homePage.assertPageContainsCredsErrorMessage()
+  })
+})
