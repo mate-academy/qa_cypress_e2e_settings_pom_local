@@ -18,8 +18,8 @@ describe('Article', () => {
     cy.task('db:clear')
     settingsPage.visit()
     settingsPage.logout()
-    cy.task('generateUser').then((generateUser) => {
-      user = generateUser
+    cy.task('generateUser').then((generatedUser) => {
+      user = generatedUser
       cy.login(user.email, user.username, user.password)
       cy.task('generateArticle').then((generatedArticle) => {
         article = generatedArticle

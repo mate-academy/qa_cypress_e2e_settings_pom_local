@@ -66,10 +66,10 @@ Cypress.Commands.add(
       window.localStorage.setItem('user', JSON.stringify(user))
       cy.setCookie('auth', response.body.user.token)
     })
-
-    Cypress.Commands.add('logout', () => {
-      window.localStorage.setItem('user', JSON.stringify(''))
-      cy.clearAllCookies()
-    })
   }
 )
+
+Cypress.Commands.add('logout', () => {
+  window.localStorage.setItem('user', JSON.stringify(''))
+  cy.clearAllCookies()
+})
