@@ -22,29 +22,34 @@ describe('Settings page', () => {
     const newUsername = fakeData.username;
     settingsPage.typeUsername(newUsername);
     settingsPage.clickUpdateSettingsBtn();
+    settingsPage.assertUsername(newUsername);
   });
-
+  
   it('should provide an ability to update bio', () => {
     cy.login(user.email, user.username, user.password);
     settingsPage.visit();
     const newBio = fakeData.bio;
     settingsPage.typeBio(newBio);
     settingsPage.clickUpdateSettingsBtn();
+    settingsPage.assertBio(newBio);
   });
-
+  
   it('should provide an ability to update an email', () => {
     cy.login(user.email, user.username, user.password);
     settingsPage.visit();
     const newEmail = fakeData.email;
     settingsPage.typeEmail(newEmail);
     settingsPage.clickUpdateSettingsBtn();
+    settingsPage.assertEmail(newEmail);
   });
-
+  
   it('should provide an ability to update password', () => {
     cy.login(user.email, user.username, user.password);
     settingsPage.visit();
     const newPassword = fakeData.password;
     settingsPage.typePassword(newPassword);
     settingsPage.clickUpdateSettingsBtn();
+    cy.signIn(user.email, user.username, newPassword);
+    settingsPage.assertUsername(user.username);
   });
 });

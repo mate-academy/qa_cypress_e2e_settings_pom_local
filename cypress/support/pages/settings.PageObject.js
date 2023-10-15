@@ -6,7 +6,7 @@ class settingsPageObject extends PageObject {
 
   static generateFakeData() {
     const fakeData = {
-      username: faker.internet.userName(),
+      username: faker.lorem.word(),
       email: faker.internet.email(),
       bio: faker.lorem.sentence(),
       password: faker.internet.password(),
@@ -36,19 +36,19 @@ class settingsPageObject extends PageObject {
   }
 
   typeUsername(username) {
-    this.usernameField.type(username);
+    this.usernameField.clear().type(username);
   }
 
   typeBio(bio) {
-    this.bioField.type(bio);
+    this.bioField.clear().type(bio);
   }
 
   typeEmail(email) {
-    this.emailField.type(email);
+    this.emailField.clear().type(email);
   }
 
   typePassword(password) {
-    this.passwordField.type(password);
+    this.passwordField.clear().type(password);
   }
 
   clickUpdateSettingsBtn() {
@@ -56,7 +56,25 @@ class settingsPageObject extends PageObject {
   } 
 
   assertInput(input) {
-    cy.get('body').should('contain', input);  }
+    cy.get('body').should('contain', input);
+  }
+
+  assertUsername(username) {
+    this.usernameField.should('have.value', username);
+  }
+
+  assertBio(bio) {
+    this.bioField.should('have.value', bio);
+    
+  }
+
+  assertEmail(email) {
+    this.emailField.should('have.value', email);
+  }
+
+  assertPassword(password) {
+    this.passwordField.should('have.value', password);
+  }
 }
 
 export default settingsPageObject;
