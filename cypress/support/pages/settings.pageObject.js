@@ -1,80 +1,31 @@
 import PageObject from '../PageObject';
 
 class settingsPageObject extends PageObject {
- url = '/settings';
+  url = '/settings/';
 
- editUsername (username) {
-  cy.getByDataCy('username-settings')
-    .type('{selectAll}' + username)
- };
+  get usernameField() {
+    return cy.getByDataCy('username-settings');
+  }
 
- editBio (bio) {
-  cy.getByDataCy('bio-settings')
-    .type('{selectAll}' + bio)
- };
+  get updateSettingsBtn() {
+    return cy.getByDataCy('update-btn-settings');
+  }
 
- editEmail (email) {
-  cy.getByDataCy('email-ettings')
-    .type('{selectAll}' + email)
- };
+  get biographyField() {
+    return cy.getByDataCy('bio-settings');
+  }
 
- editPassword (password) {
-  cy.getByDataCy('password-settings')
-    .type('{selectAll}' + password)
- };
+  get emailField() {
+    return cy.getByDataCy('email-settings');
+  }
 
- sumbitSettings () {
-  cy.getByDataCy('sumbit-settings')
-    .click();
- };
+  get newPasswordField() {
+    return cy.getByDataCy('new-password-settings');
+  }
 
- logOut () {
-  cy.getByDataCy('/settings')
-  .click();
-  cy.get('.btn-outline-danger')
-    .click();
- };
-
- assertNewUsername (newUsername) {
-  cy.url()
-    .should('contain', `/profile/${newUsername}`)
- };
-
- assertNewBio (newBio) {
-  cy.getByDataCy('/settings')
-    .click();
-  cy.getByDataCy('bioSettings')
-    .should('contain', newBio);  
- };
-
- assertNewEmail (newUsername, email, password) {
-  cy.getByDataCy('/user/login')
-    .click();
-  cy.getByDataCy('email-sign-in')
-    .type(email);
-  cy.getByDataCy('password-sign-in')
-    .type(password);
-  cy.url()
-    .should('contain', `/profile/${newUsername}`);     
- };
-
- assertLogOut () {
-  cy.getByDataCy('/user/login')
-    .should('contain', 'Sign in');
-  cy.getByDataCy('/user/login')
-    .should('contain', 'Sign up');  
- }; 
-
- assertNewPassword (newUsername, email, password) {
-  cy.getByDataCy('/user/login')
-    .click();
-  cy.getByDataCy('email-sign-in')
-    .type(email);
-  cy.getByDataCy('password-sign-in')
-    .type(password);
-  cy.url()
-    .should('contain', `/profile/${newUsername}`);     
- };
+  get logoutBtn() {
+    return cy.getByDataCy('logout-btn-settings');
+  }
 }
 
 export default settingsPageObject;

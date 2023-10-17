@@ -1,62 +1,60 @@
 /// <reference types="cypress" />
 /// <reference types="../support" />
 
-import faker from "faker";
-import settingsPageObject from "../support/pages/settings.pageObject";
+import homePageObject from '../support/pages/home.pageObject';
+import settingsPageObject from '../support/pages/settings.pageObject';
+import profilePageObject from '../support/pages/profile.pageObject';
 
-const settingsPage = new settingsPageObject;
-
-const user = faker.name.firstName();
-const testData = {
-  newUsername: user.toLowerCase(),
-  newBio: faker.lorem.words(),
-  newPassword: faker.name.lastName() + faker.address.city(),
-  newEmail: faker.internet.email()
-}
-
-describe('Settings page', () => {
+const homePage = new homePageObject();
+const settingsPage = new settingsPageObject();
+const profilePage = new profilePageObject();
 let user;
 
-  before(() => {
-    cy.task('generateUser').then(generateUser => {
-      user = generateUser;
-    });
-  });
-
+describe('Settings page', () => {
   beforeEach(() => {
     cy.task('db:clear');
+    cy.register();
     cy.login();
     settingsPage.visit();
+    cy.task('generateUser')
+      .then(generateUser => {
+        user = generateUser;
+      });
   });
 
   it('should provide an ability to update username', () => {
-    settingsPage.editUsername(testData.newUsername);
-    settingsPage.sumbitSettings();
-    settingsPage.assertNewUsername(testData.newUsername);
+    settingsPage.usernameField.type(`{selectAll}${user.username}`);
+    settingsPage.updateSettingsBtn.click();
+    homePage.usernameLink.should('contain', user.username);
   });
 
   it('should provide an ability to update bio', () => {
-    settingsPage.editBio(testData.newBio);
-    settingsPage.sumbitSettings();
-    settingsPage.assertNewBio(testData.newBio);
+    settingsPage.biographyField.type(user.bio);
+    settingsPage.updateSettingsBtn.click();
+    homePage.usernameLink.click();
+    profilePage.assertNewBio(user.bio);
   });
 
   it('should provide an ability to update an email', () => {
-    settingsPage.editEmail(testData.newEmail);
-    settingsPage.sumbitSettings();
-    settingsPage.logOut();
-    settingsPage.assertNewEmail(testData.newUsername, testData.newEmail, user.password);
+    settingsPage.emailField.type(`{selectAll}${user.email}`);
+    settingsPage.updateSettingsBtn.click();
+    settingsPage.logoutBtn.click();
+    cy.login(user.email);
+    settingsPage.visit();
+    settingsPage.emailField.should('have.value', user.email);
   });
 
   it('should provide an ability to update password', () => {
-    settingsPage.editPassword(testData.newPassword);
-    settingsPage.sumbitSettings();
-    settingsPage.logOut();
-    settingsPage.assertNewEmail(testData.newUsername, user.email, testData.newPassword);
+    settingsPage.newPasswordField.type(user.newPassword);
+    settingsPage.updateSettingsBtn.click();
+    settingsPage.logoutBtn.click();
+    cy.login('riot@qa.team', 'riot', user.newPassword);
+    settingsPage.visit();
   });
 
   it('should provide an ability to log out', () => {
-    settingsPage.logOut();
-    settingsPage.assertLogOut();
+    settingsPage.logoutBtn.click();
+    homePage.signInLink.should('contain', 'Sign in');
+    homePage.signUpLink.should('contain', 'Sign up');
   });
 });
