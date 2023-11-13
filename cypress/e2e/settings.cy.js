@@ -65,7 +65,7 @@ describe('Settings page', () => {
     cy.login(user.email, testData.password);
   });
 
-  it.only('should provide an ability to log out', () => {
+  it('should provide an ability to log out', () => {
     settings.logOutBtn.click();
 
     settings.assertConduitBanner();
