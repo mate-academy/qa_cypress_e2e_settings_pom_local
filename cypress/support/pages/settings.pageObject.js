@@ -27,6 +27,11 @@ class SettingsPageObject extends PageObject {
     return cy.getByDataCy('update-settings-btn');
   }
 
+  assertContainNewUsername(username) {
+    this.userNameField
+      .should('have.value', username);
+  }
+
   typeUserName(userName) {
     this.userNameField.type('{selectAll}' + userName);
   }

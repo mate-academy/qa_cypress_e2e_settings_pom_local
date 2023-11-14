@@ -32,7 +32,7 @@ describe('Settings page', () => {
     settingsPage.typeUserName(user.username);
     settingsPage.clickUpdateSettingsBtn();
 
-    settingsPage.assertHeaderContainUsername(user.username);
+    settingsPage.assertContainNewUsername(user.username);
   });
 
   it('should provide an ability to update bio', () => {
@@ -66,7 +66,7 @@ describe('Settings page', () => {
     homePage.assertHeaderContainUsername('riot');
   });
 
-  it.only('should provide an ability to log out', () => {
+  it('should provide an ability to log out', () => {
     settingsPage.clickLogoutBtn();
 
     homePage.usernameLink.should('not.exist');
