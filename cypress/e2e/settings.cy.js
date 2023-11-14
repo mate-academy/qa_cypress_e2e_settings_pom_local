@@ -13,6 +13,7 @@ const homePage = new HomePageObject();
 const signInPage = new SignInPageObject();
 
 
+
 describe('Settings page', () => {
   let user;
   before(() => {
@@ -46,7 +47,6 @@ describe('Settings page', () => {
     settingsPage.assertUpdatedBio(newbio);
     homePage.clickUsernameLink();
     profilePage.assertUserInfo(newbio);
-
   });
 
   it('should provide an ability to update an email', () => {
@@ -55,17 +55,28 @@ describe('Settings page', () => {
     settingsPage.clickUpdateSettingsBtn();
     settingsPage.assertUpdatedEmail(newEmail);
 
+    cy.clearCookies();
+
+    signInPage.visit();
+    signInPage.typeEmail(newEmail);
+    signInPage.typePassword(user.password);
+    signInPage.clickSignInBtn();
+
+    homePage.assertHeaderContainUsername(user.username);
+    //also added test for signin with new email but it doesn't work properly cuz of the bug in the application
+
   });
 
   it('should provide an ability to update password', () => {
-    settingsPage.fillPasswordField(user.password);
+    const newPassword = 'asdfghjkl*78963';
+    settingsPage.fillPasswordField(newPassword);
     settingsPage.clickUpdateSettingsBtn();
     
     cy.clearCookies();
 
     signInPage.visit();
     signInPage.typeEmail(user.email);
-    signInPage.typePassword(user.password);
+    signInPage.typePassword(newPassword);
     signInPage.clickSignInBtn();
 
     homePage.assertHeaderContainUsername(user.username);

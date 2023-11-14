@@ -13,7 +13,7 @@ module.exports = defineConfig({
           return {
             username: userName.toLowerCase(),
             email: 'test'+`${randomNumber}`+'@mail.com',
-            password: 'asdfghjkl*78963',
+            password: '12345Qwert!',
           };
         },
         generateArticle() {
