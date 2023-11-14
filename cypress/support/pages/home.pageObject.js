@@ -11,6 +11,10 @@ class HomePageObject extends PageObject {
     this.usernameLink
       .should('contain', username);
   }
+  assertHeaderNotContainUsername() {
+    this.usernameLink
+      .should('not.exist');
+}
 }
 
 export default HomePageObject;
