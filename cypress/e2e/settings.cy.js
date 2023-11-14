@@ -11,11 +11,6 @@ const homePage = new homePageObject();
 const settingsPage = new SettingsPageObject();
 const profilePage = new ProfilePageObject();
 
-const user = {
-  
-  
-};
-
 describe('Settings page', () => {
   let user;
   beforeEach(() => {
@@ -32,7 +27,7 @@ describe('Settings page', () => {
 
     settingsPage.typeUsername(newUsername);
     settingsPage.clickUpdateSettingsBtn();
-    homePage.assertHeaderContainUsername(user.username);
+    homePage.assertHeaderContainUsername(newUsername);
   });
 
   it('should provide an ability to update bio', () => {
@@ -53,7 +48,7 @@ describe('Settings page', () => {
   });
 
   it('should provide an ability to update password', () => {
-    const newPassword = 'Qwer123@';
+    const newPassword = faker.random.alphaNumeric(8);
 
     settingsPage.typePassword(newPassword);
     settingsPage.clickUpdateSettingsBtn();
