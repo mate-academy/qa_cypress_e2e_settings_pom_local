@@ -8,18 +8,14 @@ class SettingsObject extends PageObject {
     return cy.getByDataCy('password-update-field');
   }
 
-
-
 typePassword(password) {
     this.passwordField.type(password);
   }
-
 
 clickUpdateBtn() {
   cy.getByDataCy('update-btn')
   .click();
 }
-
 
 get usernameField() {
   return cy.getByDataCy('username-update-field');
@@ -44,10 +40,26 @@ typeBio(bio) {
 }
 
 typeEmail(email) {
-  this.emailField.type(email);
+  this.emailField
+  .clear()
+  .type(email);
 }
 
+assertUsername(username) {
+  this.usernameField
+    .should('contain', username);
+}
+assertEmail(email) {
+  this.emailField
+    .should('contain', email)
+}
+
+assertBio(bio) {
+  this.bioField
+    .should('contain', bio)
+}
 
 }
+
 
 export default SettingsObject;

@@ -5,15 +5,16 @@ import faker from 'faker';
 import SignInPageObject from '../support/pages/signIn.pageObject';
 import HomePageObject from '../support/pages/home.pageObject';
 
+
 const settingsPage = new SettingsObject();
 const signInPage = new SignInPageObject();
 const homePage = new HomePageObject();
 
 const testData = {
-  email: faker.internet.email(),
+  email: faker.internet.email().toLowerCase(),
   password: faker.internet.password(),
-  name: faker.name.firstName(),
-  bio: 'update',
+  name: faker.name.firstName().toLowerCase(),
+  bio: faker.random.words(2).toLowerCase(),
 
 };
 
@@ -24,55 +25,37 @@ describe('Settings page', () => {
     beforeEach(() => {
       cy.task('generateUser').then((generateUser) => {
         user = generateUser;
+        cy.login(user.email, user.username, user.password);
+        settingsPage.visit();
       });
   });
 
   it('should provide an ability to update username', () => {
-    cy.login(user.email, user.username, user.password);
-    settingsPage.visit();
     settingsPage.typeUsername(testData.name);
     settingsPage.clickUpdateBtn();
-
-    signInPage.visit();
-    signInPage.typeEmail(user.email);
-    signInPage.typePassword(user.password);
-    signInPage.clickSignInBtn();
-    
     homePage.assertHeaderContainUsername(testData.name);
-
+ 
+    
   });
 
   it('should provide an ability to update bio', () => {
-    cy.login(user.email, user.username, user.password);
-    settingsPage.visit();
     settingsPage.typeBio(testData.bio);
     settingsPage.clickUpdateBtn();
-
-    signInPage.visit();
-    signInPage.typeEmail(user.email);
-    signInPage.typePassword(user.password);
-    signInPage.clickSignInBtn();
-    
-    homePage.assertHeaderContainUsername(user.username);
+    cy.clearAllCookies();
+    settingsPage.assertBio(testData.bio);
   });
 
   it('should provide an ability to update an email', () => {
-    cy.login(user.email, user.username, user.password);
-    settingsPage.visit();
     settingsPage.typeEmail(testData.email);
     settingsPage.clickUpdateBtn();
-
     signInPage.visit();
     signInPage.typeEmail(testData.email);
     signInPage.typePassword(user.password);
     signInPage.clickSignInBtn();
-   
     homePage.assertHeaderContainUsername(user.username);
   });
 
   it('should provide an ability to update password', () => {
-    cy.login(user.email, user.username, user.password);
-    settingsPage.visit();
     settingsPage.typePassword(testData.password);
     settingsPage.clickUpdateBtn();
 
