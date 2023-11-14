@@ -4,6 +4,8 @@ const { clear } = require("./dataBase");
 
 module.exports = defineConfig({
   e2e: {
+    viewportHeight: 1200,
+    viewportWidth: 1500,
     baseUrl: 'http://localhost:3000',
     setupNodeEvents(on, config) {
       on("task", {
