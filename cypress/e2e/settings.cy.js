@@ -27,7 +27,7 @@ describe('Settings page', () => {
     const newUsername = faker.name.firstName().toLowerCase();
 
     settingsPage.typeUsername(newUsername);
-    settingsPage.clickSignInBtn();
+    settingsPage.clickUpdateBtn();
     settingsPage.checkUserBanner(newUsername);
   });
 
@@ -35,7 +35,7 @@ describe('Settings page', () => {
     const newBio = faker.lorem.word();
 
     settingsPage.typeBiofield(newBio);
-    settingsPage.clickSignInBtn();
+    settingsPage.clickUpdateBtn();
     settingsPage.checkUserBanner(newBio);
   });
 
@@ -43,7 +43,7 @@ describe('Settings page', () => {
     const newEmail = faker.internet.email().toLowerCase();
 
     settingsPage.typeEmailfield(newEmail);
-    settingsPage.clickSignInBtn();
+    settingsPage.clickUpdateBtn();
     settingsPage.clicklogoutBtn();
 
     signInPage.visit();
@@ -57,7 +57,7 @@ describe('Settings page', () => {
     const newPassword = 'vtnfkk1234';
 
     settingsPage.typePassword(newPassword);
-    settingsPage.clickSignInBtn();
+    settingsPage.clickUpdateBtn();
     settingsPage.clicklogoutBtn();
 
     signInPage.visit();

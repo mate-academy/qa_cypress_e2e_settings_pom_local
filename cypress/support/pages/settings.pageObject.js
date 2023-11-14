@@ -51,7 +51,7 @@ class SettingsPageObject extends PageObject {
     this.emailField.clear().type(email);
   }
 
-  clickSignInBtn() {
+  clickUpdateBtn() {
     this.updateBtn.click();
   }
 
