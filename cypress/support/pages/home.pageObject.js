@@ -7,10 +7,20 @@ class HomePageObject extends PageObject {
     return cy.getByDataCy('profile-link');
   }
 
+  clickOnUserNameLink() {
+    this.usernameLink.click();
+}
+
   assertHeaderContainUsername(username) {
     this.usernameLink
       .should('contain', username);
   }
+
+  assertHeaderNotContainUsername() {
+    this.usernameLink
+      .should('not.exist', 'profile-link');
+  }
+  
 }
 
 export default HomePageObject;
