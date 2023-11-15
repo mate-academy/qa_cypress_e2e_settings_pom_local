@@ -46,6 +46,10 @@ class SettingsPageObject extends PageObject {
   clickUpdateBtn() {
     this.updateBtn.click();
   }
+  
+  clickOnSettingsLink() {
+    this.settingsLink.click();
+   }
 
   clickOnLogOutBtn() {
     this.logOutBtn.click();

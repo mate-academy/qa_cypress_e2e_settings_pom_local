@@ -15,6 +15,10 @@ class HomePageObject extends PageObject {
   clickUsernameLink() {
     this.usernameLink.click();
   }
+
+  assertUserIsNotLoggedIn(username) {
+    this.usernameLink.should('not.exist');
+  }
 }
 
 export default HomePageObject;

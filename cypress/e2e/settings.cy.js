@@ -72,4 +72,11 @@ describe('Settings page', () => {
 
     homePage.assertHeaderContainUsername(user.username);
   });
+
+  it('should provide an ability to log out', () => {
+    
+    settingsPage.visit();
+    settingsPage.clickOnLogOutBtn();
+    homePage.assertUserIsNotLoggedIn();
+    });
 });
