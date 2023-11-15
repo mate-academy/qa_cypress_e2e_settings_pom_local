@@ -1,5 +1,5 @@
 import PageObject from '../PageObject';
-class SettingsPageObgect extends PageObject {
+class SettingsPageObject extends PageObject {
   url = '/settings';
 
   get usernameField() {
@@ -11,7 +11,6 @@ class SettingsPageObgect extends PageObject {
   get emailField() {
     return cy.get('[data-cy="email-settings-field"]');
   }
-
   get passwordField() {
     return cy.get('[data-cy="new-password-field"]');
   }
@@ -25,11 +24,9 @@ class SettingsPageObgect extends PageObject {
   typeUsername(username) {
     this.usernameField.clear().type(username);
   }
-
   typeBioField(bio) {
     this.bioField.clear().type(bio);
   }
-
   typeEmailField(email) {
     this.emailField.clear().type(email);
   }
@@ -39,13 +36,11 @@ class SettingsPageObgect extends PageObject {
   clickUpdateSettings() {
     this.updateSettingsBtn.click();
   }
-
   clickLogoutBtn() {
     this.logoutBtn.click();
   }
   assertNewEmail(email) {
     this.emailField.should('contain', email);
   }
-
 }
-export default SettingsPageObgect;
+export default SettingsPageObject;

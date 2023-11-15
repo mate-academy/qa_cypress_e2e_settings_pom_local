@@ -2,7 +2,7 @@
 /// <reference types="../support" />
 import { settings } from 'cluster';
 import faker from 'faker';
-import SettingsPageObgect from '../support/pages/settings.pageObject';
+import SettingsPageObject from '../support/pages/settings.pageObject';
 import SignInPageObject from '../support/pages/signIn.pageObject';
 import { fa } from 'faker/lib/locales';
 import HomePageObject from '../support/pages/home.pageObject';
@@ -15,80 +15,72 @@ const testData = {
   bio: faker.lorem.words()
 };
 
-const settingsPageObgect = new SettingsPageObgect();
-const signInPageObject = new SignInPageObject();
-const homePageObject = new HomePageObject();
-const profilePageObject = new ProfilePageObject();
+const settingsPage = new SettingsPageObject();
+const signInPage = new SignInPageObject();
+const homePage = new HomePageObject();
+const profilePage = new ProfilePageObject();
 
 describe('Settings page', () => {
   let user;
 
-  before(() => {
-
-});
+ before(() => {
+ });
 
   beforeEach(() => {
     cy.task('db:clear');
     cy.task('generateUser').then((generateUser) => {
       user = generateUser;
       cy.register(user.email, user.username, user.password);
-    signInPageObject.visit();
-    signInPageObject.typeEmail(user.email);
-    signInPageObject.typePassword(user.password);
-    signInPageObject.clickSignInBtn();
-    });
-    
-
-  });
+    signInPage.visit();
+    signInPage.typeEmail(user.email);
+    signInPage.typePassword(user.password);
+    signInPage.clickSignInBtn();
+      });
+   });
 
   it('should provide an ability to update username', () => {
-    settingsPageObgect.visit();
-    settingsPageObgect.typeUsername(testData.username);
-    settingsPageObgect.clickUpdateSettings();
-    homePageObject.assertHeaderContainUsername(testData.username);
-
+    settingsPage.visit();
+    settingsPage.typeUsername(testData.username);
+    settingsPage.clickUpdateSettings();
+    homePage.assertHeaderContainUsername(testData.username);
   });
 
   it('should provide an ability to update bio', () => {
-    settingsPageObgect.visit();
-    settingsPageObgect.typeBioField(testData.bio);
-    settingsPageObgect.clickUpdateSettings();
-    profilePageObject.assertBio(testData.bio);
+    settingsPage.visit();
+    settingsPage.typeBioField(testData.bio);
+    settingsPage.clickUpdateSettings();
+    profilePage.assertBio(testData.bio);
   });
 
   it('should provide an ability to update an email', () => {
-    settingsPageObgect.visit();
-    settingsPageObgect.typeEmailField(testData.email);
-    settingsPageObgect.clickUpdateSettings();
-    settingsPageObgect.visit();
-    settingsPageObgect.clickLogoutBtn();
-    signInPageObject.visit();
-    signInPageObject.typeEmail(testData.email);
-    signInPageObject.typePassword(user.password);
-    signInPageObject.clickSignInBtn();
-    homePageObject.assertHeaderContainUsername(user.username);
-
+    settingsPage.visit();
+    settingsPage.typeEmailField(testData.email);
+    settingsPage.clickUpdateSettings();
+    settingsPage.visit();
+    settingsPage.clickLogoutBtn();
+    signInPage.visit();
+    signInPage.typeEmail(testData.email);
+    signInPage.typePassword(user.password);
+    signInPage.clickSignInBtn();
+    homePage.assertHeaderContainUsername(user.username);
   });
 
   it('should provide an ability to update password', () => {
-    settingsPageObgect.visit();
-    settingsPageObgect.typePasswordField(testData.password);
-    settingsPageObgect.clickUpdateSettings();
-    settingsPageObgect.visit();
-    settingsPageObgect.clickLogoutBtn();
-    signInPageObject.visit();
-    signInPageObject.typeEmail(user.email);
-    signInPageObject.typePassword(testData.password);
-    signInPageObject.clickSignInBtn();
-    homePageObject.assertHeaderContainUsername(user.username);
-
-
+    settingsPage.visit();
+    settingsPage.typePasswordField(testData.password);
+    settingsPage.clickUpdateSettings();
+    settingsPage.visit();
+    settingsPage.clickLogoutBtn();
+    signInPage.visit();
+    signInPage.typeEmail(user.email);
+    signInPage.typePassword(testData.password);
+    signInPage.clickSignInBtn();
+    homePage.assertHeaderContainUsername(user.username);
   });
 
   it('should provide an ability to log out', () => {
-    settingsPageObgect.visit();
-    settingsPageObgect.clickLogoutBtn();
-    homePageObject.assertHeaderNotContainUsername();
-
+    settingsPage.visit();
+    settingsPage.clickLogoutBtn();
+    homePage.assertHeaderNotContainUsername();
   });
 });
