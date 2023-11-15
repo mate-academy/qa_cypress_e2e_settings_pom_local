@@ -37,10 +37,11 @@ describe('Settings page', () => {
   });
 
   it('should provide an ability to update an email', () => {
-    const newEmail = faker.internet.email();
+    const newEmail = faker.internet.email().toLowerCase();
     settingsPage.fillEmailField(newEmail);
     settingsPage.clickUpdateBtn();
-    homePage.assertHeaderContainUsername(user.username);
+    settingsPage.visit();
+    settingsPage.assertEmailField(newEmail);
   });
 
   it('should provide an ability to update password', () => {

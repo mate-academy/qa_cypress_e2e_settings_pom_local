@@ -50,10 +50,16 @@ class SettingsPageObject extends PageObject {
   assertUpdatedBio(bio) {
     this.bioField.should('contain', bio);
   }
-assertUpdatedEmail(email) {
-    this.emailField.should('have.value', email);
+
+  assertContainNewUsername(username) {
+    this.userNameField
+      .should('have.value', username);
   }
 
+   assertEmailField(email) {
+    this.emailField
+      .should('have.value', email);
+  }
   clickUpdateBtn(){
     this.updateBtn.click();
   }
