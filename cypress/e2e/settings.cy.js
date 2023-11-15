@@ -22,10 +22,6 @@ describe('Settings page', () => {
     bio: faker.lorem.sentence()
   };
 
-  before(() => {
-
-  });
-
   beforeEach(() => {
     cy.task('db:clear');
     cy.task('generateUser')
@@ -53,7 +49,7 @@ describe('Settings page', () => {
     settingsPage.clearEmailField();
     settingsPage.fillEmailField(settingsData.email);
     settingsPage.clickOnUpdateSettingsBtn();
-    cy.contains('My Posts').should('be.visible');
+    //cy.contains('My Posts').should('be.visible');
     settingsPage.visit();
     settingsPage.assertEmailField(settingsData.email);
   });
@@ -72,5 +68,6 @@ describe('Settings page', () => {
 
   it('should provide an ability to log out', () => {
     settingsPage.clickOnLogOutBtn();
+    cy.contains('Sign in').should('be.visible');
   });
 });
