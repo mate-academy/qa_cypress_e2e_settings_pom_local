@@ -49,7 +49,7 @@ describe('Settings page', () => {
     settingsPage.clearEmailField();
     settingsPage.fillEmailField(settingsData.email);
     settingsPage.clickOnUpdateSettingsBtn();
-    //cy.contains('My Posts').should('be.visible');
+    cy.contains('My Posts').should('be.visible');
     settingsPage.visit();
     settingsPage.assertEmailField(settingsData.email);
   });
