@@ -50,10 +50,12 @@ describe('Settings page', () => {
   });
 
   it('should provide an ability to update an email', () => {
-    settingsPage.typeEmail(user.email);
+    const newEmail = 'new'+`${randomNumber}`+'@i.ua';
+
+    settingsPage.typeEmail(newEmail);
     settingsPage.clickOnSubmitButton();
     profilePage.clickOnSettingsLink();
-    settingsPage.assertEditVewEmail(user.email);
+    settingsPage.assertEditVewEmail(newEmail);
   });
 
   it('should provide an ability to update password', () => {
