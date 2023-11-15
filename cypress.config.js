@@ -4,6 +4,8 @@ const { clear } = require("./dataBase");
 
 module.exports = defineConfig({
   e2e: {
+    viewportHeight: 1100,
+    viewportWidth: 1320,
     baseUrl: 'http://localhost:3000',
     setupNodeEvents(on, config) {
       on("task", {
@@ -12,7 +14,7 @@ module.exports = defineConfig({
           let userName = faker.name.firstName() + `${randomNumber}`
           return {
             username: userName.toLowerCase(),
-            email: 'test'+`${randomNumber}`+'@mail.com',
+            email: 'test'+`${randomNumber}`+'@gmail.com',
             password: '12345Qwert!',
           };
         },
