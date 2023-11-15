@@ -44,6 +44,7 @@ describe('Settings page', () => {
 
     settingsPage.typeEmail(newEmail);
     settingsPage.clickUpdateSettingsBtn();
+    settingsPage.assertEmailField(newEmail);
     homePage.assertHeaderContainUsername(user.username);
   });
 
