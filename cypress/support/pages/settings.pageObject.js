@@ -15,7 +15,7 @@ class SettingsUserAccount extends PageObject{
   }
 
   assertNewEmail(newemail) {
-    cy.getByDataCy('settings-email').should('contain', newemail);
+    cy.getByDataCy('settings-email').should('have.value', newemail);
   }
 
   fillUserBioField(bio) {

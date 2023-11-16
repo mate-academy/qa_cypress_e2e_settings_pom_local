@@ -21,8 +21,7 @@ const testData = {
 
 
 describe('Settings page', () => {
-  // before(() => {})
-
+  
   beforeEach(() => {
     cy.task('db:clear');
     cy.task('generateUser').then((generateUser) => {
@@ -46,10 +45,11 @@ describe('Settings page', () => {
   });
 
   it('should provide an ability to update an email', () => {
-    settings.fillEmailField(user.email);
+    settings.fillEmailField(testData.newEmail);
     settings.clickOnUpdateSettingsBtn();
+    
     cy.visit('/settings');
-    // settings.assertNewEmail(user.email);
+    settings.assertNewEmail(testData.newEmail.toLowerCase());
   });
 
   it('should provide an ability to update password', () => {
