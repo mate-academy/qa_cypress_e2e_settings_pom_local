@@ -53,7 +53,7 @@ describe('Settings page', () => {
     settingsPage.visit();
     settingsPage.fillEmailField(newEmail);
     settingsPage.clickUpdateBtn();
-    homePage.assertHeaderContainUsername(user.username);
+    settingsPage.assertEmailField(newEmail);
   });
 
   it('should provide an ability to update password', () => {

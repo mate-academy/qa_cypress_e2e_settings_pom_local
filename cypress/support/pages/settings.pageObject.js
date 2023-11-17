@@ -54,6 +54,9 @@ class SettingsPageObject extends PageObject {
   clickOnLogOutBtn() {
     this.logOutBtn.click();
   }
+  assertEmailField(email) {
+    this.emailField.should('have.value', email);
+  }
 }
 
 export default SettingsPageObject;
