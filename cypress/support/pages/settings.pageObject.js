@@ -51,7 +51,7 @@ class SettingsPageObject extends PageObject {
     this.logoutButton.click();
   }
 
-  assertEditVewEmail(email) {
+  assertNewEmail(email) {
     this.emailField.should('have.value', email);
   }
 }

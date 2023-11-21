@@ -26,9 +26,7 @@ describe('Settings page', () => {
 
   beforeEach(() => {
     cy.task('db:clear');
-    signUpPage.visit();
     cy.login(user.username, user.email, user.password);
-    homePage.visit();
     settingsPage.visit();
   });
 
@@ -55,7 +53,7 @@ describe('Settings page', () => {
     settingsPage.typeEmail(newEmail);
     settingsPage.clickOnSubmitButton();
     profilePage.clickOnSettingsLink();
-    settingsPage.assertEditVewEmail(newEmail);
+    settingsPage.assertNewEmail(newEmail);
   });
 
   it('should provide an ability to update password', () => {
