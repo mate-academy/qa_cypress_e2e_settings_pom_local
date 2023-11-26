@@ -20,7 +20,6 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": false,
-    "suppressImplicitAnyIndexErrors": true,
     "incremental": true
   },
   "exclude": ["node_modules"],
