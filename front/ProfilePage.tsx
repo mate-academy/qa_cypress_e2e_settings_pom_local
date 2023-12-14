@@ -56,7 +56,7 @@ const ProfileHoc = (tab) => {
                     className="user-img"
                   />
                   <h4>{username}</h4>
-                  <p>{bio}</p>
+                  <p data-cy="user-bio">{bio}</p>
                   <EditProfileButton isCurrentUser={isCurrentUser} />
                   <FollowUserButtonContext.Provider
                     value={{ following, setFollowing }}
