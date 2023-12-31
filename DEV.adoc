@@ -31,7 +31,7 @@ If you make any changes to the code, at least code under `/pages` for sure, you 
 
 Running `next build` is one very important test of the code, as it builds many of the most important pages of the website, and runs checks such as TypeScript type checking. You should basically run it after every single commit that touches the frontend.
 
-If you look into what `npm run start-dev` does in the `package.json`, you will see the following environment variables, which are custom to this project and not defined by Next.js itself:
+If you look into what `npm run start-dev` does in the `package.json`, you will see the following environment variables, which are custom to this project and not defined by Next.jnpm s itself:
 
 * `NEXT_PUBLIC_NODE_ENV=development`: sets everything to be development by default.
 +

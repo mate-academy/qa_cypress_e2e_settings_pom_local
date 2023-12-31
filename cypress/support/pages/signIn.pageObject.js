@@ -11,7 +11,7 @@ class SignInPageObject extends PageObject {
     return cy.getByDataCy('password-sign-in');
   }
 
-  get signInBtn() {
+  get signInButton() {
     return cy.getByDataCy('sign-in-btn');
   }
 
@@ -23,8 +23,8 @@ class SignInPageObject extends PageObject {
     this.passwordField.type(password);
   }
 
-  clickSignInBtn() {
-    this.signInBtn.click();
+  clickSignInButton() {
+    this.signInButton.click();
   }
 }
 

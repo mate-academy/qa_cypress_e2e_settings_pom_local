@@ -38,9 +38,7 @@ const Settings = () => {
               <h1 className="text-xs-center">{title}</h1>
               <SettingsForm />
               <hr />
-              <button className="btn btn-outline-danger" onClick={handleLogout}>
-                Or click here to logout.
-              </button>
+              <button className="btn btn-outline-danger" data-cy="logout-button">Or click here to logout.</button>
             </div>
           </div>
         </div>

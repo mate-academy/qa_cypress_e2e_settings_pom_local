@@ -21,7 +21,8 @@
     "sourceMap": true,
     "strict": false,
     "suppressImplicitAnyIndexErrors": true,
-    "incremental": true
+    "incremental": true,
+    "ignoreDeprecations": "5.0",
   },
   "exclude": ["node_modules"],
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "cypress/support/commands.js", "cypress/support/commands.js", "cypress/support/e2e.js", "cypress/support/e2e.js", "cypress.config.js", "cypress.config.js"]
