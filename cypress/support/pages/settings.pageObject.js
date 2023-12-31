@@ -13,7 +13,7 @@ class SettingsPageObject extends PageObject {
     }
 
     get bioField() {
-        return cy.getByDataCy('Bio');
+      return cy.getByDataCy('Bio');
     }
 
     get emailField() {
@@ -21,27 +21,27 @@ class SettingsPageObject extends PageObject {
     }
 
     get passwordField() {
-        return cy.getByDataCy('New-password');
+      return cy.getByDataCy('New-password');
     }
 
     get updateBtn() {
-        return cy.getByDataCy('Update-btn');
-      }
+      return cy.getByDataCy('Update-btn');
+    }
 
     typeUrl(userInfo) {
       this.urlField.type(userInfo);
     }
 
     typeUsername(userInfo) {
-        this.usernameField.type(`${userInfo}`);
+      this.usernameField.type(userInfo);
     }
 
     typeBio(userInfo) {
-        this.bioField.type(userInfo);
+      this.bioField.type(userInfo);
     }
 
     typeEmail(userInfo) {
-    this.emailField.type(userInfo);
+      this.emailField.type(userInfo);
     }
 
     typePassword(userInfo) {
@@ -50,6 +50,10 @@ class SettingsPageObject extends PageObject {
 
     clickUpdateBtn() {
       this.updateBtn.click();
+    }
+
+    clickLogOutBtn() {
+      cy.get('button').contains('Or click here to logout.').click();
     }
   }
 
