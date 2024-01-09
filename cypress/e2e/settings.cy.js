@@ -32,10 +32,10 @@ describe('Settings page', () => {
   });
 
   it('should provide an ability to update bio', () => {
-    settingsPage.typeBio('test1');
+    settingsPage.typeBio(user.bio);
     settingsPage.clickOnTheUpdateBtn();
     settingsPage.visit();
-    settingsPage.assertBioFieldUpdated('test1');
+    settingsPage.assertBioFieldUpdated(user.bio);
   });
 
   it('should provide an ability to update an email', () => {

@@ -17,7 +17,8 @@ module.exports = defineConfig({
             password: '12345Qwert!',
             newUsername: newUserName.toLowerCase(),
             newEmail: 'new'+`${randomNumber}`+'@mail.com',
-            newPassword: 'Qwerty123456!'
+            newPassword: 'Qwerty123456!',
+            bio: faker.lorem.words()
           };
         },
         generateArticle() {
