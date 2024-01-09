@@ -19,7 +19,7 @@ describe('Settings page', () => {
     settingsPage.visit();
     settingsPage.typeNewUsername(user.newUsername);
     settingsPage.clickOnUpdateSettingsButton();
-    settingsPage.usernameField.should('have.value', user.newUsername);
+    settingsPage.assertNewUsername(user.newUsername);
   });
 
   it('should provide an ability to update bio', () => {
@@ -27,7 +27,7 @@ describe('Settings page', () => {
     settingsPage.visit();
     settingsPage.typeNewBio(user.bio);
     settingsPage.clickOnUpdateSettingsButton();
-    settingsPage.bioTextarea.should('have.value', user.bio);
+    settingsPage.assertNewBio(user.bio);
   });
 
   it('should provide an ability to update an email', () => {
@@ -35,8 +35,7 @@ describe('Settings page', () => {
     settingsPage.visit();
     settingsPage.typeNewEmail(user.newEmail);
     settingsPage.clickOnUpdateSettingsButton();
-    settingsPage.emailField.should('have.value', user.newEmail);
-
+    settingsPage.assertNewEmail(user.newEmail);
   });
 
   it('should provide an ability to update password', () => {
@@ -44,7 +43,7 @@ describe('Settings page', () => {
     settingsPage.visit();
     settingsPage.typeNewPassword(user.newPassword);
     settingsPage.clickOnUpdateSettingsButton();
-    settingsPage.passwordField.should('have.value', user.newPassword);
+    settingsPage.assertNewPassword(user.newPassword);
   });
 
   it('should provide an ability to log out', () => {

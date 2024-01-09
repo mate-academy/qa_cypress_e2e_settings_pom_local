@@ -11,6 +11,10 @@ export class SettingsPageObject extends PageObject {
         this.usernameField.clear().type(newUsername);
     }
 
+    assertNewUsername(value) {
+        this.usernameField.should('have.value', value);
+    }
+
     get updateSettingsButton() {
         return cy.getByDataCy('update-settings-button');
     }
@@ -27,6 +31,10 @@ export class SettingsPageObject extends PageObject {
         this.bioTextarea.clear().type(newBio);
     }
 
+    assertNewBio(value) {
+        this.bioTextarea.should('have.value', value);
+    }
+
     get emailField() {
         return cy.getByDataCy('user-email');
     }
@@ -35,12 +43,20 @@ export class SettingsPageObject extends PageObject {
         this.emailField.clear().type(newEmail);
     }
 
+    assertNewEmail(value) {
+        this.emailField.should('have.value', value);
+    }
+
     get passwordField() {
         return cy.getByDataCy('user-password');
     }
 
     typeNewPassword(newPassword) {
         this.passwordField.clear().type(newPassword);
+    }
+
+    assertNewPassword(value) {
+        this.passwordField.should('have.value', value);
     }
 
     get logoutButton() {
