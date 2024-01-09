@@ -27,6 +27,14 @@ class SettingsPageObject extends PageObject {
     this.usernameField.clear().type(username);
   }
 
+  isUpdated(value) {
+    this.usernameField.should('have.value', value);
+  }
+
+  isUpdated2(value, filedName) {
+    this[filedName].should('have.value', value);
+  }
+
   typeBio(bio) {
     this.bioField.type(bio);
   }
