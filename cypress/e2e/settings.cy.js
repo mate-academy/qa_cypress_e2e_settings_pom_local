@@ -22,49 +22,43 @@ describe('Settings page', () => {
   it('should provide an ability to update username', () => {
     cy.login(user.email, user.username, user.password);
     settingPageObject.visit();
-    settingPageObject.userNameField.clear().type(user.username);
-
+    settingsPage.typeNewUsername(user.newUsername);
     settingPageObject.updateSettingButton;
-    settingPageObject.assertUserInfo(user.username);
+    settingsPage.usernameField.should('have.value', user.newUsername);
 });
 
-  it('should provide an ability to update bio', () => {
-    const bio = 'my new bio';
+it('should provide an ability to update bio', () => {
     cy.login(user.email, user.username, user.password);
     settingPageObject.visit();
-    settingPageObject.bioField.clear().type(bio);
+    settingPageObject.bioField.type(user.bio);
     settingPageObject.updateSettingButton;
-    settingPageObject.assertBio(bio);
+    settingsPage.bioField.should('have.value', user.bio);
   });
 
   it('should provide an ability to update an email', () => {
     cy.login(user.email, user.username, user.password);
     settingPageObject.visit();
-     const email = 'test@test.com';
-    settingPageObject.emailField.clear().type(email);
+    settingPageObject.emailField.clear().type(user.newEmail);
     settingPageObject.updateSettingButton;
-    settingPageObject.assertUserEmail(email);
+    settingsPage.emailField.should('have.value', user.newEmail);
   });
 
-  it('should provide an ability to update password', () => {
-    const email = user.email;
-     const login = user.username;
-
+it('should provide an ability to update password', () => {
     cy.login(user.email, user.username, user.password);
     settingPageObject.visit();
-    const pass = user.password;
-    settingPageObject.passwordField.clear().type(pass);
+    settingPageObject.passwordField.clear().type(user.newPassword);
     settingPageObject.updateSettingButton;
-    //cy.login(user.email, user.username, pass);
-  });
+  settingsPage.passwordField.should('have.value', user.newPassword);
+   });
 
-  it('should provide an ability to log out', () => {
+    it('should provide an ability to log out', () => {
     cy.login(user.email, user.username, user.password);
-    const bio = user.bio;
     settingPageObject.visit();
     cy.getByDataCy('logout-button').click();
-    //cy.login(user.email, user.username, user.password);
-    //settingPageObject.visit();
-    //settingPageObject.assertBio(bio);
-  });
+     settingsPage.clickOnLogoutButton();
+      settingsPage.assertUserLoggedOut();
+   });
 });
+
+
+
