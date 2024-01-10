@@ -37,11 +37,10 @@ assertBio(bio) {
   .contains(bio);
 }
 
-assertPassword(pass) {
-}
+assertUserLoggedOut() {
+        cy.get('.nav-link').should('contain', 'Sign in')
+    }
 
-assertUserEmail(email) {
-}
 
 
 
