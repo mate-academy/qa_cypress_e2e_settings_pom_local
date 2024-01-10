@@ -1,6 +1,6 @@
 import PageObject from '../PageObject';
 
-class HomePageObject extends PageObject {
+export class HomePageObject extends PageObject {
   url = '/#/';
 
   get usernameLink() {
@@ -10,6 +10,11 @@ class HomePageObject extends PageObject {
   assertHeaderContainUsername(username) {
     this.usernameLink
       .should('contain', username);
+  }
+
+  assertHeaderNotContainUsername(username) {
+    this.usernameLink
+      .not('contain', username);
   }
 }
 
