@@ -33,16 +33,17 @@ describe('Settings page', () => {
   });
 
   it('should provide an ability to update username', () => {
-    settingsPage.userNameField.clear().type(newUserName);
-    settingsPage.updateSettingsButton.click();
+    settingsPage.fillTheUserNameField(newUserName);
+    settingsPage.clickUpdateSettingsButton();
+
 
     homePage.assertHeaderContainUsername(newUserName);
     profilePage.assertProfileContainUsername(newUserName);
   });
 
   it('should provide an ability to update bio', () => {
-    settingsPage.bioField.type(newUserBio);
-    settingsPage.updateSettingsButton.click();
+    settingsPage.fillTheBioField(newUserBio);
+    settingsPage.clickUpdateSettingsButton();
 
     settingsPage.visit();
 
@@ -50,9 +51,9 @@ describe('Settings page', () => {
   });
 
   it('should provide an ability to update an email', () => {
-    settingsPage.settingsEmailField.clear().type(newUserEmail);
+    settingsPage.fillTheSettingsEmailField(newUserEmail);
 
-    settingsPage.updateSettingsButton.click();
+    settingsPage.clickUpdateSettingsButton();
 
     settingsPage.visit();
 
@@ -61,8 +62,8 @@ describe('Settings page', () => {
   });
 
   it('should provide an ability to update password', () => {
-    settingsPage.passwordlField.type(newUserPassword);
-    settingsPage.updateSettingsButton.click();
+    settingsPage.fillThePasswordlField(newUserPassword);
+    settingsPage.clickUpdateSettingsButton();
 
     cy.clearCookies();
 
@@ -77,7 +78,7 @@ describe('Settings page', () => {
   });
 
   it('should provide an ability to log out', () => {
-    settingsPage.logOutButton.click();
+    settingsPage.clicklogOutButton();
 
     homePage.assertsignInLinkOnTheHome();
   });

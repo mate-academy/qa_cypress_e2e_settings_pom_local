@@ -36,6 +36,30 @@ class SettingsPageObject extends PageObject {
     this.settingsEmailField
     .should('have.value', settingsUserEmail);
   }
+
+  fillTheUserNameField(newUserName) {
+    this.userNameField.clear().type(newUserName);
+  }
+
+  fillTheBioField(newUserBio) {
+    this.bioField.type(newUserBio);
+  }
+
+  fillTheSettingsEmailField(newUserEmail) {
+    this.settingsEmailField.clear().type(newUserEmail);
+  }
+
+  fillThePasswordlField(newUserPassword) {
+    this.passwordlField.type(newUserPassword);
+  }
+
+  clickUpdateSettingsButton() {
+    this.updateSettingsButton.click();
+  }
+
+  clicklogOutButton() {
+    this.logOutButton.click();
+  }
 }
 
 export default SettingsPageObject;
