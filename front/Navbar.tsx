@@ -16,7 +16,8 @@ const Navbar = () => {
   const { setPage, setTab } = React.useContext(AppContext)
   const clickHandler = () => resetIndexState(setPage, setTab, loggedInUser)
   return (
-    <nav className="navbar navbar-light">
+    <nav className="navbar navbar-light"
+    data-cy="nav-bar">
       <div className="container">
         <CustomLink
           href={routes.home()}
