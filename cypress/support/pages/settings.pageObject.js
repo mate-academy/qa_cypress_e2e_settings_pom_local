@@ -27,15 +27,19 @@ class SettingsPageObject extends PageObject {
     this.usernameField.clear().type(username);
   }
 
+  valueUsername(value) {
+    this.usernameField.should('have.value', value);
+  }
+
   isUpdatedBio(value) {
     this.bioField.should('have.value', value);
   }
 
   isUpdEmail(value) {
-    this.emailField.type(value);
+    this.emailField.should('have.value', value);
   }
 
-  isUpdPassword(value) {
+  fillThePasswordField(value) {
     this.passwordField.type(value);
   }
 

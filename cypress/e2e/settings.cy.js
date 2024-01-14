@@ -3,18 +3,19 @@
 const faker = require('faker');
 import { it } from 'mocha';
 import SettingsPageObject from '../support/pages/settings.pageObject';
+
 describe('Settings page', () => {
   const settingsPage = new SettingsPageObject();
   let user;
 
   const newUserName = faker.name.firstName().toLowerCase();
   const newUserBio = faker.random.word().toLowerCase();
-  const newUserEmail = `${newUserName}`+'@mail.com';
+  const newUserEmail = `${newUserName}@mail.com`;
   const newUserPassword = 'test1234';
 
   before(() => {
     cy.task('db:clear');
-
+    // Additional setup if needed
   });
 
   beforeEach(() => {
@@ -32,8 +33,7 @@ describe('Settings page', () => {
     settingsPage.typeUsername(newUserName);
     settingsPage.clickUpdateBtn();
     cy.reload();
-    // settingsPage.isUpdated(newUserName); 
-    settingsPage.typeUsername(newUserName);
+    settingsPage.valueUsername(newUserName);
   });
 
   it('should provide an ability to update bio', () => {
@@ -56,7 +56,7 @@ describe('Settings page', () => {
     cy.clearAllCookies();
     cy.login(user.email,user.username,newUserPassword);
     settingsPage.visit();
-    settingsPage.isUpdPassword(user.email);
+    settingsPage.valueUsername(user.username);
   });
 
 });
