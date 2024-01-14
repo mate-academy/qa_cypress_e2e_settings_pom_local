@@ -1,14 +1,15 @@
 import PageObject from '../PageObject';
 
 class ProfilePageObject extends PageObject {
-  url = '/profile/';
+ 
 
-  get userInfoBanner () {
-    return cy.getByDataCy('user-info');
+  get profileInfo() {
+    return cy.getByDataCy('profile-info');
   }
 
-  assertUserInfo (info) {
-    this.userInfoBanner.should('contain', info);
+  assertUserInfo(newBio) {
+    this.profileInfo.should('contain',newBio);
   }
 }
+
 export default ProfilePageObject;

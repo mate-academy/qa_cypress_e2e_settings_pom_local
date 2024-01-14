@@ -3,77 +3,41 @@ import PageObject from '../PageObject';
 class SettingsPageObject extends PageObject {
   url = '/settings';
 
-  get profilePictureField() {
-    return cy.getByDataCy('profile-picture-field');
-  }
-
   get usernameField() {
-    return cy.getByDataCy('username-field');
+    return cy.getByDataCy('username-settings');
   }
-
-  get bioField() {
-    return cy.getByDataCy('bio-field');
-  }
-
-  get emailField() {
-    return cy.getByDataCy('email-field');
-  }
-
   get passwordField() {
-    return cy.getByDataCy('password-field');
+    return cy.getByDataCy('password-settings');
   }
-
-  get profileLink() {
-    return cy.getByDataCy('profile-link');
+  get bioField() {
+    return cy.getByDataCy('bio-settings');
   }
-  get settingsLink() {
-    return cy.getByDataCy('settings-link');
+  get emailField() {
+    return cy.getByDataCy('email-settings');
   }
-
-  goToSettings(link) {
-    this.settingsLink.type(link).click();
+  
+  fillEmptyUsernameField(newUsername) {
+    this.usernameField.clear().type(newUsername);
   }
-  fillAvatarField(url) {
-    this.profilePictureField.type(url);
+  fillPasswordField(newPassword) {
+    this.passwordField.clear().type(newPassword);
   }
-
-  fillEmptyUsernameField(username) {
-    this.usernameField.clear();
-    this.usernameField.type(username);
+  fillBioField(newBio) {
+    this.bioField.clear().type(newBio);
   }
-
-  fillBioField(bio) {
-    this.bioField.type(bio);
+  fillEmptyEmailField(newEmail) {
+    this.emailField.clear().type(newEmail);
   }
-
-  fillEmptyEmailField(email) {
-    this.emailField.clear();
-    this.emailField.type(email);
+  clickUpdateBtn(){
+    cy.getByDataCy('update-settings-btn')
+      .click();
   }
-
-  fillPasswordField(password) {
-    this.passwordField.type(password);
+  assertNewEmail(newEmail) {
+    this.emailField.should('contain',newEmail);
   }
-
-  clickOnButton(buttonName) {
-    cy.getByDataCy(buttonName).click();
+  clickLogOutBtn(){
+    cy.getByDataCy('log-out-btn').click();
   }
-
-  assertUpdUsername(newUsername) {
-    this.profileLink.should('contain.text', newUsername);
-  }
-
-  checkUrlEndPoint(urlEndpoint) {
-    cy.url().should('include', urlEndpoint);
-  }
-
-  assertEmail(email) {
-    this.emailField.should('have.value', email);
-  }
-
-  assertNewPassword(value) {
-    this.passwordField.should('have.value', value);
-  }
-
 }
+
 export default SettingsPageObject;
