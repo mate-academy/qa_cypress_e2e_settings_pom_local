@@ -50,6 +50,18 @@ class SettingsPageObject extends PageObject {
   assertMail(value) {
     this.emailField.should('have.value', value);
   }
+
+  clearUserName() {
+    this.userNameField.clear();
+  }
+
+  clearUserEmail() {
+    this.emailField.clear();
+  }
+
+  clearUserPassword() {
+    this.passwordField.clear();
+  }
 }
 
 export default SettingsPageObject;

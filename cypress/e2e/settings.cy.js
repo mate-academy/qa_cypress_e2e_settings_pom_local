@@ -32,7 +32,7 @@ describe('Settings page', () => {
   });
 
   it('should provide an ability to update username', () => {
-    settingsPage.userNameField.clear();
+    settingsPage.clearUserName();
     settingsPage.typeUserName('new' + user.username);
     settingsPage.clickUpdateSettings();
     homePage.assertHeaderContainUsername('new' + user.username);
@@ -46,7 +46,7 @@ describe('Settings page', () => {
   });
 
   it('should provide an ability to update an email', () => {
-    settingsPage.emailField.clear();
+    settingsPage.clearUserEmail();
     settingsPage.typeEmail('new' + user.email);
     settingsPage.clickUpdateSettings();
     settingsPage.visit();
@@ -55,7 +55,7 @@ describe('Settings page', () => {
 
   it('should provide an ability to update password', () => {
     const newPassword = 'new' + user.password;
-    settingsPage.passwordField.clear();
+    settingsPage.clearUserPassword();
     settingsPage.typePassword(newPassword);
     settingsPage.clickUpdateSettings();
 
