@@ -7,20 +7,40 @@ class SettingsPageObject extends PageObject {
         return cy.getByDataCy('user-name-settings');
     }
 
+    fillUsernameField(fillUsername){
+        this.usernameField.clear().type(fillUsername);
+    }
+
     get bioField(){
         return cy.getByDataCy('user-short-bio');
+    }
+
+    typeInBioField(typeInBio){
+        this.bioField.clear().type(typeInBio);
     }
 
     get emailField(){
         return cy.getByDataCy('user-email');
     }
 
+    typeInEmailField(typeEmail){
+        this.emailField.clear().type(typeEmail);
+    }
+
     get passwordField(){
         return cy.getByDataCy('user-newpassword');
     }
 
+    typeInPasswordField(typePassword){
+        this.passwordField.type(typePassword);
+    }
+
     get updateBtn(){
         return cy.getByDataCy('update-button');
+    }
+
+    clickUpdateBtn(clickBtn){
+        this.updateBtn.click(clickBtn);
     }
 
     get logoutBtn(){
@@ -39,11 +59,11 @@ class SettingsPageObject extends PageObject {
         return cy.getByDataCy('edit-btn').click(editBtn);
     }
 
-    emailFieldIsUpdate(updateEmail){
+    emailFieldIsUpdated(updateEmail){
         this.emailField.should('contain.value', updateEmail);
     }
 
-    passwordFieldIsUpdate(updatePassw){
+    passwordFieldIsUpdated(updatePassw){
         this.passwordField.should('contain.value', updatePassw);
     }
 
@@ -51,7 +71,7 @@ class SettingsPageObject extends PageObject {
         return cy.getByDataCy('logout-btn')
     }
 
-    clickOnLogOutbtn(logout){
+    clickOnLogOutBtn(logout){
         this.logOutBtn.click()
     }
 
