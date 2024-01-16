@@ -46,7 +46,7 @@ const ProfileHoc = (tab) => {
     return (
       <>
         <div className="profile-page">
-          <div className="user-info">
+          <div className="user-info" data-cy="user-info">
             <div className="container">
               <div className="row">
                 <div className="col-xs-12 col-md-10 offset-md-1">
@@ -75,10 +75,7 @@ const ProfileHoc = (tab) => {
                     <li className="nav-item">
                       <CustomLink
                         href={routes.userView(encodeURIComponent(username))}
-                        className={`nav-link${
-                          tab === 'my-posts' ? ' active' : ''
-                        }`}
-                      >
+                        className={`nav-link${tab === 'my-posts' ? ' active' : ''}`} children={''}                      >
                         My Posts
                       </CustomLink>
                     </li>
@@ -87,10 +84,7 @@ const ProfileHoc = (tab) => {
                         href={routes.userViewLikes(
                           encodeURIComponent(username)
                         )}
-                        className={`nav-link${
-                          tab === 'favorites' ? ' active' : ''
-                        }`}
-                      >
+                        className={`nav-link${tab === 'favorites' ? ' active' : ''}`} children={''}                      >
                         Favorited Posts
                       </CustomLink>
                     </li>

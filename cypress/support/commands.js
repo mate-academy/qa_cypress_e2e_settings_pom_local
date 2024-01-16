@@ -26,31 +26,39 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 //
 
+const faker = require('faker');
+
 Cypress.Commands.add('getByDataCy', (selector) => {
   cy.get(`[data-cy^="${selector}"]`);
 });
 
-Cypress.Commands.add('register', (email = 'riot@qa.team', username = 'riot', password = '12345Qwert!') => {
+Cypress.Commands.add('register',
+(email = 'natabob179@qa.team', username = 'nata123',
+ password = '12345Qwert!') => {
   cy.request('POST', '/api/users', {
     user: {
-      email,
-      username,
-      password
+      email: faker.internet.email(),
+      username: faker.name.firstName(),
+      password: 'blabla123!'
     }
   });
 });
 
-Cypress.Commands.add('login', (email = 'riot@qa.team', username = 'riot', password = '12345Qwert!') => {
+Cypress.Commands.add('login',
+(email = 'blablabla1290@qa.team', 
+username = 'blalala', password = '12345Qwert!') => {
   cy.request('POST', '/api/users', {
     user: {
-      email,
-      username,
-      password
+      email: faker.internet.email(),
+      username: faker.name.firstName(),
+      password: 'blabla123!nata'
     }
-  }).then(response => {
+  }).then((response) => {
     const user = {
       bio: response.body.user.bio,
-      effectiveImage: "https://static.productionready.io/images/smiley-cyrus.jpg",
+      // eslint-disable-next-line max-len
+      effectiveImage: 
+      'https://static.productionready.io/images/smiley-cyrus.jpg',
       email: response.body.user.email,
       image: response.body.user.image,
       token: response.body.user.token,
