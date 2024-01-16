@@ -1,4 +1,4 @@
-import { defineConfig } from "cypress";
+const { defineConfig } = require("cypress");
 const faker = require("faker");
 const { clear } = require("./dataBase");
 
@@ -10,10 +10,18 @@ module.exports = defineConfig({
         generateUser() {
           let randomNumber = Math.ceil(Math.random(1000) * 1000);
           let userName = faker.name.firstName() + `${randomNumber}`
+          let newUserName = faker.name.firstName() + `${randomNumber}`
+          
           return {
             username: userName.toLowerCase(),
             email: 'test'+`${randomNumber}`+'@mail.com',
             password: '12345Qwert!',
+            updateUsername: newUserName.toLowerCase(),
+            updateEmail: 'update'+`${randomNumber}`+'@mail.com',
+            bio: faker.lorem.lines(),
+            updatePassword: 'Qwerty!1',
+
+
           };
         },
         generateArticle() {

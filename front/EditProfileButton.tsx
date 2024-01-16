@@ -11,10 +11,9 @@ interface EditProfileButtonProps {
 const EditProfileButton = ({ isCurrentUser }: EditProfileButtonProps) => (
   <Maybe test={isCurrentUser}>
     <CustomLink
-      href={routes.userEdit()}
-      className="btn btn-sm btn-outline-secondary action-btn"
-    >
-      <i className="ion-gear-a" /> Edit Profile Settings
+      href={routes.userEdit()}      
+      className="btn btn-sm btn-outline-secondary  action-btn">
+      <i data-cy="edit-btn" className="ion-gear-a" /> Edit Profile Settings
     </CustomLink>
   </Maybe>
 )
