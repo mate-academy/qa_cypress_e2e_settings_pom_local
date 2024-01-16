@@ -7,10 +7,16 @@ class HomePageObject extends PageObject {
     return cy.getByDataCy('profile-link');
   }
 
+  assertUserIsLoggedOut() {
+    this.usernameLink.should('not.exist');
+  }
+
   assertHeaderContainUsername(username) {
     this.usernameLink
       .should('contain', username);
   }
+
+
 }
 
 export default HomePageObject;

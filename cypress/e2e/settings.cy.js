@@ -5,11 +5,13 @@ import SignInPageObject from '../support/pages/signIn.pageObject';
 import HomePageObject from '../support/pages/home.pageObject';
 import SettingsPageObject from '../support/pages/settings.pageObject';
 import { sign } from 'crypto';
+import ProfilePajeObject from '../support/pages/profile.pageObject';
 const { faker } = require('@faker-js/faker');
 
 const homePage = new HomePageObject();
 const signInPage = new SignInPageObject();
 const settingsPage = new SettingsPageObject();
+const profilePage = new ProfilePajeObject();
 
 describe('Settings page', () => {
   let user;
@@ -40,14 +42,14 @@ describe('Settings page', () => {
     settingsPage.typeUsername(testData.username);
     settingsPage.clickOnButton('update');
 
-    cy.getByDataCy('profile-link').should('have.text', testData.username);
+    homePage.assertHeaderContainUsername(testData.username);
   });
 
   it('should provide an ability to update bio', () => {
     settingsPage.typeBio(testData.bio);
     settingsPage.clickOnButton('update');
 
-    cy.getByDataCy('user-bio').should('have.text', testData.bio);
+    profilePage.assertBio(testData.bio);
   });
 
   it('should provide an ability to update an email', () => {
@@ -75,6 +77,6 @@ describe('Settings page', () => {
   it('should provide an ability to log out', () => {
     settingsPage.clickOnButton('logout');
 
-    homePage.usernameLink.should('not.exist');
+    homePage.assertUserIsLoggedOut();
   });
 });
