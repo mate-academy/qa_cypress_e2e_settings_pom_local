@@ -53,7 +53,7 @@ fillEmptyEmailField(email) {
 }
 
 fillPasswordField(password) {
-  this.passwordField.type(password);
+  this.passwordField.clear().type(password);
 }
 
 clickOnButton(buttonName) {
@@ -74,6 +74,18 @@ assertUpdPassword(newUserPassword) {
 
 checkUrlEndPoint(urlEndpoint) {
   cy.url().should('include', urlEndpoint);
+}
+
+assertNewPassword(value) {
+  this.passwordField.should('have.value', value);
+}
+
+typeEmail(email) {
+  this.emailField.clear().type(email);
+}
+
+typePassword(password) {
+  this.passwordField.type(password);
 }
 
 }

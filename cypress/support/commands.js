@@ -45,7 +45,8 @@ Cypress.Commands.add('register',
 });
 
 Cypress.Commands.add('login',
-(email = 'riot@qa.team', username = 'riot', password = '12345Qwert!') => {
+(email = 'blablabla1290@qa.team', 
+username = 'blalala', password = '12345Qwert!') => {
   cy.request('POST', '/api/users', {
     user: {
       email: faker.internet.email(),

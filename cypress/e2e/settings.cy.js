@@ -6,9 +6,13 @@ const faker = require('faker');
 
 import SettingsPageObject from '../support/pages/settings.pageObject';
 import ProfilePageObject from '../support/pages/profile.pageObject';
+import SignInPageObject from '../support/pages/signIn.pageObject';
+import HomePageObject from '../support/pages/home.pageObject';
 
 const settingsPage = new SettingsPageObject();
 const profilePage = new ProfilePageObject();
+const signInPage = new SignInPageObject();
+//const homePage = new HomePageObject();
 
 describe('Settings page', () => {
 
@@ -36,7 +40,6 @@ describe('Settings page', () => {
     settingsPage.fillEmptyUsernameField(newUserName);
     settingsPage.clickOnButton('update-settings-button');
     settingsPage.assertUpdUsername(newUserName);
-    cy.log('Username updated successfully.');
   });
   
 
@@ -52,10 +55,16 @@ describe('Settings page', () => {
     settingsPage.assertUpdEmail(newUserEmail);
   });
 
-  it('should provide an ability to update password', () => {
+  it.only('should provide an ability to update password', () => {
+    settingsPage.typeEmail(user.email);
     settingsPage.fillPasswordField(newUserPassword);
     settingsPage.clickOnButton('update-settings-button');
-    settingsPage.assertUpdPassword(newUserPassword);
+    cy.clearCookies();
+    signInPage.visit();
+    signInPage.typeEmail(user.email);
+    signInPage.typePassword(newUserPassword);
+    signInPage.clickSignInBtn();
+    homePage.assertHeaderContainUsername(user.username);
   });
 
   it('should provide an ability to log out', () => {
