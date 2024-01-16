@@ -29,8 +29,8 @@ describe('Settings page', () => {
 
   it('should provide an ability to update username', () => {
    
-    settingsPage.usernameField.clear().type(user.updateUsername);
-    settingsPage.updateBtn.click();
+    settingsPage.fillUsernameField(user.updateUsername);
+    settingsPage.clickUpdateBtn();
     homePage.assertHeaderContainUsername(user.updateUsername);
 
   });
@@ -39,18 +39,18 @@ describe('Settings page', () => {
 
 
   
-    settingsPage.bioField.clear().type(user.bio);
-    settingsPage.updateBtn.click();
+    settingsPage.typeInBioField(user.bio);
+    settingsPage.clickUpdateBtn();
     settingsPage.userBioTextExist(user.bio);
   
   });
 
   it('should provide an ability to update an email', () => {
 
-    settingsPage.emailField.clear().type(user.updateEmail);
-    settingsPage.updateBtn.click();
+    settingsPage.typeInEmailField(user.updateEmail);
+    settingsPage.clickUpdateBtn();
     settingsPage.clickOnEditBtn();
-    settingsPage.emailFieldIsUpdate(user.updateEmail);
+    settingsPage.emailFieldIsUpdated(user.updateEmail);
 
     cy.clearAllCookies().reload();
     signInPage.visit();
@@ -65,8 +65,8 @@ describe('Settings page', () => {
 
   it('should provide an ability to update password', () => {
 
-    settingsPage.passwordField.type(user.updatePassword);
-    settingsPage.updateBtn.click();
+    settingsPage.typeInPasswordField(user.updatePassword);
+    settingsPage.clickUpdateBtn();
 
     cy.clearAllCookies().reload();
 
@@ -80,7 +80,7 @@ describe('Settings page', () => {
 
   it('should provide an ability to log out', () => {
 
-    settingsPage.clickOnLogOutbtn();
+    settingsPage.clickOnLogOutBtn();
     settingsPage.navbarShouldNotContain(user.username);
    
   });
