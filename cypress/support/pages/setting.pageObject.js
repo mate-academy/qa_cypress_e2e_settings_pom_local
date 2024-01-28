@@ -36,6 +36,7 @@ class SettingsPageObject extends PageObject {
   }
 
   typeNewUsername(newUsername) {
+    this.usernameField.clear();
     this.usernameField.type(newUsername);
   }
 
@@ -44,6 +45,7 @@ class SettingsPageObject extends PageObject {
   }
 
   typeNewEmail(newEmail) {
+    this.emailField.clear();
     this.emailField.type(newEmail);
   }
 

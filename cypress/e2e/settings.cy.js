@@ -24,7 +24,6 @@ describe('Settings page', () => {
   it('should provide an ability to update username', () => {
     signInPage.login(user.email, user.username, user.password);
     settingsPage.visit();
-    settingsPage.usernameField.clear();
     settingsPage.typeNewUsername(user.newUsername);
     settingsPage.clickUpdateSettingBtn();
 
@@ -45,7 +44,6 @@ describe('Settings page', () => {
   it('should provide an ability to update an email', () => {
     signInPage.login(user.email, user.username, user.password);
     settingsPage.visit();
-    settingsPage.emailField.clear();
     settingsPage.typeNewEmail(user.newEmail);
     settingsPage.clickUpdateSettingBtn();
     // eslint-disable-next-line cypress/no-unnecessary-waiting
