@@ -26,6 +26,10 @@ class SignInPageObject extends PageObject {
   clickSignInBtn() {
     this.signInBtn.click();
   }
+
+  login(email, username, password) {
+    cy.login(email, username, password);
+  }
 }
 
 export default SignInPageObject;
