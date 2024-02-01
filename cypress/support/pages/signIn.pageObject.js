@@ -1,30 +1,25 @@
-import PageObject from '../PageObject';
+import PageObject from './PageObject';
 
 class SignInPageObject extends PageObject {
-  url = '/user/login';
-
-  get emailField() {
-    return cy.getByDataCy('email-sign-in');
-  }
-
-  get passwordField() {
-    return cy.getByDataCy('password-sign-in');
-  }
-
-  get signInBtn() {
-    return cy.getByDataCy('sign-in-btn');
+  constructor() {
+    super();
+    this.url = '/login';
   }
 
   typeEmail(email) {
-    this.emailField.type(email);
+    cy.get('[data-cy=email-input]').type(email);
   }
 
   typePassword(password) {
-    this.passwordField.type(password);
+    cy.get('[data-cy=password-input]').type(password);
   }
 
   clickSignInBtn() {
-    this.signInBtn.click();
+    cy.get('[data-cy=sign-in-btn]').click();
+  }
+
+  assertErrorMessage(message) {
+    cy.get('[data-cy=error-message]').should('be.visible').and('contain', message);
   }
 }
 
