@@ -1,55 +1,34 @@
-/// <reference types="cypress" />
-/// <reference types="../support" />
+/// <reference types='cypress' />
+/// <reference types='../support' />
 
-import SettingsPageObject from '../support/pages/settings.pageObject';
+import SignInPageObject from '../support/pages/signIn.pageObject';
+import homePageObject from '../support/pages/home.pageObject';
 
-const settingsPage = new SettingsPageObject();
+const signInPage = new SignInPageObject();
+const homePage = new homePageObject();
 
-describe('Settings page', () => {
+describe('Sign In page', () => {
   let user;
 
   before(() => {
     cy.task('db:clear');
-    cy.task('generateUser').then((generatedUser) => {
-      user = generatedUser;
+    cy.task('generateUser').then((generateUser) => {
+      user = generateUser;
     });
   });
+  
+  it('should provide an ability to log in with existing credentials', () => {
+    signInPage.visit();
+    cy.register(user.email, user.username, user.password);
 
-  beforeEach(() => {
-    settingsPage.visit();
-    cy.login(user.email, user.password);
+    signInPage.typeEmail(user.email);
+    signInPage.typePassword(user.password);
+    signInPage.clickSignInBtn();
+
+    homePage.assertHeaderContainUsername(user.username);
   });
 
-  it('should provide an ability to update username', () => {
-    const newUsername = cy.faker.name.firstName();
-    settingsPage.typeUsername(newUsername);
-    settingsPage.clickUpdateSettingsBtn();
-    settingsPage.assertUsernameIsUpdated(newUsername);
-  });
+  it('should not provide an ability to log in with wrong credentials', () => {
 
-  it('should provide an ability to update bio', () => {
-    const newBio = cy.faker.lorem.sentence();
-    settingsPage.typeBio(newBio);
-    settingsPage.clickUpdateSettingsBtn();
-    settingsPage.assertBioIsUpdated(newBio);
-  });
-
-  it('should provide an ability to update an email', () => {
-    const newEmail = cy.faker.internet.email();
-    settingsPage.typeEmail(newEmail);
-    settingsPage.clickUpdateSettingsBtn();
-    settingsPage.assertEmailIsUpdated(newEmail);
-  });
-
-  it('should provide an ability to update password', () => {
-    const newPassword = cy.faker.internet.password();
-    settingsPage.typePassword(newPassword);
-    settingsPage.clickUpdateSettingsBtn();
-    settingsPage.assertPasswordIsUpdated(newPassword);
-  });
-
-  it('should provide an ability to log out', () => {
-    settingsPage.clickLogoutBtn();
-    settingsPage.assertUserIsLoggedOut();
   });
 });
