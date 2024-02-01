@@ -3,6 +3,7 @@
 
 import SignInPageObject from '../support/pages/signIn.pageObject';
 import homePageObject from '../support/pages/home.pageObject';
+import { faker } from '@faker-js/faker';
 
 const signInPage = new SignInPageObject();
 const homePage = new homePageObject();
@@ -12,15 +13,20 @@ describe('Sign In page', () => {
 
   before(() => {
     cy.task('db:clear');
-    cy.task('generateUser').then((generateUser) => {
-      user = generateUser;
-    });
+  });
+
+  beforeEach(() => {
+    user = {
+      email: faker.internet.email(),
+      username: faker.internet.userName(),
+      password: faker.internet.password()
+    };
+    // Предполагается, что у вас есть функция cy.register для регистрации пользователя
+    cy.register(user.email, user.username, user.password);
+    signInPage.visit();
   });
   
   it('should provide an ability to log in with existing credentials', () => {
-    signInPage.visit();
-    cy.register(user.email, user.username, user.password);
-
     signInPage.typeEmail(user.email);
     signInPage.typePassword(user.password);
     signInPage.clickSignInBtn();
@@ -29,6 +35,13 @@ describe('Sign In page', () => {
   });
 
   it('should not provide an ability to log in with wrong credentials', () => {
+    const wrongEmail = `wrong_${user.email}`;
+    const wrongPassword = `wrong_${user.password}`;
 
+    signInPage.typeEmail(wrongEmail);
+    signInPage.typePassword(wrongPassword);
+    signInPage.clickSignInBtn();
+
+    cy.get('[data-cy=error-message]').should('be.visible').and('contain', 'Invalid credentials');
   });
 });
