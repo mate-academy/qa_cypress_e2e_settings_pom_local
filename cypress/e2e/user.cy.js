@@ -1,12 +1,25 @@
 /// <reference types="cypress" />
 /// <reference types="../support" />
 
-describe('Follow/unfollow button', () => {
-  before(() => {
+import UserPageObject from '../support/pages/UserPageObject';
 
+const userPage = new UserPageObject();
+
+describe('Follow/unfollow button', () => {
+  beforeEach(() => {
+    cy.task('db:clear');
+    cy.createUserAndSignIn();
+
+    userPage.visit('/user-profile');
   });
 
-  it.skip('should provide an ability to follow the another user', () => {
+  it('should provide an ability to follow another user', () => {
+    userPage.followUser();
+    userPage.assertFollowed();
+  });
 
+  it('should provide an ability to unfollow the followed user', () => {
+    userPage.unfollowUser();
+    userPage.assertUnfollowed();
   });
 });
