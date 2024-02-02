@@ -1,29 +1,36 @@
 import PageObject from './PageObject';
 
-class SettingsPageObject extends PageObject {
-  constructor() {
-    super();
-    this.url = '/settings';
+class SettingsPageObject {
+  get usernameField() {
+    return cy.get('[data-cy="username-field"]');
   }
 
-  updateUsername(username) {
-    cy.get('[data-cy=username]').clear().type(username);
-    cy.get('[data-cy=submit]').click();
+  get emailField() {
+    return cy.get('[data-cy="email-field"]');
   }
 
-  updateBio(bio) {
-    cy.get('[data-cy=bio]').clear().type(bio);
-    cy.get('[data-cy=submit]').click();
+  get newPasswordField() {
+    return cy.get('[data-cy="new-password-field"]');
   }
 
-  updateEmail(email) {
-    cy.get('[data-cy=email]').clear().type(email);
-    cy.get('[data-cy=submit]').click();
+  get submitButton() {
+    return cy.get('[data-cy="submit-btn"]');
   }
 
-  updatePassword(password) {
-    cy.get('[data-cy=password]').clear().type(password);
-    cy.get('[data-cy=submit]').click();
+  typeUsername(username) {
+    this.usernameField.clear().type(username);
+  }
+
+  typeEmail(email) {
+    this.emailField.clear().type(email);
+  }
+
+  typeNewPassword(newPassword) {
+    this.newPasswordField.clear().type(newPassword);
+  }
+
+  submit() {
+    this.submitButton.click();
   }
 }
 
