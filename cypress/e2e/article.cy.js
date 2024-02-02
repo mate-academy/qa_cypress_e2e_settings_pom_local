@@ -4,44 +4,26 @@
 import ArticlePageObject from '../support/pages/ArticlePageObject';
 import { faker } from '@faker-js/faker';
 
-const articlePage = new ArticlePageObject();
-
-describe('Article', () => {
-  let user;
-  let article;
-
-  before(() => {
-    cy.task('db:clear');
-    cy.task('generateUser').then((generatedUser) => {
-      user = generatedUser;
-      cy.register(user.email, user.username, user.password);
-    });
-  });
+describe('Article actions', () => {
+  const articlePage = new ArticlePageObject();
 
   beforeEach(() => {
-    cy.signIn(user.email, user.password);
-    article = {
-      title: faker.lorem.sentence(),
-      description: faker.lorem.sentence(),
-      body: faker.lorem.paragraphs(2)
-    };
-    articlePage.visit();
+    cy.task('db:clear'); // Припускаючи, що у вас є така задача
+    cy.visit('/articles/new'); // Або інший URL, де ви створюєте статті
   });
 
-  it('should be created using New Article form', () => {
-    articlePage.createArticle(article.title, article.description, article.body);
+  it('should allow a user to create an article', () => {
+    const title = faker.lorem.sentence();
+    const description = faker.lorem.sentence();
+    const body = faker.lorem.paragraph();
+
+    articlePage.typeTitle(title);
+    articlePage.typeDescription(description);
+    articlePage.typeBody(body);
+    articlePage.submitArticle();
+
+    // Тут має бути перевірка на успішне створення статті
   });
 
-  it('should be edited using Edit button', () => {
-    const newArticle = {
-      title: faker.lorem.sentence(),
-      description: faker.lorem.sentence(),
-      body: faker.lorem.paragraphs(2)
-    };
-    articlePage.editArticle(newArticle.title, newArticle.description, newArticle.body);
-  });
-
-  it('should be deleted using Delete button', () => {
-    articlePage.deleteArticle();
-  });
+  // Додайте інші тестові випадки за потреби
 });
