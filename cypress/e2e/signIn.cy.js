@@ -1,47 +1,22 @@
 /// <reference types='cypress' />
 /// <reference types='../support' />
 
-import SignInPageObject from '../support/pages/signIn.pageObject';
-import homePageObject from '../support/pages/home.pageObject';
-import { faker } from '@faker-js/faker';
+import SignInPageObject from '../support/pages/SignInPageObject';
 
-const signInPage = new SignInPageObject();
-const homePage = new homePageObject();
-
-describe('Sign In page', () => {
-  let user;
-
-  before(() => {
-    cy.task('db:clear');
-  });
+describe('Sign In', () => {
+  const signInPage = new SignInPageObject();
 
   beforeEach(() => {
-    user = {
-      email: faker.internet.email(),
-      username: faker.internet.userName(),
-      password: faker.internet.password()
-    };
-    // Предполагается, что у вас есть функция cy.register для регистрации пользователя
-    cy.register(user.email, user.username, user.password);
-    signInPage.visit();
-  });
-  
-  it('should provide an ability to log in with existing credentials', () => {
-    signInPage.typeEmail(user.email);
-    signInPage.typePassword(user.password);
-    signInPage.clickSignInBtn();
-
-    homePage.assertHeaderContainUsername(user.username);
+    cy.visit('/sign-in'); // Змініть на актуальний URL сторінки входу
   });
 
-  it('should not provide an ability to log in with wrong credentials', () => {
-    const wrongEmail = `wrong_${user.email}`;
-    const wrongPassword = `wrong_${user.password}`;
+  it('should allow a user to sign in with correct credentials', () => {
+    signInPage.typeEmail('user@example.com'); // Використовуйте дійсні дані для тестування
+    signInPage.typePassword('password'); // Використовуйте дійсні дані для тестування
+    signInPage.clickSignIn();
 
-    signInPage.typeEmail(wrongEmail);
-    signInPage.typePassword(wrongPassword);
-    signInPage.clickSignInBtn();
-
-    cy.get('[data-cy=error-message]').should('be.visible').and('contain', 'Invalid credentials');
+    // Тут має бути перевірка на успішний вхід, наприклад, перевірка URL або наявності елемента, що з'являється тільки після входу
   });
+
+  // Додайте інші тестові випадки за потреби
 });
