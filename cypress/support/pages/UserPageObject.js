@@ -1,20 +1,29 @@
 import PageObject from './PageObject';
 
-class UserPageObject {
-  get followButton() {
-    return cy.get('[data-cy="follow-btn"]');
+import PageObject from './PageObject';
+
+class UserPageObject extends PageObject {
+  constructor() {
+    super();
+    // Предположим, что URL профиля пользователя может быть динамическим или статическим
+    // Если динамический, то метод visit() можно переопределить для приема username
   }
 
-  get unfollowButton() {
-    return cy.get('[data-cy="unfollow-btn"]');
+  followUser() {
+    cy.get('[data-cy=follow-btn]').click();
   }
 
-  clickFollow() {
-    this.followButton.click();
+  unfollowUser() {
+    cy.get('[data-cy=unfollow-btn]').click();
   }
 
-  clickUnfollow() {
-    this.unfollowButton.click();
+  // Методы для проверки состояния кнопки подписки, если необходимо
+  assertFollowed() {
+    cy.get('[data-cy=follow-btn]').should('contain', 'Unfollow');
+  }
+
+  assertUnfollowed() {
+    cy.get('[data-cy=follow-btn]').should('contain', 'Follow');
   }
 }
 
