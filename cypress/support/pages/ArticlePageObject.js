@@ -1,28 +1,36 @@
 import PageObject from './PageObject';
 
-class ArticlePageObject extends PageObject {
-  constructor() {
-    super();
-    this.url = '/articles/new';
+class ArticlePageObject {
+  get titleField() {
+    return cy.get('[data-cy=title]');
   }
 
-  createArticle(title, description, body) {
-    cy.get('[data-cy=title]').type(title);
-    cy.get('[data-cy=description]').type(description);
-    cy.get('[data-cy=body]').type(body);
-    cy.get('[data-cy=submit]').click();
+  get descriptionField() {
+    return cy.get('[data-cy=description]');
   }
 
-  editArticle(title, description, body) {
-    cy.get('[data-cy=edit]').click();
-    cy.get('[data-cy=title]').clear().type(title);
-    cy.get('[data-cy=description]').clear().type(description);
-    cy.get('[data-cy=body]').clear().type(body);
-    cy.get('[data-cy=submit]').click();
+  get bodyField() {
+    return cy.get('[data-cy=body]');
   }
 
-  deleteArticle() {
-    cy.get('[data-cy=delete]').click();
+  get submitButton() {
+    return cy.get('[data-cy=submit]');
+  }
+
+  typeTitle(title) {
+    this.titleField.clear().type(title);
+  }
+
+  typeDescription(description) {
+    this.descriptionField.clear().type(description);
+  }
+
+  typeBody(body) {
+    this.bodyField.clear().type(body);
+  }
+
+  submitArticle() {
+    this.submitButton.click();
   }
 }
 
