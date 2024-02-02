@@ -1,24 +1,20 @@
 import PageObject from './PageObject';
 
-class UserPageObject extends PageObject {
-  constructor() {
-    super();
+class UserPageObject {
+  get followButton() {
+    return cy.get('[data-cy="follow-btn"]');
   }
 
-  followUser() {
-    cy.get('[data-cy=follow-btn]').click();
+  get unfollowButton() {
+    return cy.get('[data-cy="unfollow-btn"]');
   }
 
-  unfollowUser() {
-    cy.get('[data-cy=unfollow-btn]').click();
+  clickFollow() {
+    this.followButton.click();
   }
 
-  assertFollowed() {
-    cy.get('[data-cy=follow-btn]').should('contain', 'Unfollow');
-  }
-
-  assertUnfollowed() {
-    cy.get('[data-cy=follow-btn]').should('contain', 'Follow');
+  clickUnfollow() {
+    this.unfollowButton.click();
   }
 }
 
