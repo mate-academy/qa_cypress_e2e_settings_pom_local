@@ -1,30 +1,36 @@
 import PageObject from './PageObject';
 
-class SignUpPageObject extends PageObject {
-  constructor() {
-    super();
-    this.url = '/register'; // Подставьте актуальный URL страницы регистрации
+class SignUpPageObject {
+  get emailField() {
+    return cy.get('[data-cy="email-field"]');
   }
 
-  typeUsername(username) {
-    cy.get('[data-cy=username-input]').type(username);
+  get usernameField() {
+    return cy.get('[data-cy="username-field"]');
+  }
+
+  get passwordField() {
+    return cy.get('[data-cy="password-field"]');
+  }
+
+  get signUpButton() {
+    return cy.get('[data-cy="sign-up-btn"]');
   }
 
   typeEmail(email) {
-    cy.get('[data-cy=email-input]').type(email);
+    this.emailField.clear().type(email);
+  }
+
+  typeUsername(username) {
+    this.usernameField.clear().type(username);
   }
 
   typePassword(password) {
-    cy.get('[data-cy=password-input]').type(password);
+    this.passwordField.clear().type(password);
   }
 
-  clickSignUpButton() {
-    cy.get('[data-cy=sign-up-btn]').click();
-  }
-
-  // Метод для проверки успешной регистрации, например, переход на главную страницу
-  assertSuccessfulSignUp() {
-    cy.url().should('include', '/'); // Проверьте URL, который подтверждает успешную регистрацию
+  clickSignUp() {
+    this.signUpButton.click();
   }
 }
 
