@@ -1,27 +1,22 @@
 /// <reference types="cypress" />
 /// <reference types="../support" />
 
-import UserPageObject from '../support/pages/UserPageObject';
-
-describe('User actions', () => {
-  const userPage = new UserPageObject();
+describe('Follow/unfollow button', () => {
+  before(() => {
+    cy.task('db:clear');
+    cy.task('createUser', { username: 'userToFollow', email: 'follow@example.com', password: 'password' });
+    cy.login('yourEmail@example.com', 'yourPassword');
+  });
 
   beforeEach(() => {
-    cy.login(); // Припускаємо, що у вас є команда для входу користувача
-    cy.visit('/user-profile'); // Змініть на актуальний URL сторінки профілю користувача
+    cy.visit('/profile/userToFollow');
   });
 
-  it('should allow a user to follow another user', () => {
-    userPage.clickFollow();
+  it('should provide an ability to follow the another user', () => {
+    cy.get('[data-cy="follow-button"]').click();
+    cy.get('[data-cy="follow-button"]').should('contain', 'Unfollow');
 
-    // Тут має бути перевірка на успішну підписку, наприклад, перевірка тексту кнопки на "Unfollow"
+    cy.get('[data-cy="follow-button"]').click();
+    cy.get('[data-cy="follow-button"]').should('contain', 'Follow');
   });
-
-  it('should allow a user to unfollow another user', () => {
-    userPage.clickUnfollow();
-
-    // Тут має бути перевірка на успішну відписку, наприклад, перевірка тексту кнопки на "Follow"
-  });
-
-  // Додайте інші тестові випадки за потреби
 });
