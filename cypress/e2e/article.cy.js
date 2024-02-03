@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 /// <reference types="../support" />
 import UserSettingsPage from '../support/pages/UserSettingsPage';
-import { generateUserData } from '../support/utils';
+import { faker } from '@faker-js/faker';
 
 describe('User Settings', () => {
   const userSettingsPage = new UserSettingsPage();
@@ -16,34 +16,34 @@ describe('User Settings', () => {
   });
 
   it('should allow updating bio', () => {
-    const { bio } = generateUserData();
-    userSettingsPage.typeBio(bio);
+    const newBio = faker.lorem.sentence();
+    userSettingsPage.typeBio(newBio);
     userSettingsPage.clickUpdate();
-    cy.contains('Profile updated successfully');
-    userSettingsPage.bioField.should('have.value', bio);
+    cy.contains('Your settings have been updated').should('be.visible');
+    userSettingsPage.bioField.should('have.value', newBio);
   });
 
   it('should allow updating username', () => {
-    const { username } = generateUserData();
-    userSettingsPage.typeUsername(username);
+    const newUsername = faker.internet.userName();
+    userSettingsPage.typeUsername(newUsername);
     userSettingsPage.clickUpdate();
-    cy.contains('Profile updated successfully');
-    userSettingsPage.usernameField.should('have.value', username);
+    cy.contains('Your settings have been updated').should('be.visible');
+    userSettingsPage.usernameField.should('have.value', newUsername);
   });
 
   it('should allow updating email', () => {
-    const { email } = generateUserData();
-    userSettingsPage.typeEmail(email);
+    const newEmail = faker.internet.email();
+    userSettingsPage.typeEmail(newEmail);
     userSettingsPage.clickUpdate();
-    cy.contains('Profile updated successfully');
-    userSettingsPage.emailField.should('have.value', email);
+    cy.contains('Your settings have been updated').should('be.visible');
+    userSettingsPage.emailField.should('have.value', newEmail);
   });
 
   it('should allow updating password', () => {
-    const { password } = generateUserData();
-    userSettingsPage.typePassword(password);
+    const newPassword = faker.internet.password();
+    userSettingsPage.typePassword(newPassword);
     userSettingsPage.clickUpdate();
-    cy.contains('Profile updated successfully');
-    // Assuming the password field gets cleared or there's a confirmation message
+    cy.contains('Your settings have been updated').should('be.visible');
+    userSettingsPage.passwordField.should('not.have.value', newPassword);
   });
 });
