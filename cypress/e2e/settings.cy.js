@@ -1,34 +1,48 @@
 /// <reference types="cypress" />
 /// <reference types="../support" />
+import UserSettingsPage from '../support/pages/UserSettingsPage';
+import { generateUserData } from '../support/utils';
 
-import SettingsPageObject from '../support/pages/SettingsPageObject';
-import { faker } from '@faker-js/faker';
+describe('User Settings', () => {
+  const userSettingsPage = new UserSettingsPage();
 
-describe('Settings', () => {
-  const settingsPage = new SettingsPageObject();
+  before(() => {
+    cy.task('db:clear');
+  });
 
   beforeEach(() => {
-    cy.login(); // Припускаємо, що у вас є команда для входу користувача
-    cy.visit('/settings'); // Змініть на актуальний URL сторінки налаштувань
+    cy.login();
+    userSettingsPage.visit('/settings');
   });
 
-  it('should provide the ability to update Username', () => {
-    const newUsername = faker.internet.userName();
-    settingsPage.typeUsername(newUsername);
-    settingsPage.submit();
-
-    cy.get('.success-message').should('contain', 'Your settings have been successfully updated');
-    settingsPage.usernameField.should('have.value', newUsername);
+  it('should allow updating bio', () => {
+    const { bio } = generateUserData();
+    userSettingsPage.typeBio(bio);
+    userSettingsPage.clickUpdate();
+    cy.contains('Profile updated successfully').should('be.visible');
+    userSettingsPage.bioField.should('have.value', bio);
   });
 
-  it('should provide the ability to update Email', () => {
-    const newEmail = faker.internet.email();
-    settingsPage.typeEmail(newEmail);
-    settingsPage.submit();
-
-    cy.get('.success-message').should('contain', 'Your settings have been successfully updated');
-    settingsPage.emailField.should('have.value', newEmail);
+  it('should allow updating username', () => {
+    const { username } = generateUserData();
+    userSettingsPage.typeUsername(username);
+    userSettingsPage.clickUpdate();
+    cy.contains('Profile updated successfully').should('be.visible');
+    userSettingsPage.usernameField.should('have.value', username);
   });
 
-  // Додайте інші тестові випадки за потреби
+  it('should allow updating email', () => {
+    const { email } = generateUserData();
+    userSettingsPage.typeEmail(email);
+    userSettingsPage.clickUpdate();
+    cy.contains('Profile updated successfully').should('be.visible');
+    userSettingsPage.emailField.should('have.value', email);
+  });
+
+  it('should allow updating password', () => {
+    const { password } = generateUserData();
+    userSettingsPage.typePassword(password);
+    userSettingsPage.clickUpdate();
+    cy.contains('Profile updated successfully').should('be.visible');
+  });
 });
