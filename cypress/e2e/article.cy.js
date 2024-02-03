@@ -11,7 +11,7 @@ describe('User Settings', () => {
   });
 
   beforeEach(() => {
-    cy.login(); // Assuming you have a custom command for logging in
+    cy.login();
     userSettingsPage.visit('/settings');
   });
 
