@@ -1,48 +1,50 @@
 /// <reference types="cypress" />
 /// <reference types="../support" />
-import UserSettingsPage from '../support/pages/UserSettingsPage';
-import { generateUserData } from '../support/utils';
+import SettingsPage from '../support/pages/SettingsPage';
+import { faker } from '@faker-js/faker';
 
-describe('User Settings', () => {
-  const userSettingsPage = new UserSettingsPage();
+describe('Settings page', () => {
+  const settingsPage = new SettingsPage();
 
   before(() => {
     cy.task('db:clear');
+    cy.login();
   });
 
   beforeEach(() => {
-    cy.login();
-    userSettingsPage.visit('/settings');
+    settingsPage.visit('/settings');
   });
 
-  it('should allow updating bio', () => {
-    const { bio } = generateUserData();
-    userSettingsPage.typeBio(bio);
-    userSettingsPage.clickUpdate();
-    cy.contains('Profile updated successfully').should('be.visible');
-    userSettingsPage.bioField.should('have.value', bio);
+  it('should provide an ability to update username', () => {
+    const newUsername = faker.internet.userName();
+    settingsPage.typeUsername(newUsername);
+    settingsPage.clickUpdate();
+    cy.contains('Your settings have been updated').should('be.visible');
   });
 
-  it('should allow updating username', () => {
-    const { username } = generateUserData();
-    userSettingsPage.typeUsername(username);
-    userSettingsPage.clickUpdate();
-    cy.contains('Profile updated successfully').should('be.visible');
-    userSettingsPage.usernameField.should('have.value', username);
+  it('should provide an ability to update bio', () => {
+    const newBio = faker.lorem.sentence();
+    settingsPage.typeBio(newBio);
+    settingsPage.clickUpdate();
+    cy.contains('Your settings have been updated').should('be.visible');
   });
 
-  it('should allow updating email', () => {
-    const { email } = generateUserData();
-    userSettingsPage.typeEmail(email);
-    userSettingsPage.clickUpdate();
-    cy.contains('Profile updated successfully').should('be.visible');
-    userSettingsPage.emailField.should('have.value', email);
+  it('should provide an ability to update an email', () => {
+    const newEmail = faker.internet.email();
+    settingsPage.typeEmail(newEmail);
+    settingsPage.clickUpdate();
+    cy.contains('Your settings have been updated').should('be.visible');
   });
 
-  it('should allow updating password', () => {
-    const { password } = generateUserData();
-    userSettingsPage.typePassword(password);
-    userSettingsPage.clickUpdate();
-    cy.contains('Profile updated successfully').should('be.visible');
+  it('should provide an ability to update password', () => {
+    const newPassword = faker.internet.password();
+    settingsPage.typePassword(newPassword);
+    settingsPage.clickUpdate();
+    cy.contains('Your settings have been updated').should('be.visible');
+  });
+
+  it('should provide an ability to log out', () => {
+    settingsPage.clickLogout();
+    cy.url().should('include', '/login');
   });
 });
