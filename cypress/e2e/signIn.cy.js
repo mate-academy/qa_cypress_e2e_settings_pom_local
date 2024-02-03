@@ -1,22 +1,44 @@
 /// <reference types='cypress' />
 /// <reference types='../support' />
 
-import SignInPageObject from '../support/pages/SignInPageObject';
+import SignInPageObject from '../support/pages/signIn.pageObject';
+import homePageObject from '../support/pages/home.pageObject';
 
-describe('Sign In', () => {
-  const signInPage = new SignInPageObject();
+const signInPage = new SignInPageObject();
+const homePage = new homePageObject();
+
+describe('Sign In page', () => {
+  let user;
+
+  before(() => {
+    cy.task('db:clear');
+    cy.task('generateUser').then((generatedUser) => {
+      user = generatedUser;
+    });
+  });
 
   beforeEach(() => {
-    cy.visit('/sign-in'); // Змініть на актуальний URL сторінки входу
+    signInPage.visit();
+  });
+  
+  it('should provide an ability to log in with existing credentials', () => {
+    cy.register(user.email, user.username, user.password);
+
+    signInPage.typeEmail(user.email);
+    signInPage.typePassword(user.password);
+    signInPage.clickSignInBtn();
+
+    homePage.assertHeaderContainUsername(user.username);
   });
 
-  it('should allow a user to sign in with correct credentials', () => {
-    signInPage.typeEmail('user@example.com'); // Використовуйте дійсні дані для тестування
-    signInPage.typePassword('password'); // Використовуйте дійсні дані для тестування
-    signInPage.clickSignIn();
+  it('should not provide an ability to log in with wrong credentials', () => {
+    const wrongEmail = `wrong${user.email}`;
+    const wrongPassword = `wrong${user.password}`;
 
-    // Тут має бути перевірка на успішний вхід, наприклад, перевірка URL або наявності елемента, що з'являється тільки після входу
+    signInPage.typeEmail(wrongEmail);
+    signInPage.typePassword(wrongPassword);
+    signInPage.clickSignInBtn();
+
+    signInPage.assertLoginError();
   });
-
-  // Додайте інші тестові випадки за потреби
 });
