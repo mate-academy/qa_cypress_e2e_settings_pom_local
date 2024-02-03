@@ -1,37 +1,45 @@
 import PageObject from './PageObject';
 
-class ArticlePageObject {
-  get titleField() {
-    return cy.get('[data-cy=title]');
+class UserSettingsPage extends PageObject {
+  get bioField() {
+    return cy.get('[data-cy="bio-field"]');
   }
 
-  get descriptionField() {
-    return cy.get('[data-cy=description]');
+  get usernameField() {
+    return cy.get('[data-cy="username-field"]');
   }
 
-  get bodyField() {
-    return cy.get('[data-cy=body]');
+  get emailField() {
+    return cy.get('[data-cy="email-field"]');
   }
 
-  get submitButton() {
-    return cy.get('[data-cy=submit]');
+  get passwordField() {
+    return cy.get('[data-cy="password-field"]');
   }
 
-  typeTitle(title) {
-    this.titleField.clear().type(title);
+  get updateButton() {
+    return cy.get('[data-cy="update-button"]');
   }
 
-  typeDescription(description) {
-    this.descriptionField.clear().type(description);
+  typeBio(bio) {
+    this.bioField.clear().type(bio);
   }
 
-  typeBody(body) {
-    this.bodyField.clear().type(body);
+  typeUsername(username) {
+    this.usernameField.clear().type(username);
   }
 
-  submitArticle() {
-    this.submitButton.click();
+  typeEmail(email) {
+    this.emailField.clear().type(email);
+  }
+
+  typePassword(password) {
+    this.passwordField.clear().type(password);
+  }
+
+  clickUpdate() {
+    this.updateButton.click();
   }
 }
 
-export default ArticlePageObject;
+export default UserSettingsPage;
