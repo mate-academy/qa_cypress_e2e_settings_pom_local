@@ -1,17 +1,12 @@
 import PageObject from './PageObject';
 
-class SettingsPageObject extends PageObject {
-  constructor() {
-    super();
-    this.url = '/settings';
+class SettingsPage extends PageObject {
+  get usernameField() {
+    return cy.get('[data-cy="username-field"]');
   }
 
   get bioField() {
     return cy.get('[data-cy="bio-field"]');
-  }
-
-  get usernameField() {
-    return cy.get('[data-cy="username-field"]');
   }
 
   get emailField() {
@@ -26,31 +21,33 @@ class SettingsPageObject extends PageObject {
     return cy.get('[data-cy="update-button"]');
   }
 
-  typeBio(bio) {
-    this.bioField.clear().type(bio);
-    return this;
+  get logoutButton() {
+    return cy.get('[data-cy="logout-button"]');
   }
 
   typeUsername(username) {
     this.usernameField.clear().type(username);
-    return this;
+  }
+
+  typeBio(bio) {
+    this.bioField.clear().type(bio);
   }
 
   typeEmail(email) {
     this.emailField.clear().type(email);
-    return this;
   }
 
   typePassword(password) {
     this.passwordField.clear().type(password);
-    return this;
   }
 
   clickUpdate() {
     this.updateButton.click();
-    return this;
   }
 
+  clickLogout() {
+    this.logoutButton.click();
+  }
 }
 
-export default SettingsPageObject;
+export default SettingsPage;
