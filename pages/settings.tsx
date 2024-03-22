@@ -35,10 +35,10 @@ const Settings = () => {
         <div className="container page">
           <div className="row">
             <div className="col-md-6 offset-md-3 col-xs-12">
-              <h1 className="text-xs-center">{title}</h1>
+              <h1 className="text-xs-center" data-cy='settings-title'>{title}</h1>
               <SettingsForm />
               <hr />
-              <button className="btn btn-outline-danger" onClick={handleLogout}>
+              <button className="btn btn-outline-danger" data-cy="logout-button" onClick={handleLogout}>
                 Or click here to logout.
               </button>
             </div>

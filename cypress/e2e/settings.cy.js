@@ -1,32 +1,73 @@
 /// <reference types="cypress" />
 /// <reference types="../support" />
+const { faker } = require('@faker-js/faker');
+import HomePageObject from '../support/pages/home.pageObject';
+import SignInPageObject from '../support/pages/signIn.pageObject';
+import SettingsPageObject from '../support/pages/settings.pageObject';
+
+const signInPage = new SignInPageObject();
+const homePage = new HomePageObject();
+const settingsPage = new SettingsPageObject();
 
 describe('Settings page', () => {
-  before(() => {
+  let user;
+  let updatedData;
 
+  before(() => {
+    cy.task('db:clear');
+    cy.task('generateUpdatedSettings').then((generateUpdatedSettings) => {
+      updatedData = generateUpdatedSettings;
+    });
   });
 
   beforeEach(() => {
-
+    cy.task('generateUser').then((generateUser) => {
+      user = generateUser;
+    }).then((user) => {
+      cy.login(user.email, user.username, user.password);
+      settingsPage.visit();
+    });
   });
 
   it('should provide an ability to update username', () => {
-
+    settingsPage.assertSettingsTitle();
+    settingsPage.clearAndTypeUsername(updatedData.newUsername);
+    settingsPage.clickUpdateButton();
+    settingsPage.assertUrl(updatedData.newUsername);
+    settingsPage.assertProfileLink(updatedData.newUsername);
+    settingsPage.assertUsernameTitle(updatedData.newUsername);
   });
 
   it('should provide an ability to update bio', () => {
-
+    settingsPage.clearAndTypeBio(updatedData.newBio);
+    settingsPage.clickUpdateButton();
+    settingsPage.assertUrl(user.username);
+    settingsPage.assertUpdatedBio(updatedData.newBio);
   });
 
   it('should provide an ability to update an email', () => {
-
+    settingsPage.clearAndTypeEmail(updatedData.newEmail);
+    settingsPage.clickUpdateButton();
+    settingsPage.assertUrl(user.username);
+    settingsPage.clickSettingsLink();
+    settingsPage.assertUpdatedEmail(updatedData.newEmail);
   });
 
   it('should provide an ability to update password', () => {
-
+    settingsPage.clearAndTypePassword(updatedData.newPassword);
+    settingsPage.clickUpdateButton();
+    cy.clearCookies();
+    settingsPage.assertTokenIsRemoved();
+    cy.reload();
+    signInPage.visit();
+    signInPage.typeEmail(user.email);
+    signInPage.typePassword(updatedData.newPassword);
+    signInPage.clickSignInBtn();
+    homePage.assertHeaderContainUsername(user.username);
   });
 
   it('should provide an ability to log out', () => {
-
+    settingsPage.clickLogoutButton();
+    settingsPage.assertStartUrl();
   });
 });
