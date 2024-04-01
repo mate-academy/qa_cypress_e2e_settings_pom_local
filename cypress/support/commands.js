@@ -41,7 +41,7 @@ Cypress.Commands.add('register', (email = 'riot@qa.team', username = 'riot', pas
 });
 
 Cypress.Commands.add('login', (email = 'riot@qa.team', username = 'riot', password = '12345Qwert!') => {
-  cy.request('POST', '/api/users', {
+  cy.request('POST', '/api/users/login', {
     user: {
       email,
       username,
@@ -59,4 +59,16 @@ Cypress.Commands.add('login', (email = 'riot@qa.team', username = 'riot', passwo
     window.localStorage.setItem('user', JSON.stringify(user));
     cy.setCookie('auth', response.body.user.token);
   });
+});
+
+Cypress.Commands.add('loginViaUi', (email, password) => {
+  cy.visit('/user/login');
+  cy.getByDataCy('email-sign-in').type(email);
+  cy.getByDataCy('password-sign-in').type(password);
+  cy.getByDataCy('sign-in-btn').click();
+});
+
+Cypress.Commands.add('logout', () => {
+  cy.visit('/settings');
+  cy.getByDataCy('logout-button').click();
 });

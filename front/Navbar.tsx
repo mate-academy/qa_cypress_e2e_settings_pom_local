@@ -16,7 +16,7 @@ const Navbar = () => {
   const { setPage, setTab } = React.useContext(AppContext)
   const clickHandler = () => resetIndexState(setPage, setTab, loggedInUser)
   return (
-    <nav className="navbar navbar-light">
+    <nav data-cy="header" className="navbar navbar-light">
       <div className="container">
         <CustomLink
           href={routes.home()}
@@ -39,7 +39,7 @@ const Navbar = () => {
               </NavLink>
             </NavbarItem>
             <NavbarItem>
-              <NavLink href={routes.userEdit()}>
+              <NavLink dataCy="settings-link" href={routes.userEdit()}>
                 <i className="ion-gear-a" />
                 &nbsp;Settings
               </NavLink>
