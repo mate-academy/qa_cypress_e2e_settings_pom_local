@@ -4,7 +4,7 @@ class SignInPageObject extends PageObject {
   url = '/user/login';
 
   get emailField() {
-    return cy.getByDataCy('email-sign-in');
+    return cy.getByDataCy('email-sign-in', {timeout: 10000});
   }
 
   get passwordField() {
@@ -16,7 +16,7 @@ class SignInPageObject extends PageObject {
   }
 
   typeEmail(email) {
-    this.emailField.type(email);
+    this.emailField.clear().type(email);
   }
 
   typePassword(password) {
