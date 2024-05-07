@@ -58,6 +58,7 @@ const LoginForm = ({ register = false }) => {
               <input
                 className="form-control form-control-lg"
                 type="text"
+                data-cy="username-sign-in"
                 placeholder="Username"
                 value={username}
                 onChange={handleUsernameChange}
