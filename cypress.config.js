@@ -10,10 +10,12 @@ module.exports = defineConfig({
         generateUser() {
           let randomNumber = Math.ceil(Math.random(1000) * 1000);
           let userName = faker.name.firstName() + `${randomNumber}`;
+          let userNameLowercase = userName.toLocaleLowerCase();
           return {
-            username: userName.toLowerCase(),
-            email: 'test'+`${randomNumber}`+'@mail.com',
+            username: userNameLowercase,
+            email: `${userNameLowercase}@mail.com`,
             password: '12345Qwert!',
+            bio: faker.person.bio(),
           };
         },
         generateArticle() {
@@ -21,8 +23,8 @@ module.exports = defineConfig({
             title: faker.lorem.word(),
             description: faker.lorem.words(),
             body: faker.lorem.words(),
-            tag: faker.lorem.word()
-          };;
+            tag: faker.lorem.word(),
+          };
         },
         'db:clear'() {
           clear();
