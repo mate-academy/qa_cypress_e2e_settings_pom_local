@@ -16,6 +16,14 @@ module.exports = defineConfig({
             password: '12345Qwert!',
           };
         },
+        generateUpdateUser() {
+          return {
+            usernameChanged: (faker.person.firstName()),
+            bioChanged: faker.lorem.words(40), 
+            emailChanged: faker.internet.email().toLowerCase(),
+            passwordChanged: faker.internet.password()
+          };
+        },
         generateArticle() {
           return {
             title: faker.lorem.word(),
