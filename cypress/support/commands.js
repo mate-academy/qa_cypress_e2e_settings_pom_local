@@ -1,3 +1,5 @@
+/* eslint-disable quotes */
+/* eslint-disable max-len */
 /// <reference types="cypress" />
 // ***********************************************
 // This example commands.ts shows you how to
@@ -27,7 +29,7 @@
 //
 
 Cypress.Commands.add('getByDataCy', (selector) => {
-  cy.get(`[data-cy^="${selector}"]`);
+  cy.get(`[data-cy="${selector}"]`);
 });
 
 Cypress.Commands.add('register', (email = 'riot@qa.team', username = 'riot', password = '12345Qwert!') => {
@@ -47,7 +49,7 @@ Cypress.Commands.add('login', (email = 'riot@qa.team', username = 'riot', passwo
       username,
       password
     }
-  }).then(response => {
+  }).then((response) => {
     const user = {
       bio: response.body.user.bio,
       effectiveImage: "https://static.productionready.io/images/smiley-cyrus.jpg",
