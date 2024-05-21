@@ -57,3 +57,4 @@ tmp.*
 
 # typescript
 *.tsbuildinfo
+qa_cypress_e2e_settings_pom_local.code-workspace
