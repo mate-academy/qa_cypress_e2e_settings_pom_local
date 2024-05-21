@@ -74,13 +74,14 @@ const SettingsForm = () => {
               placeholder="Username"
               value={userInfo.username}
               onChange={updateState('username')}
+              data-cy='usernameSettings'
             />
           </fieldset>
           <fieldset className="form-group">
             <textarea
               className="form-control form-control-lg"
               rows={8}
-              placeholder="Short bio about you"
+              placeholder="Short bio about you" data-cy="bio"
               value={userInfo.bio}
               onChange={updateState('bio')}
             />
@@ -89,7 +90,7 @@ const SettingsForm = () => {
             <input
               className="form-control form-control-lg"
               type="email"
-              placeholder="Email"
+              placeholder="Email" data-cy="email"
               value={userInfo.email}
               onChange={updateState('email')}
             />
@@ -98,14 +99,14 @@ const SettingsForm = () => {
             <input
               className="form-control form-control-lg"
               type="password"
-              placeholder="New Password"
+              placeholder="New Password" data-cy="password"
               value={userInfo.password}
               onChange={updateState('password')}
               autoComplete="new-password"
             />
           </fieldset>
           <button
-            className="btn btn-lg btn-primary pull-xs-right"
+            className="btn btn-lg btn-primary pull-xs-right" data-cy="updateSettings"
             type="submit"
             disabled={isLoading}
           >
