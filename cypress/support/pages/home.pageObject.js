@@ -13,4 +13,4 @@ class HomePageObject extends PageObject {
   }
 }
 
-export default HomePageObject;
+export const homePageObject = new HomePageObject();
