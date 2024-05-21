@@ -63,6 +63,19 @@ class SettingsPageObject extends PageObject {
     this.usernameLink
       .should('contain', username);
   }
+
+assertUsernameFieldHasValue(username) {
+    this.usernameField.should('have.value', username);
+  }
+
+  assertBioFieldContains(bio) {
+    this.bioField.should('have.value', bio);
+  }
+
+  assertEmailFieldHasValue(email) {
+    this.emailField.should('have.value', email);
+  }
 }
+
 
 export default SettingsPageObject;

@@ -29,14 +29,14 @@ describe('Settings page', () => {
     settingsPage.clickOnUpdateSettingsButton();
     settingsPage.assertHeaderContainUsername(user.username);
     settingsPage.visit();
-    settingsPage.usernameField.should('have.value', user.username);
+    settingsPage.assertUsernameFieldHasValue(user.username);
   });
 
   it('should provide an ability to update bio', () => {
     settingsPage.visit();
     settingsPage.typeBio(user.bio);
     settingsPage.clickOnUpdateSettingsButton();
-    settingsPage.bioField.should('contain', user.bio);
+    settingsPage.assertBioFieldContains(user.bio);
   });
 
   it('should provide an ability to update an email', () => {
@@ -44,7 +44,7 @@ describe('Settings page', () => {
     settingsPage.typeEmail(user.email);
     settingsPage.clickOnUpdateSettingsButton();
     settingsPage.visit();
-    settingsPage.emailField.should('have.value', user.email);
+    settingsPage.assertEmailFieldHasValue(user.email);
   });
 
   it('should provide an ability to update password', () => {
