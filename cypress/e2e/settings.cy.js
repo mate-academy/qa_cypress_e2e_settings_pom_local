@@ -34,7 +34,7 @@ describe('Settings page', () => {
     settings.UsernameInput.clear();
     settings.UsernameInput.type(newData.username);
     settings.UpdateSettingsBtn;
-    settings.AssertUpdatedUsername(newData.username);
+    settings.AssertUpdatedUsername(newData.username.toLowerCase());
   });
 
   it('should provide an ability to update bio', () => {
