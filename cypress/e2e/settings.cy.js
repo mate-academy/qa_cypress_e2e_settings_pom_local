@@ -1,32 +1,77 @@
 /// <reference types="cypress" />
 /// <reference types="../support" />
 
-describe('Settings page', () => {
-  before(() => {
+import { settingsPage } from '../support/pages/settings_pageObject';
+import { homePageObject } from '../support/pages/home.pageObject';
+import { profilePage } from '../support/pages/profile_pageObject';
 
+describe('Settings page', () => {
+  let user;
+  let nextUser;
+  before(() => {
+    cy.task('generateUser').then((generateUser)=>{
+      user = generateUser;
+      return cy.task('generateUpdateData');
+    }).then((generateUpdateData)=>{
+      nextUser = generateUpdateData;
+    });
   });
 
   beforeEach(() => {
-
+    cy.task('db:clear');
+    cy.login(user.email, user.username, user.password);
   });
 
   it('should provide an ability to update username', () => {
 
+    settingsPage.visit();
+    settingsPage.fillUsernameField(nextUser.usernameChanged);
+    settingsPage.clickUpdateButton();
+    homePageObject.assertHeaderContainUsername(nextUser.usernameChanged);
+
   });
 
   it('should provide an ability to update bio', () => {
-
+    settingsPage.visit();
+    settingsPage.fillBioField(nextUser.bioChanged);
+    settingsPage.clickUpdateButton();
+    profilePage.visit(user.username);
+    profilePage.assertProfileContainBio(nextUser.bioChanged);
   });
 
   it('should provide an ability to update an email', () => {
+    settingsPage.visit();
+    settingsPage.fillEmailField(nextUser.emailChanged);
+    settingsPage.clickUpdateButton();
+    settingsPage.visit();
+    settingsPage.assertTheEmailField(nextUser.emailChanged); 
 
+    settingsPage.clickLogoutButton(); 
+    cy.loginAuth(nextUser.emailChanged, user.password);
+    settingsPage.visit();
+    settingsPage.assertTheEmailField(nextUser.emailChanged);
   });
 
   it('should provide an ability to update password', () => {
+    settingsPage.visit();
+    settingsPage.fillPasswordField(nextUser.passwordChanged);
+    settingsPage.clickUpdateButton();
+
+ 
+    settingsPage.clickLogoutButton();
+    cy.loginAuth(user.email, nextUser.passwordChanged);
+    settingsPage.visit();
+    homePageObject.assertHeaderContainUsername(user.username); 
+    
 
   });
 
   it('should provide an ability to log out', () => {
+
+    settingsPage.visit();
+    settingsPage.clickLogoutButton();
+
+    cy.getCookie('auth').should('not.exist');
 
   });
 });
