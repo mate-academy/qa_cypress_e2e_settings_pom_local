@@ -9,11 +9,15 @@ module.exports = defineConfig({
       on('task', {
         generateUser() {
           let randomNumber = Math.ceil(Math.random(1000) * 1000);
-          let userName = faker.name.firstName() + `${randomNumber}`;
+          let userName = faker.person.firstName() + `${randomNumber}`;
           return {
             username: userName.toLowerCase(),
             email: 'test'+`${randomNumber}`+'@mail.com',
             password: '12345Qwert!',
+            randomNumber: randomNumber,
+            bio: faker.lorem.words(25),
+            emailChanged: faker.internet.email().toLowerCase(),
+            passwordChanged: faker.internet.password(),
           };
         },
         generateArticle() {
