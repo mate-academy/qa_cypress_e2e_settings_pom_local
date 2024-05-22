@@ -57,7 +57,7 @@ describe('Settings page', () => {
     homePage.assertHeaderContainUsername(user.username);
   });
 
-  it.only('should provide an ability to log out', () => {
+  it('should provide an ability to log out', () => {
     cy.login(user.email, user.username, user.password);
     settingsPage.visit();
     settingsPage.clickOnLogOut();
