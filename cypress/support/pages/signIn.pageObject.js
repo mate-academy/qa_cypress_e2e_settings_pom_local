@@ -26,6 +26,10 @@ class SignInPageObject extends PageObject {
   clickSignInBtn() {
     this.signInBtn.click();
   }
+
+  visit() {
+    cy.visit('');
+  }
 }
 
 export default SignInPageObject;
