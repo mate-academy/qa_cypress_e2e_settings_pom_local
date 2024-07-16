@@ -4,17 +4,11 @@ module.exports = {
     es2021: true,
     'cypress/globals': true
   },
-  extends: [
-    'plugin:cypress/recommended'
-  ],
   overrides: [
   ],
   parserOptions: {
     ecmaVersion: 'latest'
   },
-  plugins: [
-    'cypress'
-  ],
   rules: {
     semi: ['error', 'always'],
     'space-before-function-paren': 'off',

@@ -10,7 +10,7 @@ const ArticlePreview = ({ article }) => {
   const preview = article
   if (!article) return
   return (
-    <div className="article-preview">
+    <div className="article-preview" data-cy="article-list">
       <div className="article-meta">
         <CustomLink href={routes.userView(preview.author.username)}>
           <CustomImage src={preview.author.image} alt="author profile image" />

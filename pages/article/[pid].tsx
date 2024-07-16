@@ -67,7 +67,7 @@ const ArticlePage = ({ article, comments }: ArticlePageProps) => {
     <>
       <div className="article-page">
         <div className="banner">
-          <div className="container">
+          <div className="container" data-cy="article-title">
             <h1>{article.title}</h1>
             <FavoriteArticleButtonContext.Provider
               value={{
