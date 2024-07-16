@@ -69,6 +69,6 @@ describe('Article', () => {
     articlePage.clickDeleteBtn();
 
     homePage.clickGlobalTab();
-    articlePage.articleWasDeleted(article.title + '123');
+    articlePage.articleWasDeleted();
   });
 });

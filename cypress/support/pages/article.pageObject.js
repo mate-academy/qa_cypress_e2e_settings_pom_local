@@ -74,7 +74,7 @@ class ArticlePageObject extends PageObject {
   }
 
   articleWasDeleted(title) {
-    this.checkList.should('not.contain.text', title);
+    this.checkList.should('contain.text', 'No articles are here... yet.');
   }
 
   checkThatUserFollowToAnotherUser(user) {
