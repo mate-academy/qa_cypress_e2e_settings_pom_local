@@ -109,6 +109,7 @@ export default function ArticleEditorHoc(isnew = false) {
                   <fieldset>
                     <fieldset className="form-group">
                       <input
+                        data-cy="article-title-field"
                         className="form-control form-control-lg"
                         type="text"
                         placeholder="Article Title"
@@ -118,6 +119,7 @@ export default function ArticleEditorHoc(isnew = false) {
                     </fieldset>
                     <fieldset className="form-group">
                       <input
+                        data-cy="article-description"
                         className="form-control"
                         type="text"
                         placeholder="What's this article about?"
@@ -127,6 +129,7 @@ export default function ArticleEditorHoc(isnew = false) {
                     </fieldset>
                     <fieldset className="form-group">
                       <textarea
+                        data-cy="article-text"
                         className="form-control"
                         rows={8}
                         placeholder="Write your article (in markdown)"
@@ -140,6 +143,7 @@ export default function ArticleEditorHoc(isnew = false) {
                       removeTag={removeTag}
                     />
                     <button
+                      data-cy="create-article-btn"
                       className="btn btn-lg pull-xs-right btn-primary"
                       type="button"
                       disabled={isLoading}

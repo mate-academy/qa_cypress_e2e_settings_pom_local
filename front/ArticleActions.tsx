@@ -44,12 +44,14 @@ const ArticleActions = ({ article }) => {
         <span>
           <CustomLink
             href={routes.articleEdit(article.slug)}
+            data-cy="edit-article-btn"
             className="btn btn-outline-secondary btn-sm"
-          >
+            >
             <i className="ion-edit" /> Edit Article
           </CustomLink>
           <button
             className="btn btn-outline-danger btn-sm"
+            data-cy="delete-btn"
             onClick={handleDelete}
           >
             <i className="ion-trash-a" /> Delete Article
