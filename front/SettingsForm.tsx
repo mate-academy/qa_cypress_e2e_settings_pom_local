@@ -72,6 +72,7 @@ const SettingsForm = () => {
               className="form-control form-control-lg"
               type="text"
               placeholder="Username"
+              data-cy="username-field-settings"
               value={userInfo.username}
               onChange={updateState('username')}
             />
@@ -81,6 +82,7 @@ const SettingsForm = () => {
               className="form-control form-control-lg"
               rows={8}
               placeholder="Short bio about you"
+              data-cy="bio"
               value={userInfo.bio}
               onChange={updateState('bio')}
             />
@@ -90,6 +92,7 @@ const SettingsForm = () => {
               className="form-control form-control-lg"
               type="email"
               placeholder="Email"
+              data-cy="email-field-settings"
               value={userInfo.email}
               onChange={updateState('email')}
             />
@@ -99,6 +102,7 @@ const SettingsForm = () => {
               className="form-control form-control-lg"
               type="password"
               placeholder="New Password"
+              data-cy="password-field-settings"
               value={userInfo.password}
               onChange={updateState('password')}
               autoComplete="new-password"
@@ -108,6 +112,7 @@ const SettingsForm = () => {
             className="btn btn-lg btn-primary pull-xs-right"
             type="submit"
             disabled={isLoading}
+            data-cy="update-btn"
           >
             Update Settings
           </button>
