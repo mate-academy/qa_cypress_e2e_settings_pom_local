@@ -30,7 +30,7 @@ describe('Settings page', () => {
     });
 
     // bug
-    it.skip('should provide an ability to update an email', () => {
+    it('should provide an ability to update an email', () => {
         settingsPage.visit();
         settingsPage.emailField.clear().type('riot1@qa.team');
         settingsPage.updateBtn.click();
