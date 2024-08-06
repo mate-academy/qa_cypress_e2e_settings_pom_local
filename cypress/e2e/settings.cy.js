@@ -47,9 +47,9 @@ describe('Settings page', () => {
     userInformation.typeEmail(user.email1);
     userInformation.clickOnUpdateSettingsBtn();
     userInformation.visit();
-    userInformation.verifyBio(user.email1);
+    userInformation.verifyEmail(user.email1);
     userInformation.clickOnLogoutBtn();
-    signInPage.typeEmail('testuser20@gmail.com');
+    signInPage.typeEmail(user.email1);
     signInPage.typePassword(user.password);
     signInPage.clickSignInBtn();
     homePage.visit();
