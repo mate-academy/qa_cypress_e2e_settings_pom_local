@@ -50,6 +50,18 @@ class UserInformationPageObject extends PageObject {
   clickOnLogoutBtn() {
     this.logoutBtn.click();
   }
+
+  verifyUsername(expectedUsername) {
+    this.usernameField.should('have.value', expectedUsername);
+  }
+
+  verifyEmail(expectedEmail) {
+    this.emailField.should('have.value', expectedEmail);
+  }
+
+  verifyBio(expectedBio) {
+    this.bioField.should('have.value', expectedBio);
+  }
 }
 
 export default UserInformationPageObject;

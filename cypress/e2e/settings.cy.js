@@ -25,29 +25,29 @@ describe('Settings page', () => {
     signInPage.typeEmail(user.email);
     signInPage.typePassword(user.password);
     signInPage.clickSignInBtn();
-    homePage.clickOnSettings();
+    userInformation.visit();
 
   });
 
   it('should provide an ability to update username', () => {
     userInformation.typeUsername(user.username1);
     userInformation.clickOnUpdateSettingsBtn();
-    homePage.clickOnSettings();
-    userInformation.usernameField.should('have.value', user.username1);
+    userInformation.visit();
+    userInformation.verifyUsername(user.username1);
   });
 
   it('should provide an ability to update bio', () => {
     userInformation.typeBio(user.bio);
     userInformation.clickOnUpdateSettingsBtn();
-    homePage.clickOnSettings();
-    userInformation.bioField.should('have.value', user.bio);
+    userInformation.visit();
+    userInformation.verifyBio(user.bio);
   });
 
   it('should provide an ability to update an email', () => {
     userInformation.typeEmail(user.email1);
     userInformation.clickOnUpdateSettingsBtn();
-    userInformation.emailField.should('have.value', 'testuser20@gmail.com');
     userInformation.visit();
+    userInformation.verifyBio(user.email1);
     userInformation.clickOnLogoutBtn();
     signInPage.typeEmail('testuser20@gmail.com');
     signInPage.typePassword(user.password);
@@ -59,5 +59,11 @@ describe('Settings page', () => {
   it('should provide an ability to update password', () => {
     userInformation.typeNewPassword(user.password1);
     userInformation.clickOnUpdateSettingsBtn();
+    userInformation.visit();
+    userInformation.clickOnLogoutBtn();
+    signInPage.typeEmail(user.email);
+    signInPage.typePassword(user.password1);
+    signInPage.clickSignInBtn();
+    homePage.assertHeaderContainUsername(user.username);
   });
 });
