@@ -20,18 +20,22 @@ class UserInformationPageObject extends PageObject {
   }
 
   typeUsername(username) {
+    this.usernameField.clear();
     this.usernameField.type(username, { force: true });
   }
 
   typeEmail(email) {
+    this.emailField.clear();
     this.emailField.type(email, { force: true });
   }
 
   typeBio(bio) {
+    this.bioField.clear();
     this.bioField.type(bio, { force: true });
   }
 
   typeNewPassword(newPassword) {
+    this.newPasswordField.clear();
     this.newPasswordField.type(newPassword, { force: true });
   }
 

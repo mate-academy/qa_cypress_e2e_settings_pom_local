@@ -30,7 +30,6 @@ describe('Settings page', () => {
   });
 
   it('should provide an ability to update username', () => {
-    userInformation.usernameField.clear();
     userInformation.typeUsername(user.username1);
     userInformation.clickOnUpdateSettingsBtn();
     homePage.clickOnSettings();
@@ -45,7 +44,6 @@ describe('Settings page', () => {
   });
 
   it('should provide an ability to update an email', () => {
-    userInformation.emailField.clear();
     userInformation.typeEmail(user.email1);
     userInformation.clickOnUpdateSettingsBtn();
     homePage.clickOnSettings();
