@@ -46,8 +46,14 @@ describe('Settings page', () => {
   it('should provide an ability to update an email', () => {
     userInformation.typeEmail(user.email1);
     userInformation.clickOnUpdateSettingsBtn();
-    homePage.clickOnSettings();
-    userInformation.emailField.should('have.value', user.email1);
+    userInformation.emailField.should('have.value', 'testuser20@gmail.com');
+    userInformation.visit();
+    userInformation.clickOnLogoutBtn();
+    signInPage.typeEmail('testuser20@gmail.com');
+    signInPage.typePassword(user.password);
+    signInPage.clickSignInBtn();
+    homePage.visit();
+    homePage.assertHeaderContainUsername(user.username);
   });
 
   it('should provide an ability to update password', () => {

@@ -19,6 +19,10 @@ class UserInformationPageObject extends PageObject {
     return cy.getByDataCy('new-password-field');
   }
 
+  get logoutBtn() {
+    return cy.getByDataCy('logout-btn');
+  }
+
   typeUsername(username) {
     this.usernameField.clear();
     this.usernameField.type(username, { force: true });
@@ -41,6 +45,10 @@ class UserInformationPageObject extends PageObject {
 
   clickOnUpdateSettingsBtn() {
     cy.getByDataCy('update-settings-btn');
+  }
+  
+  clickOnLogoutBtn() {
+    this.logoutBtn.click();
   }
 }
 
