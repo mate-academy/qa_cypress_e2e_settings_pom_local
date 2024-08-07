@@ -65,6 +65,15 @@ describe('Settings page', () => {
     settingsPage.typeEmail(newEmail);
     settingsPage.clickOnUpdateBtn();
     settingsPage.assertEmailUpdated(newEmail);
+
+    const creds = {
+      email: newEmail,
+      password: userData.password
+    };
+
+    settingsPage.clickOnLogoutBtn();
+    cy.login(creds);
+    page.assertHeaderNotContainUsername(userData.username);
   });
 
   it('should provide an ability to update password', () => {
@@ -74,6 +83,15 @@ describe('Settings page', () => {
     settingsPage.typePassword(newPassword);
     settingsPage.clickOnUpdateBtn();
     settingsPage.assertPasswordUpdated(newPassword);
+
+    const creds = {
+      email: userData.email,
+      password: newPassword
+    };
+
+    settingsPage.clickOnLogoutBtn();
+    cy.login(creds);
+    page.assertHeaderNotContainUsername(userData.username);
   });
 
   it('should provide an ability to log out', () => {
