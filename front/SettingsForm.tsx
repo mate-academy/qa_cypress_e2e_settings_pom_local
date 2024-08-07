@@ -70,49 +70,49 @@ const SettingsForm = () => {
           <fieldset className="form-group">
             <input
               className="form-control form-control-lg"
+              data-cy="settings-username"
               type="text"
               placeholder="Username"
-              data-cy="username-field-settings"
               value={userInfo.username}
               onChange={updateState('username')}
             />
           </fieldset>
           <fieldset className="form-group">
             <textarea
+              data-cy="settings-bio"
               className="form-control form-control-lg"
               rows={8}
               placeholder="Short bio about you"
-              data-cy="bio"
               value={userInfo.bio}
               onChange={updateState('bio')}
             />
           </fieldset>
           <fieldset className="form-group">
             <input
+              data-cy="settings-email"
               className="form-control form-control-lg"
               type="email"
               placeholder="Email"
-              data-cy="email-field-settings"
               value={userInfo.email}
               onChange={updateState('email')}
             />
           </fieldset>
           <fieldset className="form-group">
             <input
+              data-cy="settings-password"
               className="form-control form-control-lg"
               type="password"
               placeholder="New Password"
-              data-cy="password-field-settings"
               value={userInfo.password}
               onChange={updateState('password')}
               autoComplete="new-password"
             />
           </fieldset>
           <button
+            data-cy="settings-updateBtn"
             className="btn btn-lg btn-primary pull-xs-right"
             type="submit"
             disabled={isLoading}
-            data-cy="update-btn"
           >
             Update Settings
           </button>
