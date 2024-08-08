@@ -6,6 +6,12 @@ import SettingsFormPage from '../support/pages/settings.form.pageObject';
 const settingPage = new SettingsFormPage();
 
 describe('Settings page', () => {
+  before(() => {
+    cy.task('generateArticle').then((generateArticle) => {
+      bio = generateArticle;
+    });
+  });
+
   let user;
   let userNew;
   let bio;
@@ -25,12 +31,7 @@ describe('Settings page', () => {
     settingPage.clearUsernameField();
     settingPage.typeUsername(userNew.username);
     settingPage.clickUpdateBtn();
-  });
-
-  before(() => {
-    cy.task('generateArticle').then((generateArticle) => {
-      bio = generateArticle;
-    });
+    settingPage.usernameField.should('have.value', userNew.username);
   });
 
   it('should provide an ability to update bio', () => {
@@ -38,6 +39,7 @@ describe('Settings page', () => {
     settingPage.clearBioField();
     settingPage.typeBio(bio.body);
     settingPage.clickUpdateBtn();
+    settingPage.bioField.should('have.value', bio.body);
   });
 
   it('should provide an ability to update an email', () => {
@@ -45,6 +47,7 @@ describe('Settings page', () => {
     settingPage.clearEmailField();
     settingPage.typeEmail(userNew.email);
     settingPage.clickUpdateBtn();
+    settingPage.emailField.should('have.value', userNew.email);
   });
 
   it('should provide an ability to update password', () => {
@@ -52,10 +55,12 @@ describe('Settings page', () => {
     settingPage.clearPasswordField();
     settingPage.typePassword(userNew.password);
     settingPage.clickUpdateBtn();
+    settingPage.passwordField.should('have.value', userNew.password);
   });
 
   it('should provide an ability to log out', () => {
     settingPage.visit();
     settingPage.clickLogoutBtn();
+    cy.contains('.nav-link', 'Sign in').should('exist');
   });
 });
