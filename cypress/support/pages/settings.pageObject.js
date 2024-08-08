@@ -1,38 +1,47 @@
-import PageObject from '../PageObject';
+import PageObject from '../PageObject'
+
+let user
+before(() => {
+  cy.task('generateUser').then((generateUser) => {
+    user = generateUser
+  })
+})
 
 class SetingsPageObject extends PageObject {
   url = 'settings'
-  get userNameField() {
-    return cy.getByDataCy('username-field')
+  userNameFieldType(username) {
+    cy.getByDataCy('username-field').clear().type(username)
   }
-  get bioField() {
-    return cy.getByDataCy('bio')
+  userNameFieldCheck(expectedUsername) {
+    cy.getByDataCy('username-field').should('have.value', expectedUsername)
   }
-  get emailField() {
-    return cy.getByDataCy('emeil-field')
+  bioFieldType(newBio) {
+    cy.getByDataCy('bio').type(newBio)
   }
-  get passwordField() {
-    return cy.getByDataCy('password-field')
+  bioFieldCheck(newBio) {
+    cy.getByDataCy('bio').should('have.value', newBio)
+  }
+  emailFieldType(newEmail) {
+    cy.getByDataCy('emeil-field').clear().type(newEmail)
+  }
+  emailFieldCheck(newEmail) {
+    cy.getByDataCy('emeil-field').should('have.value', newEmail)
+  }
+  passwordFieldType(newPassword) {
+    cy.getByDataCy('password-field').type(newPassword)
+  }
+  profileLinkCheck(username) {
+    cy.getByDataCy('profile-link').should('contain', username)
+  }
+  checkLogOut() {
+    cy.contains('.nav-link', 'Sign in').should('be.visible')
   }
   get btnUpdate() {
-    return cy.getByDataCy('btn-update')
-  }
-  get emailFieldSignIn() {
-    return cy.getByDataCy('email-sign-in')
-  }
-  get passwordFieldSignIn() {
-    return cy.getByDataCy('password-sign-in')
-  }
-  get btnSignIn() {
-    return cy.getByDataCy('sign-in-btn')
-  }
-  get profileLink() {
-    return cy.getByDataCy('profile-link')
+    return cy.getByDataCy('btn-update').click()
   }
   get logOutBtn() {
-    return cy.getByDataCy('btnDanger')
+    return cy.getByDataCy('btnDanger').click()
   }
 }
 
-
-export default SetingsPageObject;
+export default SetingsPageObject
