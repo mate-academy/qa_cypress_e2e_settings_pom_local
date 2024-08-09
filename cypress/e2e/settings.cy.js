@@ -19,8 +19,6 @@ describe('Settings page', () => {
     cy.task('generateUserData').then((newUserData) => {
       updatedUserData = newUserData;
     });
-
-    page.visit('/user/register');
   });
 
   beforeEach(() => {
@@ -73,7 +71,7 @@ describe('Settings page', () => {
 
     settingsPage.clickOnLogoutBtn();
     cy.login(creds);
-    page.assertHeaderNotContainUsername(userData.username);
+    page.assertHeaderContainUsername(userData.username);
   });
 
   it('should provide an ability to update password', () => {
@@ -91,7 +89,7 @@ describe('Settings page', () => {
 
     settingsPage.clickOnLogoutBtn();
     cy.login(creds);
-    page.assertHeaderNotContainUsername(userData.username);
+    page.assertHeaderContainUsername(userData.username);
   });
 
   it('should provide an ability to log out', () => {
