@@ -35,16 +35,40 @@ class SettingsPageObject extends PageObject {
     this.usernameField.type(username);
   }
 
+  clearUsername() {
+    this.usernameField.clear();
+  }
+
+  checkUsername(username) {
+    this.usernameField.should('have.value', username);
+  }
+
   typeBio(bio) {
     this.bioField.type(bio);
+  }
+
+  checkBio(bio) {
+    this.bioField.should('have.value', bio);
   }
 
   typeEmail(email) {
     this.emailField.type(email);
   }
 
+  clearEmail() {
+    this.emailField.clear();
+  }
+
+  checkEmail(email) {
+    this.emailField.should('have.value', email);
+  }
+
   typePassword(password) {
     this.passwordField.type(password);
+  }
+
+  clearPassword() {
+    this.passwordField.clear();
   }
 
   clickUpdateBtn() {
@@ -53,6 +77,14 @@ class SettingsPageObject extends PageObject {
 
   clickLogoutBtn() {
     this.logoutBtn.click();
+  }
+
+  visit() {
+    cy.visit(this.url);
+  }
+
+  reloadAndClearCookies() {
+    cy.reload().clearCookies();
   }
 }
 

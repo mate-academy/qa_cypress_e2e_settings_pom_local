@@ -1,11 +1,18 @@
 /// <reference types="cypress" />
 /// <reference types="../support" />
 
+import HomePageObject from '../support/pages/home.pageObject.js';
 import SettingsPageObject from '../support/pages/settings.pageObject.js';
 import SignInPageObject from '../support/pages/signIn.pageObject.js';
 
+const homePage = new HomePageObject();
 const settingsPage = new SettingsPageObject();
-const SignInPage = new SignInPageObject();
+const signInPage = new SignInPageObject();
+
+const newUserName = 'stepan_bandera';
+const newBio = 'Stepan Bandera is a hero of Ukraine';
+const newEmail = 'stepan_bandera@gmail.com';
+const newPassword = 'SlavaUkraini2024';
 
 describe('Settings page', () => {
   let user;
@@ -16,60 +23,56 @@ describe('Settings page', () => {
       user = generateUser;
       cy.login(user.email, user.username, user.password);
     });
-    cy.visit(settingsPage.url);
+    settingsPage.visit();
   });
 
   it('should provide an ability to update username', () => {
-    const newUserName = 'stepan_bandera';
-    settingsPage.usernameField
-      .clear()
-      .type(newUserName);
+    settingsPage.clearUsername();
+    settingsPage.typeUsername(newUserName);
     settingsPage.clickUpdateBtn();
-    settingsPage.usernameField.should('have.value', newUserName);
+    settingsPage.checkUsername(newUserName);
   });
 
   it('should provide an ability to update bio', () => {
-    const newBio = 'Stepan Bandera is a hero of Ukraine';
     settingsPage.typeBio(newBio);
     settingsPage.clickUpdateBtn();
-    settingsPage.bioField
-      .should('have.value', newBio);
+    settingsPage.checkBio(newBio);
   });
 
   it('should provide an ability to update an email', () => {
-    const newEmail = 'stepan_bandera@gmail.com';
-    settingsPage.emailField
-      .clear()
-      .type(newEmail);
+    settingsPage.clearEmail();
+    settingsPage.typeEmail(newEmail);
     settingsPage.clickUpdateBtn();
-    settingsPage.emailField.should('have.value', newEmail);
+    settingsPage.checkEmail(newEmail);
     
-    cy.reload().clearCookies();
-    cy.visit(SignInPage.url);
-    cy.getByDataCy('email-sign-in').type(newEmail);
-    cy.getByDataCy('password-sign-in').type(user.password);
-    cy.getByDataCy('sign-in-btn').click();
-    cy.getByDataCy('profile-link').should('contain', user.username);
+    settingsPage.reloadAndClearCookies();
+    
+    signInPage.visit();
+    signInPage.typeEmail(newEmail);
+    signInPage.typePassword(user.password);
+    signInPage.clickSignInBtn();
+
+    homePage.assertHeaderContainsUsername(user.username);
   });
 
   it('should provide an ability to update password', () => {
-    const newPassword = 'SlavaUkraini2024';
-    settingsPage.passwordField
-      .clear()
-      .type(newPassword);
+    settingsPage.clearPassword();
+    settingsPage.typePassword(newPassword);
     settingsPage.clickUpdateBtn();
     
-    cy.reload().clearCookies();
-    cy.visit(SignInPage.url);
-    cy.getByDataCy('email-sign-in').type(user.email);
-    cy.getByDataCy('password-sign-in').type(newPassword);
-    cy.getByDataCy('sign-in-btn').click();
-    cy.getByDataCy('profile-link').should('contain', user.username);
+    settingsPage.reloadAndClearCookies();
+
+    signInPage.visit();
+    signInPage.typeEmail(user.email);
+    signInPage.typePassword(newPassword);
+    signInPage.clickSignInBtn();
+
+    homePage.assertHeaderContainsUsername(user.username);
   });
 
   it('should provide an ability to log out', () => {
     settingsPage.clickLogoutBtn();
-    cy.url().should('not.include', 'settings');
-    cy.contains('.nav-link', 'Sign in').should('exist');
+    homePage.assertNoSettingsInUrl();
+    homePage.assertHeaderContainsSignIn();
   });
 });
