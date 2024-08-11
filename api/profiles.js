@@ -1,5 +1,5 @@
-const router = require('express').Router()
-const auth = require('../auth')
+const router = require('express').Router();
+const auth = require('../auth');
 
 // Preload user profile on routes with ':username'
 router.param('username', function (req, res, next, username) {
@@ -8,77 +8,77 @@ router.param('username', function (req, res, next, username) {
     .models.User.findOne({ where: { username: username } })
     .then(function (user) {
       if (!user) {
-        return res.sendStatus(404)
+        return res.sendStatus(404);
       }
-      req.profile = user
-      return next()
+      req.profile = user;
+      return next();
     })
-    .catch(next)
-})
+    .catch(next);
+});
 
 router.get('/:username', auth.optional, async function (req, res, next) {
   try {
-    let toProfileJSONForUser
+    let toProfileJSONForUser;
     if (req.payload) {
       const user = await req.app
         .get('sequelize')
-        .models.User.findByPk(req.payload.id)
+        .models.User.findByPk(req.payload.id);
       if (user) {
-        toProfileJSONForUser = user
+        toProfileJSONForUser = user;
       } else {
-        toProfileJSONForUser = false
+        toProfileJSONForUser = false;
       }
     } else {
-      toProfileJSONForUser = false
+      toProfileJSONForUser = false;
     }
     return res.json({
       profile: await req.profile.toProfileJSONFor(toProfileJSONForUser),
-    })
+    });
   } catch (error) {
-    next(error)
+    next(error);
   }
-})
+});
 
 router.post(
   '/:username/follow',
   auth.required,
   async function (req, res, next) {
     try {
-      let profileId = req.profile.id
+      let profileId = req.profile.id;
       const user = await req.app
         .get('sequelize')
-        .models.User.findByPk(req.payload.id)
+        .models.User.findByPk(req.payload.id);
       if (!user) {
-        return res.sendStatus(401)
+        return res.sendStatus(401);
       }
-      await user.addFollow(profileId)
+      await user.addFollow(profileId);
       // TODO same as ArticleTag
       //await lib.deleteOldestForDemo(req.app.get('sequelize').models.UserFollowUser)
-      return res.json({ profile: await req.profile.toProfileJSONFor(user) })
+      return res.json({ profile: await req.profile.toProfileJSONFor(user) });
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
-)
+);
 
 router.delete(
   '/:username/follow',
   auth.required,
   async function (req, res, next) {
     try {
-      let profileId = req.profile.id
+      let profileId = req.profile.id;
       const user = await req.app
         .get('sequelize')
-        .models.User.findByPk(req.payload.id)
+        .models.User.findByPk(req.payload.id);
       if (!user) {
-        return res.sendStatus(401)
+        return res.sendStatus(401);
       }
-      await user.removeFollow(profileId)
-      return res.json({ profile: await req.profile.toProfileJSONFor(user) })
+      await user.removeFollow(profileId);
+      return res.json({ profile: await req.profile.toProfileJSONFor(user) });
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
-)
+);
 
-module.exports = router
+module.exports = router;

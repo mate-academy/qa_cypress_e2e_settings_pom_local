@@ -1,4 +1,4 @@
-const { DataTypes } = require('sequelize')
+const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
   const Tag = sequelize.define(
@@ -18,7 +18,7 @@ module.exports = (sequelize) => {
         },
       ],
     }
-  )
+  );
 
-  return Tag
-}
+  return Tag;
+};
