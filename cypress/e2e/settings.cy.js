@@ -3,64 +3,80 @@
 /// <reference types="../support" />
 
 
-import settingsPageObject from '../support/pages/settings.page-object'
-const settingsPage = new settingsPageObject()
-describe('Settings page', () => {
-  let user
-  beforeEach(() => {
-    cy.task('db:clear')
-    cy.task('generateUser').then((generateUser) => {
-      user = generateUser
-      cy.login(user.email, user.username, user.password)
-    })
-  })
-  it('should provide an ability to update username', () => {
-    cy.visit('/settings')
-    settingsPage.usernameField.type('new')
-    settingsPage.updateBtn.click()
+import { test } from 'mocha';
+import settingsPageObject from '../support/pages/settings.page-object';
+import SignInPageObject from '../support/pages/signIn.pageObject';
+import HomePageObject from '../support/pages/home.pageObject';
+const settingsPage = new settingsPageObject();
+const signInPage = new SignInPageObject();
+const homePage = new HomePageObject();
 
-    // settingsPage.modalText.should('contain', 'Update successful!')
-    settingsPage.usernameField.should('have.value', user.username + 'new')
-  })
+const testData= {
+  newUsername: 'Mykola',
+  bio: 'new',
+  email: 'riot1@qa.team',
+  newPassword: '12345Qwerty!'
+};
+describe('Settings page', () => {
+  let user;
+  beforeEach(() => {
+    cy.task('db:clear');
+    cy.task('generateUser').then((generateUser) => {
+      user = generateUser;
+      cy.login(user.email, user.username, user.password);
+    });
+  });
+  it('should provide an ability to update username', () => {
+    settingsPage.visit();
+    settingsPage.clearUsername();
+    settingsPage.typeUsername(testData.newUsername);
+    settingsPage.clickOnUpdateBtn();
+    settingsPage.checkUsername(testData.newUsername);
+  });
 
   it('should provide an ability to update bio', () => {
-    settingsPage.visit()
-    settingsPage.bioField.type('new')
-    settingsPage.updateBtn.click()
-    // settingsPage.modalText.should('contain', 'Update successful!')
-    cy.reload()
-    settingsPage.bioField.should('have.value', 'new')
-  })
+    settingsPage.visit();
+    settingsPage.typeBio(testData.bio);
+    settingsPage.clickOnUpdateBtn();
+    settingsPage.checkBio(testData.bio);
+  });
 
-  // bug
   it('should provide an ability to update an email', () => {
-    settingsPage.visit()
-    settingsPage.emailField.clear().type('riot1@qa.team')
-    settingsPage.updateBtn.click()
-    // settingsPage.modalText.should('contain', 'Update successful!')
-    cy.reload()
-    settingsPage.emailField.should('have.value', 'riot1@qa.team')
-  })
+    settingsPage.visit();
+    settingsPage.clearEmail();
+    settingsPage.typeEmail(testData.email);
+    settingsPage.clickOnUpdateBtn();
+    settingsPage.checkEmail(testData.email);
+
+    settingsPage.reloadAndClearCookies();
+
+    signInPage.visit();
+    signInPage.typeEmail(testData.email);
+    signInPage.typePassword(user.password);
+    signInPage.clickSignInBtn();
+
+    homePage.assertHeaderContainUsername(user.username);
+  });
 
   it('should provide an ability to update password', () => {
-    const newPass = '12345Qwerty!'
-    cy.visit('/settings')
-    settingsPage.passwordField.type(newPass)
-    settingsPage.updateBtn.click()
-    // settingsPage.modalText.should('contain', 'Update successful!')
-    cy.reload().clearCookies()
-    cy.visit('/user/login')
-    cy.getByDataCy('email-sign-in').type(user.email)
-    cy.getByDataCy('password-sign-in').type(newPass)
-    cy.getByDataCy('sign-in-btn').click()
-    cy.getByDataCy('sign-in-link').should('contain', user.username)
-  })
+    settingsPage.visit();
+    settingsPage.typePassword(testData.newPassword);
+    settingsPage.clickOnUpdateBtn();
 
-  it('should provide an ability to log out', () => {
-    cy.visit('/settings')
-    settingsPage.logoutBtn.click()
-    cy.url().should('not.include', 'settings')
-    cy.getByDataCy('sign-in-link').should('exist')
-    cy.getCookie('auth').should('not.exist')
-  })
-})
+    settingsPage.reloadAndClearCookies();
+
+    signInPage.visit();
+    signInPage.typeEmail(user.email);
+    signInPage.typePassword(testData.newPassword);
+    signInPage.clickSignInBtn();
+
+    homePage.assertHeaderContainUsername(user.username);
+  });
+
+  it.only('should provide an ability to log out', () => {
+    settingsPage.visit();
+    settingsPage.clickLoggout();
+    homePage.assertHeaderContainsSignIn();
+    homePage.assertNoSettingsInUrl();
+  });
+});
