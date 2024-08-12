@@ -1,13 +1,11 @@
 import axios from 'axios'
 import Router from 'next/router'
 import React from 'react'
-
 import { setupUserLocalStorage } from 'front'
 import { apiPath } from 'front/config'
 import ListErrors from 'front/ListErrors'
 import useLoggedInUser from 'front/useLoggedInUser'
 import { useCtrlEnterSubmit } from 'front/ts'
-
 const SettingsForm = () => {
   const [isLoading, setLoading] = React.useState(false)
   const [errors, setErrors] = React.useState([])
@@ -74,6 +72,7 @@ const SettingsForm = () => {
               placeholder="Username"
               value={userInfo.username}
               onChange={updateState('username')}
+              data-cy="username-field-settings"
             />
           </fieldset>
           <fieldset className="form-group">
@@ -83,6 +82,7 @@ const SettingsForm = () => {
               placeholder="Short bio about you"
               value={userInfo.bio}
               onChange={updateState('bio')}
+              data-cy="bio"
             />
           </fieldset>
           <fieldset className="form-group">
@@ -92,6 +92,7 @@ const SettingsForm = () => {
               placeholder="Email"
               value={userInfo.email}
               onChange={updateState('email')}
+              data-cy="email-field-settings"
             />
           </fieldset>
           <fieldset className="form-group">
@@ -102,12 +103,14 @@ const SettingsForm = () => {
               value={userInfo.password}
               onChange={updateState('password')}
               autoComplete="new-password"
+              data-cy="password-field-settings"
             />
           </fieldset>
           <button
             className="btn btn-lg btn-primary pull-xs-right"
             type="submit"
             disabled={isLoading}
+            data-cy='update-btn'
           >
             Update Settings
           </button>
@@ -116,5 +119,4 @@ const SettingsForm = () => {
     </React.Fragment>
   )
 }
-
 export default SettingsForm
