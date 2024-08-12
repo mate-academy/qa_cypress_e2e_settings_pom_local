@@ -5,46 +5,26 @@ const { faker } = require('@faker-js/faker');
 import SettingsPageObject from '../support/pages/settings.pageObject';
 import HomePageObject from '../support/pages/home.pageObject';
 
-const settings = new SettingsPageObject;
-const home = new HomePageObject;
+const settings = new SettingsPageObject();
+const home = new HomePageObject();
 
 const { generateFakeUser } = require('../support/fakeUser');
-
 const fakeUser = generateFakeUser();
 
+const newUsername = faker.internet.userName().toLowerCase().replace(/\./g, '');
+const newBio = faker.lorem.sentence();
+const newEmail = faker.internet.email().toLowerCase();
+const newPassword = faker.internet.password();
+
 describe('Settings page', () => {
-  before(() => {
-
-  });
-
   beforeEach(() => {
-    cy.visit('http://localhost:3000/');
+    cy.task('db:clear');
+    cy.visit('/');
+    cy.login(fakeUser.email, fakeUser.username, fakeUser.password);
   });
-
-  function signUpUser() {
-    cy.get(':nth-child(3) > .nav-link').should('contain', 'Sign up').click();
-    cy.get('.text-xs-center').should('contain', 'Sign up');
-    cy.get('[placeholder="Username"]').type(fakeUser.username);
-    cy.get('[placeholder="Email"]').type(fakeUser.email);
-    cy.get('[placeholder="Password"]').type(fakeUser.password);
-    cy.get('[data-cy="sign-in-btn"]').click();
-
-    home.assertHeaderContainUsername(fakeUser.username);
-  }
-
-  function signInUser() {
-    cy.get(':nth-child(2) > .nav-link').should('contain', 'Sign in').click();
-    cy.get('.text-xs-center').should('contain', 'Sign in');
-    cy.get('[placeholder="Email"]').type(fakeUser.email);
-    cy.get('[placeholder="Password"]').type(fakeUser.password);
-    cy.get('[data-cy="sign-in-btn"]').click();
-  }
 
   it('should provide an ability to update username', () => {
-    signUpUser();
-    cy.get(':nth-child(3) > .nav-link').click();
-
-    const newUsername = faker.internet.userName().toLowerCase().replace(/\./g, '');
+    home.navigateToSettings();
     settings.updateUsername(newUsername);
     settings.clickOnButton();
 
@@ -52,11 +32,7 @@ describe('Settings page', () => {
   });
 
   it('should provide an ability to update bio', () => {
-    signInUser();
-    cy.wait(2000);
-    cy.get(':nth-child(3) > .nav-link').click();
-
-    const newBio = faker.lorem.sentence();
+    home.navigateToSettings();
     settings.updateBio(newBio);
     settings.clickOnButton();
 
@@ -64,11 +40,7 @@ describe('Settings page', () => {
   });
 
   it('should provide an ability to update an email', () => {
-    signInUser();
-    cy.wait(2000);
-    cy.get(':nth-child(3) > .nav-link').click();
-
-    const newEmail = faker.internet.email().toLowerCase();
+    home.navigateToSettings();
     settings.updateEmail(newEmail);
     settings.clickOnButton();
 
@@ -76,27 +48,20 @@ describe('Settings page', () => {
     cy.get('.btn').click();
 
     settings.emailField.invoke('val').should('eq', newEmail);
+
+    cy.login(newEmail, fakeUser.username, fakeUser.password);
+    home.assertHeaderContainUsername(fakeUser.username);
   });
 
   it('should provide an ability to update password', () => {
-    signUpUser();
-    cy.wait(2000);
-    cy.get(':nth-child(3) > .nav-link').click();
-
-    const newPassword = faker.internet.password();
+    home.navigateToSettings(); 
     settings.updatePassword(newPassword);
     settings.clickOnButton();
 
     cy.wait(2000);
-    cy.get(':nth-child(3) > .nav-link').click();
-    cy.get('.btn-outline-danger').click();
+    home.logOut();
 
-    cy.get(':nth-child(2) > .nav-link').should('contain', 'Sign in').click();
-    cy.get('.text-xs-center').should('contain', 'Sign in');
-    cy.get('[placeholder="Email"]').type(fakeUser.email);
-    cy.get('[placeholder="Password"]').type(newPassword);
-    cy.get('[data-cy="sign-in-btn"]').click();
-
+    cy.login(fakeUser.email, fakeUser.username, newPassword);
     home.assertHeaderContainUsername(fakeUser.username);
   });
 });

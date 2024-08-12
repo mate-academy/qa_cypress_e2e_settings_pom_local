@@ -38,6 +38,10 @@ class SettingsPageObject extends PageObject {
   clickOnButton() {
     cy.get('form > :nth-child(1) > .btn').click();
   }
+
+  navigateToSettings () {
+    cy.get(':nth-child(3) > .nav-link').click();
+  }
 }
 
 export default SettingsPageObject;
