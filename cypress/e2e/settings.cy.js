@@ -2,7 +2,14 @@
 /// <reference types="../support" />
 
 import settingsPageObject from '../support/pages/settings.pageObject.js';
+import SignInPageObject from '../support/pages/signIn.pageObject.js';
+
+const signInPage = new SignInPageObject();
 const settingsPage = new settingsPageObject();
+const newUsername = 'AdolfWhiteCat';
+const newBio = `My name is Adolf, and I'm a little naughty boy.`;
+const newEmail = 'glorytoukraine@gmail.com';
+const newPass = 'CatPass2024';
 
 describe('Settings page', () => {
     let user;
@@ -17,7 +24,6 @@ describe('Settings page', () => {
 
 
   it('should provide an ability to update username', () => {
-    const newUsername = 'AdolfWhiteCat';
     settingsPage.usernameField.clear()
     .type(newUsername);
     settingsPage.updateBtn.click();
@@ -26,7 +32,6 @@ describe('Settings page', () => {
   });
 
   it('should provide an ability to update bio', () => {
-    const newBio = `My name is Adolf, and I'm a little naughty boy.`;
     settingsPage.bioField.clear()
     .type(newBio);
     settingsPage.updateBtn.click();
@@ -36,26 +41,31 @@ describe('Settings page', () => {
   });
 
   it('should provide an ability to update an email', () => {
-    const newEmail = 'glorytoukraine@gmail.com';
     settingsPage.emailField.clear()
     .type(newEmail);
     settingsPage.updateBtn.click();
 
     cy.reload();
     settingsPage.emailField.should('have.value', newEmail);
+
+    cy.reload().clearCookies();
+    cy.visit('user/login');
+    signInPage.emailField.type(user.email);
+    signInPage.passwordField.type(newPass);
+    signInPage.signInBtn.click();
+    cy.getByDataCy('profile-link').should('contain', user.username);
   });
 
   it('should provide an ability to update password', () => {
-    const newPass = 'CatPass2024';
     settingsPage.passwordField.clear()
     .type(newPass);
     settingsPage.updateBtn.click();
     cy.reload().clearCookies();
 
     cy.visit('user/login');
-    cy.getByDataCy('email-sign-in').type(user.email);
-    cy.getByDataCy('password-sign-in').type(newPass);
-    cy.getByDataCy('sign-in-btn').click();
+    signInPage.emailField.type(user.email);
+    signInPage.passwordField.type(newPass);
+    signInPage.signInBtn.click();
     cy.getByDataCy('profile-link').should('contain', user.username);
   });
 
