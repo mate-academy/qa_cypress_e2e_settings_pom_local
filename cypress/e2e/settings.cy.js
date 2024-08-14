@@ -28,7 +28,7 @@ describe('Settings page', () => {
     .type(newUsername);
     settingsPage.updateBtn.click();
 
-    settingsPage.usernameField.should('have.value', newUsername);
+    settingsPage.assertUsernameField(newUsername);
   });
 
   it('should provide an ability to update bio', () => {
@@ -37,7 +37,7 @@ describe('Settings page', () => {
     settingsPage.updateBtn.click();
 
     cy.reload();
-    settingsPage.bioField.should('have.value', newBio);
+    settingsPage.assertBioField(newBio);
   });
 
   it('should provide an ability to update an email', () => {
@@ -46,12 +46,12 @@ describe('Settings page', () => {
     settingsPage.updateBtn.click();
 
     cy.reload();
-    settingsPage.emailField.should('have.value', newEmail);
+    settingsPage.assertEmailField(newEmail);
 
     cy.reload().clearCookies();
     cy.visit('user/login');
-    signInPage.emailField.type(user.email);
-    signInPage.passwordField.type(newPass);
+    signInPage.emailField.type(newEmail);
+    signInPage.passwordField.type(user.password);
     signInPage.signInBtn.click();
     cy.getByDataCy('profile-link').should('contain', user.username);
   });
