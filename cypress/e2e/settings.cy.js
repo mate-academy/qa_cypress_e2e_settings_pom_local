@@ -1,13 +1,21 @@
 /// <reference types="cypress" />
 /// <reference types="../support" />
 
+import SettingsFormPage from '../support/pages/settings.form.pageObject';
 
-import SettingsPageObject from '../support/pages/settings.page-object';
-
-const settingsPage = new SettingsPageObject();
+const settingPage = new SettingsFormPage();
 
 describe('Settings page', () => {
+  before(() => {
+
+    cy.task('generateArticle').then((generateArticle) => {
+      bio = generateArticle;
+    });
+  });
+
   let user;
+  let userNew;
+  let bio;
   beforeEach(() => {
 
     cy.task('db:clear');
@@ -15,54 +23,51 @@ describe('Settings page', () => {
       user = generateUser;
       cy.login(user.email, user.username, user.password);
     });
-    settingsPage.visit();
+    cy.task('generateUser').then((generateUser) => {
+      userNew = generateUser;
+    });
   });
 
   it('should provide an ability to update username', () => {
 
-    settingsPage.usernameField.type('new');
-    settingsPage.updateBtn.click();
-    settingsPage.usernameField.should
-      ('have.value', user.username + 'new');
+    settingPage.visit();
+    settingPage.clearUsernameField();
+    settingPage.typeUsername(userNew.username);
+    settingPage.clickUpdateBtn();
+    settingPage.usernameField.should('have.value', userNew.username);
   });
 
   it('should provide an ability to update bio', () => {
 
-    settingsPage.bioField.type('new');
-    settingsPage.updateBtn.click();
-    //cy.reload();
-    settingsPage.bioField.should('have.value', 'new');
+    settingPage.visit();
+    settingPage.clearBioField();
+    settingPage.typeBio(bio.body);
+    settingPage.clickUpdateBtn();
+    settingPage.bioField.should('have.value', bio.body);
   });
 
   it('should provide an ability to update an email', () => {
 
-    settingsPage.emailField.clear().type('riot1@qa.team');
-    settingsPage.updateBtn.click();
-    //cy.reload();
-    settingsPage.emailField.should('have.value', 'riot1@qa.team');
+    settingPage.visit();
+    settingPage.clearEmailField();
+    settingPage.typeEmail(userNew.email);
+    settingPage.clickUpdateBtn();
+    settingPage.emailField.should('have.value', userNew.email);
   });
 
   it('should provide an ability to update password', () => {
 
-    const newPass = '12345Qwerty!';
-
-    settingsPage.passwordField.type(newPass);
-    settingsPage.updateBtn.click();
-    cy.reload().clearCookies();
-    cy.visit('/user/login');
-    cy.getByDataCy('email-sign-in').type(user.email);
-    cy.getByDataCy('password-sign-in').type(newPass);
-    cy.getByDataCy('sign-in-btn').click();
-    cy.getByDataCy('profile-link').should('contain', user.username);
+    settingPage.visit();
+    settingPage.clearPasswordField();
+    settingPage.typePassword(userNew.password);
+    settingPage.clickUpdateBtn();
+    settingPage.passwordField.should('have.value', userNew.password);
   });
 
   it('should provide an ability to log out', () => {
 
-
-    settingsPage.logoutBtn.click();
-    //cy.url().should('not.include', 'settings');
-    cy.get('.nav-link').should('contain', 'Sign in');
-    //cy.getByDataCy('sign-in-link').should('exist');
-    //cy.getCookie('drash_sess').should('have.property', 'value', 'null');
+    settingPage.visit();
+    settingPage.clickLogoutBtn();
+    cy.contains('.nav-link', 'Sign in').should('exist');
   });
 });

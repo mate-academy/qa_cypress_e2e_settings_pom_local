@@ -1,14 +1,12 @@
-import Router from 'next/router'
+=import Router from 'next/router'
 import React from 'react'
 import { mutate, trigger } from 'swr'
-
 import { AUTH_LOCAL_STORAGE_NAME } from 'front'
 import SettingsForm from 'front/SettingsForm'
 import checkLogin from 'front/checkLogin'
 import storage from 'front/localStorageHelper'
 import { AppContext } from 'front/ts'
 import { deleteCookie } from 'front'
-
 const Settings = () => {
   React.useEffect(() => {
     const loggedInUser = storage(AUTH_LOCAL_STORAGE_NAME)
@@ -38,7 +36,7 @@ const Settings = () => {
               <h1 className="text-xs-center">{title}</h1>
               <SettingsForm />
               <hr />
-              <button className="btn btn-outline-danger" data-cy="logout-btn" onClick={handleLogout}>
+              <button className="btn btn-outline-danger" onClick={handleLogout} data-cy="settings-form-logout-btn">
                 Or click here to logout.
               </button>
             </div>
@@ -48,5 +46,6 @@ const Settings = () => {
     </>
   )
 }
+
 
 export default Settings
