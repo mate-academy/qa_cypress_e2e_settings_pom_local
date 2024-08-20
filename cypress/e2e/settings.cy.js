@@ -1,8 +1,14 @@
 /// <reference types="cypress" />
 /// <reference types="../support" />
 
-import SettingsPageObject from '../support/pages/settings.page-object';
+import HomePageObject from '../support/pages/home.pageObject';
+import SetingsPageObject from '../support/pages/settings.pageObject';
+// eslint-disable-next-line semi
+import SignInPageObject from '../support/pages/signIn.pageObject'
 
+const signInPage = new SignInPageObject();
+const settingsPage = new SetingsPageObject();
+const homePage = new HomePageObject();
 describe('Settings page', () => {
   const settingsPage = new SettingsPageObject();
   let user;
@@ -18,22 +24,21 @@ describe('Settings page', () => {
 
   it('should provide an ability to update username', () => {
     settingsPage.fillTheUsernameField('new');
-    settingsPage.updateBtn.click();
-    settingsPage.usernameField.should('have.value', user.username + 'new');
+    settingsPage.clickUpdateButton();
+    settingsPage.verifyUsernameField(user.username + 'new');
   });
 
   it('should provide an ability to update bio', () => {
     settingsPage.fillTheBioField('new');
-    settingsPage.updateBtn.click();
-    settingsPage.bioField.should('have.value', 'new');
+    settingsPage.clickUpdateButton();
+    settingsPage.verifyBioField('new');
   });
 
   it('should provide an ability to update an email', () => {
     settingsPage.fillTheEmailField('qqiot10@qa.team');
-    settingsPage.updateBtn.click();
-    settingsPage.emailField.should('have.value', 'qqiot10@qa.team');
-
-    // Логін з новим email
+    settingsPage.clickUpdateButton();
+    settingsPage.verifyEmailField('qqiot10@qa.team');
+    
     cy.reload().clearCookies();
     cy.visit('/user/login');
     cy.getByDataCy('email-sign-in').type('qqiot10@qa.team');
@@ -45,8 +50,8 @@ describe('Settings page', () => {
   it('should provide an ability to update password', () => {
     const newPass = 'qqiot10@qa!';
     settingsPage.fillThePasswordField(newPass);
-    settingsPage.updateBtn.click();
-    
+    settingsPage.clickUpdateButton();
+
     cy.reload().clearCookies();
     cy.visit('/user/login');
     cy.getByDataCy('email-sign-in').type(user.email);
@@ -56,7 +61,7 @@ describe('Settings page', () => {
   });
 
   it('should provide an ability to log out', () => {
-    settingsPage.logoutBtn.click();
+    settingsPage.clickLogoutButton();
     cy.get('.nav-link').should('contain', 'Sign in');
   });
 });
