@@ -15,6 +15,7 @@ describe('Sign In page', () => {
     cy.task('generateUser').then((generateUser) => {
       user = generateUser;
     });
+    cy.visit();
   });
   
   it('should provide an ability to log in with existing credentials', () => {
