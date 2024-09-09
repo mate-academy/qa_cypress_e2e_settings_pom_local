@@ -7,6 +7,10 @@ class HomePageObject extends PageObject {
     return cy.getByDataCy('profile-link');
   }
 
+  get editSettingsLink() {
+    return cy.contains('a', ' Edit Profile Settings');
+  }
+
   assertHeaderContainUsername(username) {
     this.usernameLink
       .should('contain', username);
