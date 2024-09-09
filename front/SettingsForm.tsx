@@ -62,6 +62,7 @@ const SettingsForm = () => {
             <input
               className="form-control"
               type="text"
+              data-cy="setting-picture"
               placeholder="URL of profile picture"
               value={userInfo.image ? userInfo.image : ''}
               onChange={updateState('image')}
@@ -71,6 +72,7 @@ const SettingsForm = () => {
             <input
               className="form-control form-control-lg"
               type="text"
+              data-cy="setting-username"
               placeholder="Username"
               value={userInfo.username}
               onChange={updateState('username')}
@@ -80,6 +82,7 @@ const SettingsForm = () => {
             <textarea
               className="form-control form-control-lg"
               rows={8}
+              data-cy="setting-bio"
               placeholder="Short bio about you"
               value={userInfo.bio}
               onChange={updateState('bio')}
@@ -90,6 +93,7 @@ const SettingsForm = () => {
               className="form-control form-control-lg"
               type="email"
               placeholder="Email"
+              data-cy="setting-email"
               value={userInfo.email}
               onChange={updateState('email')}
             />
@@ -98,6 +102,7 @@ const SettingsForm = () => {
             <input
               className="form-control form-control-lg"
               type="password"
+              data-cy="setting-password"
               placeholder="New Password"
               value={userInfo.password}
               onChange={updateState('password')}
@@ -108,6 +113,7 @@ const SettingsForm = () => {
             className="btn btn-lg btn-primary pull-xs-right"
             type="submit"
             disabled={isLoading}
+            data-cy="update-btn"
           >
             Update Settings
           </button>
