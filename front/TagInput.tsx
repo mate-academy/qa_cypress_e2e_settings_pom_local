@@ -34,6 +34,7 @@ const TagInput = ({ tagList, addTag, removeTag }) => {
           placeholder={
             isDemo ? 'Press Enter, Tab or Comma to add a tag' : 'Enter tags'
           }
+          data-cy="article-tags"
           value={tag}
           onChange={changeTagInput}
           onBlur={handleAddTag}

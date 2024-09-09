@@ -1,7 +1,11 @@
 import PageObject from '../PageObject';
 
-class SignInPageObject extends PageObject {
-  url = '/user/login';
+class SignUpPageObject extends PageObject {
+  url = '/user/register';
+
+  get usernameField() {
+    return cy.getByDataCy('username-sign-in');
+  }
 
   get emailField() {
     return cy.getByDataCy('email-sign-in');
@@ -13,6 +17,10 @@ class SignInPageObject extends PageObject {
 
   get signInBtn() {
     return cy.getByDataCy('sign-in-btn');
+  }
+
+  typeUsername(username) {
+    this.usernameField.type(username);
   }
 
   typeEmail(email) {
@@ -34,6 +42,13 @@ class SignInPageObject extends PageObject {
     cy.contains('li', 'is invalid')
       .should('exist');
   }
+
+  checkFieldValid(field) {
+    cy.contains('li', field)
+      .should('exist');
+
+    cy.contains('li', 'can\'t be blank');
+  }
 }
 
-export default SignInPageObject;
+export default SignUpPageObject;
