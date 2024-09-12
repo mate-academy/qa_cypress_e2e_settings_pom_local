@@ -12,7 +12,7 @@ describe('Sign In page', () => {
 
   before(() => {
     cy.task('db:clear');
-    cy.task('generateUser').then((generateUser) => {
+    cy.task('generateUser').then(generateUser => {
       user = generateUser;
     });
   });
@@ -21,11 +21,15 @@ describe('Sign In page', () => {
     signInPage.visit();
     cy.register(user.email, user.username, user.password);
 
-    signInPage.typeEmail(user.email);
-    signInPage.typePassword(user.password);
-    signInPage.clickSignInBtn();
+    signInPage.emailField
+      .type(user.email);
+    signInPage.passwordField
+      .type(user.password);
+    signInPage.signInBtn
+      .click();
 
-    homePage.assertHeaderContainUsername(user.username);
+    homePage.usernameLink
+      .should('contain', user.username);
   });
 
   it('should not provide an ability to log in with wrong credentials', () => {
