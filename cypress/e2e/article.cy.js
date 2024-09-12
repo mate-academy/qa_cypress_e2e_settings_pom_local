@@ -10,15 +10,15 @@ describe('Article', () => {
     cy.task('db:clear');
   });
 
-  it('should be created using New Article form', () => {
+  it.skip('should be created using New Article form', () => {
 
   });
 
-  it('should be edited using Edit button', () => {
+  it.skip('should be edited using Edit button', () => {
 
   });
 
-  it('should be deleted using Delete button', () => {
+  it.skip('should be deleted using Delete button', () => {
 
   });
 });
