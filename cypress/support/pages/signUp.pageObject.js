@@ -1,7 +1,11 @@
 import PageObject from '../PageObject';
 
-class SignInPageObject extends PageObject {
-  url = '/user/login';
+class SignUpPageObject extends PageObject {
+  url = '/user/register';
+
+  get usernameField() {
+    return cy.getByDataCy('username-sign-up');
+  }
 
   get emailField() {
     return cy.getByDataCy('email-sign-in');
@@ -17,6 +21,10 @@ class SignInPageObject extends PageObject {
 
   get errorText() {
     return cy.getByDataCy('error-text');
+  }
+
+  typeUsername(username) {
+    this.usernameField.type(username);
   }
 
   typeEmail(email) {
@@ -37,4 +45,4 @@ class SignInPageObject extends PageObject {
   }
 }
 
-export default SignInPageObject;
+export default SignUpPageObject;

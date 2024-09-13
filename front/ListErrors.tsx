@@ -7,7 +7,7 @@ const ListErrors = ({ errors }) => (
         <li key={key}>
           {key}:
           <ul>
-            <li>{errors[key]}</li>
+            <li data-cy="error-text">{errors[key]}</li>
           </ul>
         </li>
       )
