@@ -61,6 +61,7 @@ const LoginForm = ({ register = false }) => {
                 placeholder="Username"
                 value={username}
                 onChange={handleUsernameChange}
+                data-cy="username-registeration"
               />
             </fieldset>
           )}
@@ -72,6 +73,7 @@ const LoginForm = ({ register = false }) => {
               placeholder="Email"
               value={email}
               onChange={handleEmailChange}
+          
             />
           </fieldset>
           <fieldset className="form-group">
