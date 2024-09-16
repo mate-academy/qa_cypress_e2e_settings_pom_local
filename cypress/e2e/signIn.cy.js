@@ -24,7 +24,7 @@ describe('Sign In page', () => {
     signInPage.typeEmail(user.email);
     signInPage.typePassword(user.password);
     signInPage.clickSignInBtn();
-
+    
     homePage.assertHeaderContainUsername(user.username);
   });
 
