@@ -11,6 +11,14 @@ class HomePageObject extends PageObject {
     this.usernameLink
       .should('contain', username);
   }
+
+  get signInLink() {
+    return cy.getByDataCy('/user/login');
+  }
+
+  get signUpLink() {
+    return cy.getByDataCy('/user/register');
+  }
 }
 
 export default HomePageObject;
