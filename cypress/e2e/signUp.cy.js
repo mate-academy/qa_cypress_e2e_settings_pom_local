@@ -2,12 +2,7 @@
 /// <reference types="../support" />
 
 describe('Sign Up page', () => {
+  before(() => {});
 
-  before(() => {
-
-  });
-
-  it('should ...', () => {
-
-  });
+  it('should ...', () => {});
 });

@@ -8,8 +8,11 @@ class HomePageObject extends PageObject {
   }
 
   assertHeaderContainUsername(username) {
-    this.usernameLink
-      .should('contain', username);
+    this.usernameLink.should('contain', username);
+  }
+
+  get signInLink() {
+    return cy.get(':nth-child(2) > .nav-link');
   }
 }
 

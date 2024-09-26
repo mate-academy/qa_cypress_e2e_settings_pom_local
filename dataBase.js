@@ -2,7 +2,7 @@ const { Sequelize } = require('sequelize');
 
 const sequilize = new Sequelize({
   dialect: 'sqlite',
-  storage: './db.sqlite3'
+  storage: './db.sqlite3',
 });
 
 async function clear() {
@@ -19,11 +19,11 @@ async function clear() {
 
     await t.commit();
 
-    console.log('DB was cleared');
+    // console.log('DB was cleared');
   } catch (error) {
     await t.rollback();
 
-    console.log(`Can't clear DB`);
+    // console.log(`Can't clear DB`);
   }
 }
 

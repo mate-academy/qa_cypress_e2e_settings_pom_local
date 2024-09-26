@@ -1,20 +1,20 @@
-import React from 'react'
+import React from 'react';
 
-import CustomImage from 'front/CustomImage'
-import CustomLink from 'front/CustomLink'
-import Maybe from 'front/Maybe'
-import NavLink from 'front/NavLink'
-import { appName } from 'front/config'
-import useLoggedInUser from 'front/useLoggedInUser'
-import { AppContext, resetIndexState } from 'front/ts'
-import routes from 'front/routes'
+import CustomImage from 'front/CustomImage';
+import CustomLink from 'front/CustomLink';
+import Maybe from 'front/Maybe';
+import NavLink from 'front/NavLink';
+import { appName } from 'front/config';
+import useLoggedInUser from 'front/useLoggedInUser';
+import { AppContext, resetIndexState } from 'front/ts';
+import routes from 'front/routes';
 
-const NavbarItem = ({ children }) => <li className="nav-item">{children}</li>
+const NavbarItem = ({ children }) => <li className="nav-item">{children}</li>;
 
 const Navbar = () => {
-  const loggedInUser = useLoggedInUser()
-  const { setPage, setTab } = React.useContext(AppContext)
-  const clickHandler = () => resetIndexState(setPage, setTab, loggedInUser)
+  const loggedInUser = useLoggedInUser();
+  const { setPage, setTab } = React.useContext(AppContext);
+  const clickHandler = () => resetIndexState(setPage, setTab, loggedInUser);
   return (
     <nav className="navbar navbar-light">
       <div className="container">
@@ -27,7 +27,11 @@ const Navbar = () => {
         </CustomLink>
         <ul className="nav navbar-nav pull-xs-right">
           <NavbarItem>
-            <NavLink dataCy="home-link" href={routes.home()} onClick={clickHandler}>
+            <NavLink
+              dataCy="home-link"
+              href={routes.home()}
+              onClick={clickHandler}
+            >
               Home
             </NavLink>
           </NavbarItem>
@@ -45,7 +49,10 @@ const Navbar = () => {
               </NavLink>
             </NavbarItem>
             <NavbarItem>
-              <NavLink dataCy="profile-link" href={routes.userView(loggedInUser?.username)}>
+              <NavLink
+                dataCy="profile-link"
+                href={routes.userView(loggedInUser?.username)}
+              >
                 <CustomImage
                   className="user-pic"
                   src={loggedInUser?.effectiveImage}
@@ -66,7 +73,7 @@ const Navbar = () => {
         </ul>
       </div>
     </nav>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

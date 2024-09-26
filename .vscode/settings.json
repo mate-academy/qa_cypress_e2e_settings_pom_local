@@ -1,0 +1,6 @@
+{
+  "prettier.endOfLine": "lf",
+  "prettier.requireConfig": true,
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
+}
