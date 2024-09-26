@@ -60,3 +60,27 @@ Cypress.Commands.add('login', (email = 'riot@qa.team', username = 'riot', passwo
     cy.setCookie('auth', response.body.user.token);
   });
 });
+
+Cypress.Commands.add('clickUpdateBtnSettings', () => {
+  cy.getByDataCy('btnUpdate-settings').click();
+});
+
+Cypress.Commands.add('assertNewEmail', (newEmail) => {
+  cy.getByDataCy('/settings').click();
+  cy.getByDataCy('email-settings').should('have.value', newEmail);
+});
+
+Cypress.Commands.add('updateEmailSettings', (newEmail) => {
+  cy.getByDataCy('/settings').click();
+  cy.getByDataCy('email-settings').clear().type(newEmail);
+});
+
+Cypress.Commands.add('assertNewPassword', (newPassword) => {
+  cy.getByDataCy('/settings').click();
+  cy.getByDataCy('password-settings').should('have.value', newPassword);
+});
+
+Cypress.Commands.add('updatePasswordSettings', (newPassword) => {
+  cy.getByDataCy('/settings').click();
+  cy.getByDataCy('password-settings').type(newPassword);
+});
