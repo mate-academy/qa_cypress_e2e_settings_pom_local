@@ -12,8 +12,12 @@ module.exports = defineConfig({
           let userName = faker.name.firstName() + `${randomNumber}`;
           return {
             username: userName.toLowerCase(),
-            email: 'test'+`${randomNumber}`+'@mail.com',
+            email: 'test' + `${randomNumber}` + '@mail.com',
             password: '12345Qwert!',
+            updateUsername: faker.internet.userName() + `${randomNumber}`,
+            updateEmail: faker.lorem.word() + `${randomNumber}` + '@mail.com',
+            bio: faker.lorem.word(),
+            updatePassword: 'Password6789$'
           };
         },
         generateArticle() {
@@ -24,8 +28,8 @@ module.exports = defineConfig({
             tag: faker.lorem.word()
           };;
         },
-        'db:clear'() {
-          clear();
+        async 'db:clear'() {
+          await clear();
           return null;
         },
       });
