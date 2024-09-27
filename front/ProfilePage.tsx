@@ -69,7 +69,7 @@ const ProfileHoc = (tab) => {
           </div>
           <div className="container">
             <div className="row">
-              <div className="col-xs-12 col-md-10 offset-md-1">
+              <div data-cy="user-info" className="col-xs-12 col-md-10 offset-md-1">
                 <div className="articles-toggle">
                   <ul className="nav nav-pills outline-active">
                     <li className="nav-item">
