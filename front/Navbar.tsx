@@ -33,21 +33,22 @@ const Navbar = () => {
           </NavbarItem>
           <Maybe test={loggedInUser}>
             <NavbarItem>
-              <NavLink href={routes.articleNew()} dataCy="new-article-link">
+              <NavLink href={routes.articleNew()} data-cy="new-article-link">
                 <i className="ion-compose" />
                 &nbsp;New Article
               </NavLink>
             </NavbarItem>
             <NavbarItem>
               <NavLink href={routes.userEdit()}>
-                <i className="ion-gear-a" />
+                <i className="ion-gear-a" data-cy="user-settings-link" />
                 &nbsp;Settings
               </NavLink>
             </NavbarItem>
             <NavbarItem>
-              <NavLink dataCy="profile-link" href={routes.userView(loggedInUser?.username)}>
+              <NavLink href={routes.userView(loggedInUser?.username)}>
                 <CustomImage
                   className="user-pic"
+                  data-cy="user-profile-link"
                   src={loggedInUser?.effectiveImage}
                   alt="your profile image"
                 />
