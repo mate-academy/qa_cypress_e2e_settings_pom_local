@@ -3,6 +3,9 @@ import { faker } from '@faker-js/faker';
 import { clear } from './dataBase';
 
 module.exports = defineConfig({
+  retries: {
+    openMode:5
+  },
   e2e: {
     baseUrl: 'http://localhost:3000',
     setupNodeEvents(on, config) {
@@ -14,6 +17,7 @@ module.exports = defineConfig({
             username: userName.toLowerCase(),
             email: 'test'+`${randomNumber}`+'@mail.com',
             password: '12345Qwert!',
+            bio:faker.person.bio(),
           };
         },
         generateArticle() {
