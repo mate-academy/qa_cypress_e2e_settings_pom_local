@@ -1,7 +1,6 @@
-import { defineConfig } from 'cypress';
-import { faker } from '@faker-js/faker';
-import { clear } from './dataBase';
-
+const { defineConfig } = require('cypress');
+const  faker  = require('@faker-js/faker');
+const { clear } = require('./dataBase');
 module.exports = defineConfig({
   e2e: {
     baseUrl: 'http://localhost:3000',
@@ -12,8 +11,9 @@ module.exports = defineConfig({
           let userName = faker.name.firstName() + `${randomNumber}`;
           return {
             username: userName.toLowerCase(),
-            email: 'test'+`${randomNumber}`+'@mail.com',
-            password: '12345Qwert!',
+            email: faker.internet.email(),
+            password: faker.internet.password(),
+            bio: faker.lorem.word()
           };
         },
         generateArticle() {
