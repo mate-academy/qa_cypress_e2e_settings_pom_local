@@ -8,7 +8,7 @@ module.exports = defineConfig({
       on('task', {
         generateUser() {
           let randomNumber = Math.ceil(Math.random(1000) * 1000);
-          let userName = faker.person.firstName() + `${randomNumber}`;
+          let userName = faker.name.firstName() + `${randomNumber}`;
           return {
             username: userName.toLowerCase(),
             email: faker.internet.email(),

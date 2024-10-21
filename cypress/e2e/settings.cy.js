@@ -6,10 +6,10 @@ import homePageObject from '../support/pages/home.pageObject';
 import accountPageObject from '../support/pages/account.pageObject';
 import SignInPageObject from '../support/pages/signIn.pageObject';
 
-const settingsPage = new SettingsPageObject();
-const homePage = new homePageObject();
-const accountPage = new accountPageObject();
-const signInPage = new SignInPageObject();
+const settingsPage = newSettingsPageObject();
+const homePage = newhomePageObject();
+const accountPage = newaccountPageObject();
+const signInPage = newSignInPageObject();
 
 describe('Settings page', () => {
   let user;
@@ -37,7 +37,7 @@ describe('Settings page', () => {
     settingsPage.visit();
     settingsPage.typeUsername(user2.username);
     settingsPage.clickUpdateSettingsBtn();
-    homePage.assertHeaderContainUsername(user.username);
+    homePage.assertHeaderContainUsername(user2.username);
   });
 
   it('should provide an ability to update bio', () => {
@@ -57,7 +57,7 @@ describe('Settings page', () => {
     signInPage.typeEmail(user2.email);
     signInPage.typePassword(user.password);
     signInPage.clickSignInBtn();
-    homePage.assertHeaderContainUsername(user.username);
+    homePage.assertHeaderContainUsername(user2.email);
 
   });
 
