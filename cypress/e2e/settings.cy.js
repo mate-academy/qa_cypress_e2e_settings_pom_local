@@ -2,11 +2,11 @@
 /// <reference types='../support' />
 
 import SignInPageObject from '../support/pages/signIn.pageObject';
-import homePageObject from '../support/pages/home.pageObject';
+import HomePageObject from '../support/pages/home.pageObject';
 import UserSettings from '../support/pages/userSettings.pageObject';
 
 const signInPage = new SignInPageObject();
-const homePage = new homePageObject();
+const homePage = new HomePageObject();
 const userSettings = new UserSettings();
 
 describe('Settings page', () => {
