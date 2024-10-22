@@ -7,7 +7,7 @@ class SettingsPageObject extends PageObject {
     return cy.getByDataCy('settings-username-field');
   }
 
-  editUsername() {
+  editUsername(username) {
     this.usernameField.clear().type(username);
   }
 
@@ -15,7 +15,7 @@ class SettingsPageObject extends PageObject {
     return cy.getByDataCy('settings-bio-field');
   }
 
-  editBio() {
+  editBio(bio) {
     this.bioField.clear().type(bio);
   }
 
@@ -23,7 +23,7 @@ class SettingsPageObject extends PageObject {
     return cy.getByDataCy('settings-email-field');
   }
 
-  editEmail() {
+  editEmail(email) {
     this.emailField.clear().type(email);
   }
 
@@ -31,7 +31,7 @@ class SettingsPageObject extends PageObject {
     return cy.getByDataCy('settings-password-field');
   }
 
-  editPassword() {
+  editPassword(password) {
     this.passwordField.clear().type(password);
   }
 
