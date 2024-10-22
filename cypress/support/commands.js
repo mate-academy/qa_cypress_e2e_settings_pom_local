@@ -49,11 +49,11 @@ Cypress.Commands.add('login',
         username,
         password
       }
-    }).then(response => {
+    }).then((response) => {
       window.localStorage.setItem('user', JSON.stringify({
         bio: response.body.user.bio,
         effectiveImage:
-          "https://static.productionready.io/images/smiley-cyrus.jpg",
+          'https://static.productionready.io/images/smiley-cyrus.jpg',
         email: response.body.user.email,
         image: response.body.user.image,
         token: response.body.user.token,

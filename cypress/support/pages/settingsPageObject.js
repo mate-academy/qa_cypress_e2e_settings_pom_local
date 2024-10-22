@@ -1,6 +1,6 @@
 import PageObject from '../PageObject';
 
-class SettingPageObject extends PageObject {
+class SettingsPageObject extends PageObject {
   url = '/settings';
 
   get usernameField() {
@@ -56,8 +56,8 @@ class SettingPageObject extends PageObject {
     this.logoutBtn.click();
   }
 
-  assertLogout(url) {
-    return cy.url().should('contain', ``);
+  assertLogout(expectedPath) {
+    cy.url().should('include', expectedPath);
   }
 }
 

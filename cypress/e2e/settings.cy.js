@@ -1,9 +1,9 @@
 /// <reference types="cypress" />
 /// <reference types="../support" />
 
-import SettingPageObject from '../support/pages/settingsPageObject';
+import SettingsPageObject from '../support/pages/settingsPageObject';
 
-const settingsPage = new SettingPageObject();
+const settingsPage = new SettingsPageObject();
 
 describe('Settings page', () => {
   let user;
@@ -45,7 +45,7 @@ describe('Settings page', () => {
 
   it('should provide an ability to log out', () => {
     settingsPage.clickLogoutBtn();
-    settingsPage.assertLogout('/');
+    settingsPage.assertLogout('/login');
 
   });
 });
