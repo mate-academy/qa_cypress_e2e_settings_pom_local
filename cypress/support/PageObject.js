@@ -1,7 +1,11 @@
+
 class PageObject {
-  visit(url) {
-    cy.visit(url || this.url);
+  getErrorMessage() {
+      return cy.get('[data-cy=error-message]');
   }
+
+ 
 }
 
-export default PageObject;
+export default new PageObject();
+
