@@ -1,43 +1,56 @@
 /// <reference types="cypress" />
 /// <reference types="../support" />
 
-import SettingsUsername from '../support/pages/settings.username.pageObject';
-import SettingsBio from '../support/pages/settings.bio.pageObject';
-import SettingsEmail from '../support/pages/settings.email.pageObject';
-import SettingsPassword from '../support/pages/settings.password.pageObject';
-import faker from 'faker';
+import SettingsPageObject from '../support/pages/settings.pageObject';
+import homePageObject from '../support/pages/home.pageObject';
+import SignInPageObject from '../support/pages/signIn.pageObject';
+import SignUpPageObject from '../support/pages/signUp.pageObject';
+import createArticleObject from '../support/pages/createArticle.pageObject';
+
+const SettingsPage = new SettingsPageObject();
+const homePage = new homePageObject();
+const signInPage = new SignInPageObject();
+const signUpPage = new SignUpPageObject();
+const createArticlePage = new createArticleObject();
 
 describe('Settings page', () => {
-  const user = {
-    email: 'wombat777@i.ua',
-    password: '1234567890'
-  };
-
-  beforeEach(() => {
-    cy.login(user);
-    cy.visit('/settings');
+  let user;
+  before(() => {
+    cy.task('generateUser').then((generateUser) => {
+      user = generateUser;
+    });
   });
 
-  const newUsername = faker.internet.userName();
-  const newBio = 'My new bio';
-  const newEmail = faker.internet.email();
-  const newPassword = faker.internet.password();
+  beforeEach(() => {
+    signInPage.visit();
+    cy.registerNewUser(user.email, user.username, user.password);
+    signInPage.typeEmail(user.email);
+    signInPage.typePassword(user.password);
+    signInPage.clickSignInBtn();
+  });
 
   it('should provide an ability to update username', () => {
-    SettingsUsername.updateUsername(newUsername);
+    SettingsPage.updateUsername(user.username);
+
+    usernameField.should('contain', user.username);
   });
 
   it('should provide an ability to update bio', () => {
-    SettingsBio.updateBio(newBio);
+    SettingsPage.updateBioField(user.description);
+
+    usernameField.should('contain', user.description);
   });
 
   it('should provide an ability to update an email', () => {
-    SettingsEmail.updateEmail(newEmail);
+    SettingsPage.updateEmail(user.email);
+
+    usernameField.should('contain', user.email);
   });
 
   it('should provide an ability to update password', () => {
-    SettingsPassword.updatePassword(newPassword);
+    SettingsPage.updatePassword(user.password);
 
+    usernameField.should('contain', user.password);
   });
 
   it('should provide an ability to log out', () => {
