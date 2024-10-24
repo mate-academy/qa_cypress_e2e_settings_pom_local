@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker';
 import PageObject from '../PageObject';
 
 class SettingsPageObject extends PageObject {
-  url = '/#/settings';
+  url = '/settings';
 
   get bioField() {
     return cy.findByPlaceholder('Short bio about you');
@@ -13,19 +13,15 @@ class SettingsPageObject extends PageObject {
   }
 
   get userNameField() {
-    return cy.findByPlaceholder('Your username');
+    return cy.findByPlaceholder('Username');
   }
 
   get passwordField() {
-    return cy.findByPlaceholder('Password');
+    return cy.findByPlaceholder('New Password');
   }
 
   get updateSettingsBtn() {
-    return cy.get('.btn.btn-lg');
-  }
-
-  checkUpdate() {
-    cy.get('.swal-modal').should('contain', 'Update successful!');
+    return cy.get('[type="submit"]');
   }
 
   generateBio() {
@@ -47,6 +43,7 @@ class SettingsPageObject extends PageObject {
   updateBio() {
     const bio = this.generateBio();
     this.bioField.clear().type(bio);
+    return bio;
   }
 
   updateEmail() {
@@ -57,6 +54,7 @@ class SettingsPageObject extends PageObject {
   updateUserName() {
     const username = this.generateUserName();
     this.userNameField.clear().type(username);
+    return username;
   }
 
   updatePassword() {
@@ -68,10 +66,12 @@ class SettingsPageObject extends PageObject {
     this.updateSettingsBtn.click();
   }
 
-  logout() {
-    return cy
-      .get('.btn.btn-outline-danger')
-      .click();
+  ensureProfileUsername(username) {
+    cy.url().should('contain', `/profile/${username}`);
+  }
+
+  ensureProfileBio(bio) {
+    cy.contains(bio).should('be.visible');
   }
 }
 

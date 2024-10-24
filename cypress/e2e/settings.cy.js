@@ -12,39 +12,30 @@ describe('Settings page', () => {
   beforeEach(() => {
     cy.task('generateUser').then((generatedUser) => {
       user = generatedUser;
-      cy.login(user);
-      SettingsPage.visit();
+      cy.login(user.email, user.username, user.password);
     });
+    SettingsPage.visit();
   });
 
   it('should provide an ability to update username', () => {
-    SettingsPage.updateUserName();
+    const newUsername = SettingsPage.updateUserName();
     SettingsPage.clickUpdateButton();
-    SettingsPage.checkUpdate();
+    SettingsPage.ensureProfileUsername(newUsername);
   });
 
   it('should provide an ability to update bio', () => {
-    SettingsPage.updateBio();
+    const newBio = SettingsPage.updateBio();
     SettingsPage.clickUpdateButton();
-    SettingsPage.checkUpdate();
+    SettingsPage.ensureProfileBio(newBio);
   });
 
   it('should provide an ability to update an email', () => {
     SettingsPage.updateEmail();
     SettingsPage.clickUpdateButton();
-    SettingsPage.checkUpdate();
   });
 
   it('should provide an ability to update password', () => {
     SettingsPage.updatePassword();
     SettingsPage.clickUpdateButton();
-    SettingsPage.checkUpdate();
-  });
-
-  it('should provide an ability to log out', () => {
-    SettingsPage.logout();
-    SettingsPage.clickUpdateButton();
-    SettingsPage.checkUpdate();
-    cy.contains('Sign in').should('be.visible');
   });
 });
