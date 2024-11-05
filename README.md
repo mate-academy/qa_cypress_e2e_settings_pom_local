@@ -34,5 +34,5 @@ Go to `e2e` folder and cover listed functionality with e2e tests:
    - create a files with POM classes for your pages in `cypress`/`support`/`pages`.
    - use `PageObject.js` file for the common for the whole app elements.
 
-Observe an example in `cypress`/`e2e`/`signIn.cy.js`.  
+Observe an example in `cypress`/`e2e`/`signIn.cy.js`.
 Find and additinoanl about Page Object in the [Cypress](https://mate.academy/learn/javascript-testing/cypress#/theory) topic.
