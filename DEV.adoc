@@ -198,7 +198,7 @@ These lint checks include both:
 ....
 npm run format
 ....
-* more functional checks, including important checks such as those provided by eslint-config-react-hooks  as opposed to more functional thing 
+* more functional checks, including important checks such as those provided by eslint-config-react-hooks  as opposed to more functional thing
 
 Rationale for some rules we've disabled:
 
@@ -314,7 +314,7 @@ TODO: many tests depend on previous steps, notably register. But we weren't able
 npmr test-api -- --folder 'Register' --folder 'Login and Remember Token' --folder 'Create Article'
 ....
 
-only the last `--folder` is used. Some threads say that multiple ones can be used in newer Newman, but even after updating it to latest v5 we couldn't get it to work: 
+only the last `--folder` is used. Some threads say that multiple ones can be used in newer Newman, but even after updating it to latest v5 we couldn't get it to work:
 
 * https://stackoverflow.com/questions/60057009/how-to-run-single-request-from-the-collection-in-newman
 * https://stackoverflow.com/questions/52519415/how-to-read-two-folder-with-newman
