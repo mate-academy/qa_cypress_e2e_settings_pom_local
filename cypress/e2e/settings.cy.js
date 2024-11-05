@@ -13,10 +13,10 @@ const testData = {
 describe('Settings page', () => {
   let user;
   beforeEach(() => {
-    //cy.task('db:clear');
+    cy.task('db:clear');
     cy.task('generateUser').then((generateUser) => {
-      const user = new Object(generateUser);
-      cy.login(faker.internet.email(), user.username, user.password);
+      user = new Object(generateUser);
+      cy.login(user.email, user.username, user.password);
     });
     settingPage.visit();
   });
@@ -42,6 +42,6 @@ describe('Settings page', () => {
   });
 
   it('should provide an ability to log out', () => {
-
+    settingPage.logoutFromSettings();
   });
 });
