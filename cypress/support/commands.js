@@ -60,3 +60,7 @@ Cypress.Commands.add('login', (email = 'riot@qa.team', username = 'riot', passwo
     cy.setCookie('auth', response.body.user.token);
   });
 });
+
+Cypress.Commands.add('clearDatabase', () => {
+  cy.task('clearDatabase');
+});
