@@ -16,9 +16,9 @@ class HomePageObject extends PageObject {
       .should('contain', username);
   }
 
-  assertHeaderContainH1Text(text) {
+  assertHeaderContainH1Text(text1) {
     this.h1Logo
-      .should('contain', text);
+      .should('contain', text1);
   }
 }
 
