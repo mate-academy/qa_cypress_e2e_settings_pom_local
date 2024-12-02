@@ -23,7 +23,7 @@ Go to `e2e` folder and cover listed functionality with e2e tests:
 - updating bio;
 - updating username;
 - updating email;
-- updating password.
+- updating password
 
 ### Requirements
 
