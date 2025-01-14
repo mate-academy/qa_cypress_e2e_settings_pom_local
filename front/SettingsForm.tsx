@@ -1,37 +1,37 @@
-import axios from 'axios'
-import Router from 'next/router'
-import React from 'react'
+import axios from 'axios';
+import Router from 'next/router';
+import React from 'react';
 
-import { setupUserLocalStorage } from 'front'
-import { apiPath } from 'front/config'
-import ListErrors from 'front/ListErrors'
-import useLoggedInUser from 'front/useLoggedInUser'
-import { useCtrlEnterSubmit } from 'front/ts'
+import { setupUserLocalStorage } from 'front';
+import { apiPath } from 'front/config';
+import ListErrors from 'front/ListErrors';
+import useLoggedInUser from 'front/useLoggedInUser';
+import { useCtrlEnterSubmit } from 'front/ts';
 
 const SettingsForm = () => {
-  const [isLoading, setLoading] = React.useState(false)
-  const [errors, setErrors] = React.useState([])
+  const [isLoading, setLoading] = React.useState(false);
+  const [errors, setErrors] = React.useState([]);
   const [userInfo, setUserInfo] = React.useState({
     image: '',
     username: '',
     bio: '',
     email: '',
     password: '',
-  })
-  const loggedInUser = useLoggedInUser()
+  });
+  const loggedInUser = useLoggedInUser();
   React.useEffect(() => {
-    if (!loggedInUser) return
-    setUserInfo((prev) => Object.assign(prev, loggedInUser))
-  }, [loggedInUser])
+    if (!loggedInUser) return;
+    setUserInfo((prev) => Object.assign(prev, loggedInUser));
+  }, [loggedInUser]);
   const updateState = (field) => (e) => {
-    setUserInfo({ ...userInfo, [field]: e.target.value })
-  }
+    setUserInfo({ ...userInfo, [field]: e.target.value });
+  };
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setLoading(true)
-    const user = { ...userInfo }
+    e.preventDefault();
+    setLoading(true);
+    const user = { ...userInfo };
     if (!user.password) {
-      delete user.password
+      delete user.password;
     }
     const { data, status } = await axios.put(
       `${apiPath}/user`,
@@ -42,17 +42,17 @@ const SettingsForm = () => {
           Authorization: `Token ${loggedInUser?.token}`,
         },
       }
-    )
-    setLoading(false)
+    );
+    setLoading(false);
     if (status !== 200) {
-      setErrors(data.errors.body)
+      setErrors(data.errors.body);
     }
     if (data?.user) {
-      await setupUserLocalStorage(data, setErrors)
-      Router.push(`/profile/${user.username}`)
+      await setupUserLocalStorage(data, setErrors);
+      Router.push(`/profile/${user.username}`);
     }
-  }
-  useCtrlEnterSubmit(handleSubmit)
+  };
+  useCtrlEnterSubmit(handleSubmit);
   return (
     <React.Fragment>
       <ListErrors errors={errors} />
@@ -70,6 +70,7 @@ const SettingsForm = () => {
           <fieldset className="form-group">
             <input
               className="form-control form-control-lg"
+              data-cy="setting-username"
               type="text"
               placeholder="Username"
               value={userInfo.username}
@@ -79,6 +80,7 @@ const SettingsForm = () => {
           <fieldset className="form-group">
             <textarea
               className="form-control form-control-lg"
+              data-cy="setting-bio"
               rows={8}
               placeholder="Short bio about you"
               value={userInfo.bio}
@@ -88,6 +90,7 @@ const SettingsForm = () => {
           <fieldset className="form-group">
             <input
               className="form-control form-control-lg"
+              data-cy="setting-email"
               type="email"
               placeholder="Email"
               value={userInfo.email}
@@ -97,6 +100,7 @@ const SettingsForm = () => {
           <fieldset className="form-group">
             <input
               className="form-control form-control-lg"
+              data-cy="setting-password"
               type="password"
               placeholder="New Password"
               value={userInfo.password}
@@ -106,6 +110,7 @@ const SettingsForm = () => {
           </fieldset>
           <button
             className="btn btn-lg btn-primary pull-xs-right"
+            data-cy="setting-update"
             type="submit"
             disabled={isLoading}
           >
@@ -114,7 +119,7 @@ const SettingsForm = () => {
         </fieldset>
       </form>
     </React.Fragment>
-  )
-}
+  );
+};
 
-export default SettingsForm
+export default SettingsForm;

@@ -9,13 +9,13 @@ module.exports = {
           defaultValue: undefined,
         },
         { transaction }
-      )
+      );
       await queryInterface.bulkUpdate(
         'User',
         { ip: null },
         { ip: '' },
         { transaction }
-      )
+      );
     }),
   down: async (queryInterface, Sequelize) =>
     queryInterface.sequelize.transaction(async (transaction) => {
@@ -27,12 +27,12 @@ module.exports = {
           defaultValue: '',
         },
         { transaction }
-      )
+      );
       await queryInterface.bulkUpdate(
         'User',
         { ip: '' },
         { ip: null },
         { transaction }
-      )
+      );
     }),
-}
+};

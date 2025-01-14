@@ -98,12 +98,12 @@
     "*.js": "eslint --max-warnings=0"
   },
   "engines": {
-    "node": "14.17.0",
+    "node": "20.17.0",
     "npm": "6.14.13"
   },
   "prettier": {
     "printWidth": 80,
-    "semi": false,
+    "semi": true,
     "singleQuote": true
   },
   "cacheDirectories": [
