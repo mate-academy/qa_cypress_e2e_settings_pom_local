@@ -2,19 +2,14 @@ module.exports = {
   env: {
     browser: true,
     es2021: true,
-    'cypress/globals': true
+    'cypress/globals': true,
   },
-  extends: [
-    'plugin:cypress/recommended'
-  ],
-  overrides: [
-  ],
+  extends: ['plugin:cypress/recommended'],
+  overrides: [],
   parserOptions: {
-    ecmaVersion: 'latest'
+    ecmaVersion: 'latest',
   },
-  plugins: [
-    'cypress'
-  ],
+  plugins: ['cypress'],
   rules: {
     semi: ['error', 'always'],
     'space-before-function-paren': 'off',
@@ -24,13 +19,17 @@ module.exports = {
     'cypress/no-force': 'warn',
     'cypress/no-async-tests': 'error',
     'cypress/no-pause': 'error',
-    'max-len': ['error', 80, {
-      ignoreTemplateLiterals: true,
-      ignoreRegExpLiterals: true,
-      ignoreComments: true
-    }],
+    'max-len': [
+      'error',
+      110,
+      {
+        ignoreTemplateLiterals: true,
+        ignoreRegExpLiterals: true,
+        ignoreComments: true,
+      },
+    ],
     'arrow-parens': ['error', 'always'],
     quotes: ['error', 'single', { allowTemplateLiterals: true }],
-    'no-console': ['error']
-  }
+    'no-console': ['error'],
+  },
 };

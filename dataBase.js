@@ -1,8 +1,9 @@
+/* eslint-disable no-console */
 const { Sequelize } = require('sequelize');
 
 const sequilize = new Sequelize({
   dialect: 'sqlite',
-  storage: './db.sqlite3'
+  storage: './db.sqlite3',
 });
 
 async function clear() {

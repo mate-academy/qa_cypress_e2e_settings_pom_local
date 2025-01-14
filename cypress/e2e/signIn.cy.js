@@ -7,6 +7,12 @@ import homePageObject from '../support/pages/home.pageObject';
 const signInPage = new SignInPageObject();
 const homePage = new homePageObject();
 
+const invalidUser = {
+  username: 'invalidUser',
+  password: '123',
+  email: 'invalidUser@gmail.com',
+};
+
 describe('Sign In page', () => {
   let user;
 
@@ -14,21 +20,24 @@ describe('Sign In page', () => {
     cy.task('db:clear');
     cy.task('generateUser').then((generateUser) => {
       user = generateUser;
+      cy.register(user.email, user.username, user.password);
     });
   });
-  
-  it('should provide an ability to log in with existing credentials', () => {
+
+  it('should logs in with valid credentials', () => {
     signInPage.visit();
-    cy.register(user.email, user.username, user.password);
 
     signInPage.typeEmail(user.email);
-    signInPage.typePassword(user.password);
-    signInPage.clickSignInBtn();
-
+    signInPage.typePassword(`${user.password}{enter}`);
     homePage.assertHeaderContainUsername(user.username);
   });
 
-  it('should not provide an ability to log in with wrong credentials', () => {
+  it('shows error for invalid credentials', () => {
+    signInPage.visit();
 
+    signInPage.typeEmail(invalidUser.email);
+    signInPage.typePassword(invalidUser.password);
+    signInPage.clickSignInBtn();
+    signInPage.checkErrorMessages();
   });
 });
