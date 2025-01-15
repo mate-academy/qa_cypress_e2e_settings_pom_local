@@ -1,16 +1,16 @@
-import React from 'react'
+import React from 'react';
 
-import CustomLink from 'front/CustomLink'
-import CustomImage from 'front/CustomImage'
-import FavoriteArticleButton from 'front/FavoriteArticleButton'
-import { formatDate } from 'front/date'
-import routes from 'front/routes'
+import CustomLink from 'front/CustomLink';
+import CustomImage from 'front/CustomImage';
+import FavoriteArticleButton from 'front/FavoriteArticleButton';
+import { formatDate } from 'front/date';
+import routes from 'front/routes';
 
 const ArticlePreview = ({ article }) => {
-  const preview = article
-  if (!article) return
+  const preview = article;
+  if (!article) return;
   return (
-    <div className="article-preview">
+    <div className="article-preview" data-cy="article-preview">
       <div className="article-meta">
         <CustomLink href={routes.userView(preview.author.username)}>
           <CustomImage src={preview.author.image} alt="author profile image" />
@@ -19,6 +19,7 @@ const ArticlePreview = ({ article }) => {
           <CustomLink
             href={routes.userView(preview.author.username)}
             className="author"
+            dataCy="user-author"
           >
             {preview.author.username}
           </CustomLink>
@@ -36,7 +37,7 @@ const ArticlePreview = ({ article }) => {
         href={routes.articleView(preview.slug)}
         className="preview-link"
       >
-        <h1>{preview.title}</h1>
+        <h1 data-cy="article-title-text">{preview.title}</h1>
         <p>{preview.description}</p>
         <span>Read more...</span>
         <ul className="tag-list">
@@ -45,12 +46,12 @@ const ArticlePreview = ({ article }) => {
               <li className="tag-default tag-pill tag-outline" key={index}>
                 {tag}
               </li>
-            )
+            );
           })}
         </ul>
       </CustomLink>
     </div>
-  )
-}
+  );
+};
 
-export default ArticlePreview
+export default ArticlePreview;

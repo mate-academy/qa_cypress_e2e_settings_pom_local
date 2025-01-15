@@ -1,12 +1,12 @@
-import Router, { useRouter } from 'next/router'
-import React from 'react'
+import Router, { useRouter } from 'next/router';
+import React from 'react';
 
-import ListErrors from 'front/ListErrors'
-import TagInput from 'front/TagInput'
-import ArticleAPI from 'front/api/article'
-import useLoggedInUser from 'front/useLoggedInUser'
-import { useCtrlEnterSubmit } from 'front/ts'
-import { AppContext } from 'front/ts'
+import ListErrors from 'front/ListErrors';
+import TagInput from 'front/TagInput';
+import ArticleAPI from 'front/api/article';
+import useLoggedInUser from 'front/useLoggedInUser';
+import { useCtrlEnterSubmit } from 'front/ts';
+import { AppContext } from 'front/ts';
 
 function editorReducer(state, action) {
   switch (action.type) {
@@ -14,90 +14,90 @@ function editorReducer(state, action) {
       return {
         ...state,
         title: action.text,
-      }
+      };
     case 'SET_DESCRIPTION':
       return {
         ...state,
         description: action.text,
-      }
+      };
     case 'SET_BODY':
       return {
         ...state,
         body: action.text,
-      }
+      };
     case 'ADD_TAG':
       return {
         ...state,
         tagList: state.tagList.concat(action.tag),
-      }
+      };
     case 'REMOVE_TAG':
       return {
         ...state,
         tagList: state.tagList.filter((tag) => tag !== action.tag),
-      }
+      };
     default:
-      throw new Error('Unhandled action')
+      throw new Error('Unhandled action');
   }
 }
 
 export default function ArticleEditorHoc(isnew = false) {
   return function ArticleEditor({ article: initialArticle }) {
-    let initialState
+    let initialState;
     if (initialArticle) {
       initialState = {
         title: initialArticle.title,
         description: initialArticle.description,
         body: initialArticle.body,
         tagList: initialArticle.tagList,
-      }
+      };
     } else {
       initialState = {
         title: '',
         description: '',
         body: '',
         tagList: [],
-      }
+      };
     }
-    const [isLoading, setLoading] = React.useState(false)
-    const [errors, setErrors] = React.useState([])
-    const [posting, dispatch] = React.useReducer(editorReducer, initialState)
-    const loggedInUser = useLoggedInUser()
-    const router = useRouter()
+    const [isLoading, setLoading] = React.useState(false);
+    const [errors, setErrors] = React.useState([]);
+    const [posting, dispatch] = React.useReducer(editorReducer, initialState);
+    const loggedInUser = useLoggedInUser();
+    const router = useRouter();
     const handleTitle = (e) =>
-      dispatch({ type: 'SET_TITLE', text: e.target.value })
+      dispatch({ type: 'SET_TITLE', text: e.target.value });
     const handleDescription = (e) =>
-      dispatch({ type: 'SET_DESCRIPTION', text: e.target.value })
+      dispatch({ type: 'SET_DESCRIPTION', text: e.target.value });
     const handleBody = (e) =>
-      dispatch({ type: 'SET_BODY', text: e.target.value })
-    const addTag = (tag) => dispatch({ type: 'ADD_TAG', tag: tag })
-    const removeTag = (tag) => dispatch({ type: 'REMOVE_TAG', tag: tag })
+      dispatch({ type: 'SET_BODY', text: e.target.value });
+    const addTag = (tag) => dispatch({ type: 'ADD_TAG', tag: tag });
+    const removeTag = (tag) => dispatch({ type: 'REMOVE_TAG', tag: tag });
     const handleSubmit = async (e) => {
-      e.preventDefault()
-      setLoading(true)
-      let data, status
+      e.preventDefault();
+      setLoading(true);
+      let data, status;
       if (isnew) {
-        ;({ data, status } = await ArticleAPI.create(
+        ({ data, status } = await ArticleAPI.create(
           posting,
           loggedInUser?.token
-        ))
+        ));
       } else {
-        ;({ data, status } = await ArticleAPI.update(
+        ({ data, status } = await ArticleAPI.update(
           posting,
           router.query.pid,
           loggedInUser?.token
-        ))
+        ));
       }
-      setLoading(false)
+      setLoading(false);
       if (status !== 200) {
-        setErrors(data.errors)
+        setErrors(data.errors);
       }
-      Router.push(`/article/${data.article.slug}`)
-    }
-    useCtrlEnterSubmit(handleSubmit)
-    const { setTitle } = React.useContext(AppContext)
+      Router.push(`/article/${data.article.slug}`);
+    };
+    useCtrlEnterSubmit(handleSubmit);
+    const { setTitle } = React.useContext(AppContext);
     React.useEffect(() => {
-      setTitle(isnew ? 'New article' : `Editing: ${initialArticle?.title}`)
-    }, [setTitle, initialArticle?.title])
+      setTitle(isnew ? 'New article' : `Editing: ${initialArticle?.title}`);
+    }, [setTitle, initialArticle?.title]);
     return (
       <>
         <div className="editor-page">
@@ -110,6 +110,7 @@ export default function ArticleEditorHoc(isnew = false) {
                     <fieldset className="form-group">
                       <input
                         className="form-control form-control-lg"
+                        data-cy="article-title"
                         type="text"
                         placeholder="Article Title"
                         value={posting.title}
@@ -119,6 +120,7 @@ export default function ArticleEditorHoc(isnew = false) {
                     <fieldset className="form-group">
                       <input
                         className="form-control"
+                        data-cy="article-description"
                         type="text"
                         placeholder="What's this article about?"
                         value={posting.description}
@@ -128,6 +130,7 @@ export default function ArticleEditorHoc(isnew = false) {
                     <fieldset className="form-group">
                       <textarea
                         className="form-control"
+                        data-cy="article-body"
                         rows={8}
                         placeholder="Write your article (in markdown)"
                         value={posting.body}
@@ -141,6 +144,7 @@ export default function ArticleEditorHoc(isnew = false) {
                     />
                     <button
                       className="btn btn-lg pull-xs-right btn-primary"
+                      data-cy="article-publish"
                       type="button"
                       disabled={isLoading}
                       onClick={handleSubmit}
@@ -154,6 +158,6 @@ export default function ArticleEditorHoc(isnew = false) {
           </div>
         </div>
       </>
-    )
-  }
+    );
+  };
 }
