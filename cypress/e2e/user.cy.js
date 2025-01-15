@@ -11,7 +11,7 @@ const settingPage = new SettingsPageObject();
 const homePage = new HomePageObject();
 const articlePage = new ArticlePageObject();
 
-describe('Follow/unfollow button', () => {
+describe('Follow/nofollow button', () => {
   before(() => {
     cy.task('db:clear');
 
