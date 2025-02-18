@@ -36,3 +36,9 @@ Go to `e2e` folder and cover listed functionality with e2e tests:
 
 Observe an example in `cypress`/`e2e`/`signIn.cy.js`.  
 Find and additinoanl about Page Object in the [Cypress](https://mate.academy/learn/javascript-testing/cypress#/theory) topic.
+
+<details>
+<summary>Hint</summary>
+<br>
+:bulb: Be mindful of data validation when generating test data for API requests. Some randomly generated values may not meet the API’s validation rules, causing tests to fail. To avoid flaky test behaviour, ensure that your data generation method produces valid values. You can adjust the data generation by using different `faker` methods or by passing different configuration options (if the method supports them).
+</details> 
