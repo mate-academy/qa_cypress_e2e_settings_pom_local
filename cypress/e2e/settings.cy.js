@@ -33,7 +33,7 @@ describe('Settings page', () => {
     });
   });
 
-  it.only('should provide an ability to update username', () => {
+  it('should provide an ability to update info', () => {
     settingsPage.userNameField.should('have.value', user.username);
     settingsPage.userNameField.clear();
     settingsPage.typeUserName(newName);
@@ -48,21 +48,5 @@ describe('Settings page', () => {
     settingsPage.typePassword(newPassword);
     settingsPage.passwordField.should('have.value', newPassword);
     settingsPage.updateSettings();
-  });
-
-  it('should provide an ability to update bio', () => {
-
-  });
-
-  it('should provide an ability to update an email', () => {
-
-  });
-
-  it('should provide an ability to update password', () => {
-
-  });
-
-  it('should provide an ability to log out', () => {
-
   });
 });
