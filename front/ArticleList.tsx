@@ -1,15 +1,15 @@
-import { useRouter } from 'next/router'
-import React from 'react'
-import useSWR from 'swr'
+import { useRouter } from 'next/router';
+import React from 'react';
+import useSWR from 'swr';
 
-import ArticlePreview from 'front/ArticlePreview'
-import { apiPath, articleLimit } from 'front/config'
-import ErrorMessage from 'front/ErrorMessage'
-import { FavoriteArticleButtonContext } from 'front/FavoriteArticleButton'
-import LoadingSpinner from 'front/LoadingSpinner'
-import Maybe from 'front/Maybe'
-import Pagination from 'front/Pagination'
-import fetcher from 'front/api'
+import ArticlePreview from 'front/ArticlePreview';
+import { apiPath, articleLimit } from 'front/config';
+import ErrorMessage from 'front/ErrorMessage';
+import { FavoriteArticleButtonContext } from 'front/FavoriteArticleButton';
+import LoadingSpinner from 'front/LoadingSpinner';
+import Maybe from 'front/Maybe';
+import Pagination from 'front/Pagination';
+import fetcher from 'front/api';
 
 const ArticleList = ({
   articles,
@@ -21,51 +21,51 @@ const ArticleList = ({
   ssr,
   tag = undefined,
 }) => {
-  const router = useRouter()
-  const { query } = router
-  const { pid } = query
+  const router = useRouter();
+  const { query } = router;
+  const { pid } = query;
   // The page can be seen up to date from SSR without refetching,
   // so we skip the fetch.
   const ssrSkipFetch =
     page === 0 &&
-    ((loggedInUser && what === 'feed') || (!loggedInUser && what === 'global'))
+    ((loggedInUser && what === 'feed') || (!loggedInUser && what === 'global'));
   const fetchURL = (() => {
     if (loggedInUser === undefined || (ssr && ssrSkipFetch)) {
       // This makes SWR not fetch.
-      return null
+      return null;
     }
     switch (what) {
       case 'favorites':
         return `${apiPath}/articles?limit=${articleLimit}&favorited=${encodeURIComponent(
           String(pid)
-        )}&offset=${page * articleLimit}`
+        )}&offset=${page * articleLimit}`;
       case 'my-posts':
         return `${apiPath}/articles?limit=${articleLimit}&author=${encodeURIComponent(
           String(pid)
-        )}&offset=${page * articleLimit}`
+        )}&offset=${page * articleLimit}`;
       case 'tag':
         return `${apiPath}/articles?limit=${articleLimit}&tag=${encodeURIComponent(
           tag
-        )}&offset=${page * articleLimit}`
+        )}&offset=${page * articleLimit}`;
       case 'feed':
         return `${apiPath}/articles/feed?limit=${articleLimit}&offset=${
           page * articleLimit
-        }`
+        }`;
       case 'global':
         return `${apiPath}/articles?limit=${articleLimit}&offset=${
           page * articleLimit
-        }`
+        }`;
       case undefined:
         // We haven't decided yet because we haven't decided if we are logged in or out yet.
-        return null
+        return null;
       default:
-        throw new Error(`Unknown search: ${what}`)
+        throw new Error(`Unknown search: ${what}`);
     }
-  })()
-  const { data, error } = useSWR(fetchURL, fetcher())
-  let showSpinner = true
+  })();
+  const { data, error } = useSWR(fetchURL, fetcher());
+  let showSpinner = true;
   if (data) {
-    ;({ articles, articlesCount } = data)
+    ({ articles, articlesCount } = data);
   } else if (
     // If we used server side data on either of those cases, it would lead to wrong
     // data flickering, either for page 0, for for global feed instead of user following feed
@@ -80,16 +80,16 @@ const ArticleList = ({
     // SSR has all the data it needs, so for sure we won't show the spinner.
     (ssr && (ssrSkipFetch || loggedInUser === undefined))
   ) {
-    showSpinner = false
+    showSpinner = false;
   } else {
-    ;[articles, articlesCount] = [[], 0]
+    [articles, articlesCount] = [[], 0];
   }
 
   // Favorite article button state.
-  const favorited = []
-  const setFavorited = []
-  const favoritesCount = []
-  const setFavoritesCount = []
+  const favorited = [];
+  const setFavorited = [];
+  const favoritesCount = [];
+  const setFavoritesCount = [];
   // MUST be articleLimit and not articles.length, because articles.length
   // can happen a variable number of times on index page due to:
   // * load ISR page logged off on global
@@ -100,23 +100,27 @@ const ArticleList = ({
     // https://stackoverflow.com/questions/53906843/why-cant-react-hooks-be-called-inside-loops-or-nested-function
     // https://stackoverflow.com/questions/61345625/ignore-react-hook-react-useeffect-may-be-executed-more-than-once
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    ;[favorited[i], setFavorited[i]] = React.useState(false)
+    [favorited[i], setFavorited[i]] = React.useState(false);
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    ;[favoritesCount[i], setFavoritesCount[i]] = React.useState(0)
+    [favoritesCount[i], setFavoritesCount[i]] = React.useState(0);
   }
   React.useEffect(() => {
-    const nArticles = articles?.length || 0
+    const nArticles = articles?.length || 0;
     for (let i = 0; i < nArticles; i++) {
-      setFavorited[i](articles[i].favorited)
-      setFavoritesCount[i](articles[i].favoritesCount)
+      setFavorited[i](articles[i].favorited);
+      setFavoritesCount[i](articles[i].favoritesCount);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, Object.assign(articles.map((a) => a.favorited).concat(articles.map((a) => a.favoritesCount)), { length: articleLimit }))
+  }, Object.assign(articles.map((a) => a.favorited).concat(articles.map((a) => a.favoritesCount)), { length: articleLimit }));
 
-  if (error) return <ErrorMessage message="Cannot load recent articles..." />
-  if (!data && showSpinner) return <LoadingSpinner />
+  if (error) return <ErrorMessage message="Cannot load recent articles..." />;
+  if (!data && showSpinner) return <LoadingSpinner />;
   if (articles?.length === 0) {
-    return <div className="article-preview">No articles are here... yet.</div>
+    return (
+      <div className="article-preview" data-cy="article-preview">
+        No articles are here... yet.
+      </div>
+    );
   }
   return (
     <>
@@ -143,7 +147,7 @@ const ArticleList = ({
         />
       </Maybe>
     </>
-  )
-}
+  );
+};
 
-export default ArticleList
+export default ArticleList;

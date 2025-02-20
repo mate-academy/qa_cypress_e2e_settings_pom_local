@@ -1,20 +1,20 @@
-import Head from 'next/head'
-import React from 'react'
+import Head from 'next/head';
+import React from 'react';
 
-import ArticleList from 'front/ArticleList'
-import Maybe from 'front/Maybe'
-import Tags from 'front/Tags'
-import { appName } from 'front/config'
-import useLoggedInUser from 'front/useLoggedInUser'
-import { AppContext, resetIndexState } from 'front/ts'
+import ArticleList from 'front/ArticleList';
+import Maybe from 'front/Maybe';
+import Tags from 'front/Tags';
+import { appName } from 'front/config';
+import useLoggedInUser from 'front/useLoggedInUser';
+import { AppContext, resetIndexState } from 'front/ts';
 
 const IndexPage = ({ articles, articlesCount, ssr, tags }) => {
   const { page, setPage, tab, setTab, tag, setTag } =
-    React.useContext(AppContext)
-  const loggedInUser = useLoggedInUser()
+    React.useContext(AppContext);
+  const loggedInUser = useLoggedInUser();
   React.useEffect(() => {
-    resetIndexState(setPage, setTab, loggedInUser)
-  }, [loggedInUser, setPage, setTab])
+    resetIndexState(setPage, setTab, loggedInUser);
+  }, [loggedInUser, setPage, setTab]);
   return (
     <>
       <Head>
@@ -44,8 +44,8 @@ const IndexPage = ({ articles, articlesCount, ssr, tags }) => {
                           tab === 'feed' ? ' active' : ''
                         }`}
                         onClick={() => {
-                          setPage(0)
-                          setTab('feed')
+                          setPage(0);
+                          setTab('feed');
                         }}
                       >
                         Your Feed
@@ -57,9 +57,10 @@ const IndexPage = ({ articles, articlesCount, ssr, tags }) => {
                       className={`link nav-link${
                         tab === 'global' ? ' active' : ''
                       }`}
+                      data-cy="user-global-feed"
                       onClick={() => {
-                        setPage(0)
-                        setTab('global')
+                        setPage(0);
+                        setTab('global');
                       }}
                     >
                       Global Feed
@@ -97,7 +98,7 @@ const IndexPage = ({ articles, articlesCount, ssr, tags }) => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default IndexPage
+export default IndexPage;
