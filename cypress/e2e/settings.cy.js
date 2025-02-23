@@ -1,41 +1,64 @@
-// cypress/e2e/settings.spec.js
-
 /// <reference types="cypress" />
 /// <reference types="../support" />
 
-import SettingsPage from '../support/pages/settings.pageObject';
+const { faker } = require('@faker-js/faker');
+import SettingsPageObject from '../support/pages/setting.pageObject';
+import HomePageObject from '../support/pages/home.pageObject';
 
-const settingsPage = new SettingsPage();
+const testData = {
+  username: faker.internet.userName().toLowerCase(),
+  bio: faker.lorem.sentences(2),
+  email: faker.internet.email(),
+  password: faker.internet.password({ length: 8 })
+};
+
+const homePage = new HomePageObject();
+const settingPage = new SettingsPageObject();
 
 describe('Settings page', () => {
+  before(() => {
+    cy.visit('/');
+    cy.login();
+  });
+
   beforeEach(() => {
-    cy.task('db:clear'); // Clear database before each test
+    cy.task('db:clear');
+    cy.task('generateUser').then((data) => {
+      const { email, username, password } = data;
+
+      cy.login(email, username, password);
+    });
+
+    settingPage.visit();
   });
 
   it('should provide an ability to update username', () => {
-    settingsPage.visit();
-    settingsPage.updateUsername('new_username');
-    // Add assertions as needed
+    settingPage.updateUsername(testData.username);
+    settingPage.clickOnUpdateButton();
+    settingPage.pageReload();
+    settingPage.checkUsernameIsUpdated(testData.username);
   });
 
   it('should provide an ability to update bio', () => {
-    settingsPage.visit();
-    settingsPage.updateBio('New bio text');
-    // Add assertions as needed
+    settingPage.updateBio(testData.bio);
+    settingPage.clickOnUpdateButton();
+    settingPage.checkBioIsUpdated(testData.bio);
   });
 
-  it('should provide an ability to update email', () => {
-    settingsPage.visit();
-    settingsPage.updateEmail('newemail@example.com');
+  it('should provide an ability to update an email', () => {
+    settingPage.updateEmail(testData.email);
+    settingPage.clickOnUpdateButton();
+    settingPage.pageReload();
+    settingPage.checkEmailIsUpdated(testData.email);
   });
 
   it('should provide an ability to update password', () => {
-    settingsPage.visit();
-    settingsPage.updatePassword('new_password');
+    settingPage.updatePassword(testData.password);
+    settingPage.clickOnUpdateButton();
   });
 
   it('should provide an ability to log out', () => {
-    settingsPage.visit();
-    settingsPage.logout();
+    settingPage.clickOnLogoutButton();
+    homePage.checkHomePageTitle();
   });
 });

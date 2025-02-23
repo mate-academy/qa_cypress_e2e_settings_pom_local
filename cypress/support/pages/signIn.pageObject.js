@@ -1,31 +1,57 @@
 import PageObject from '../PageObject';
 
-class SignInPageObject extends PageObject {
-  url = '/user/login';
+class SettingsPageObject extends PageObject {
+    url = '/settings';
 
-  get emailField() {
-    return cy.getByDataCy('email-sign-in');
-  }
+    elements = {
+        usernameField: () => cy.getByDataCy('username'),
+        bioField: () => cy.getByDataCy('bio'),
+        emailField: () => cy.getByDataCy('email'),
+        newPasswordField: () => cy.getByDataCy('new-password'),
+        updateButton: () => cy.getByDataCy('update'),
+        logoutButton: () => cy.getByDataCy('logout'),
+        profileBio: () => cy.getByDataCy('profile-bio')
+    };
 
-  get passwordField() {
-    return cy.getByDataCy('password-sign-in');
-  }
+    updateUsername(username) {
+        this.elements.usernameField().clear().type(username);
+    }
 
-  get signInBtn() {
-    return cy.getByDataCy('sign-in-btn');
-  }
+    updateBio(bio) {
+        this.elements.bioField().type(bio);
+    }
 
-  typeEmail(email) {
-    this.emailField.type(email);
-  }
+    updateEmail(email) {
+        this.elements.emailField().clear().type(email);
+    }
 
-  typePassword(password) {
-    this.passwordField.type(password);
-  }
+    updatePassword(password) {
+        this.elements.newPasswordField().type(password);
+    }
 
-  clickSignInBtn() {
-    this.signInBtn.click();
-  }
+    clickOnUpdateButton() {
+        this.elements.updateButton().click();
+    }
+
+    clickOnLogoutButton() {
+        this.elements.logoutButton().click();
+    }
+
+    pageReload() {
+        cy.reload();
+    }
+
+    checkUsernameIsUpdated(username) {
+        this.elements.usernameField().should('have.value', username);
+    }
+
+    checkBioIsUpdated(bio) {
+        this.elements.profileBio().should('contain', bio);
+    }
+
+    checkEmailIsUpdated(email) {
+        this.elements.emailField().should('have.value', email.toLowerCase());
+    }
 }
 
-export default SignInPageObject;
+export default SettingsPageObject;
