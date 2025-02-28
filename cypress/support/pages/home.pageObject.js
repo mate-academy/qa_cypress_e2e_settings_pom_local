@@ -11,6 +11,10 @@ class HomePageObject extends PageObject {
     this.usernameLink
       .should('contain', username);
   }
+
+  checkHomePageTitle() {
+    cy.getByDataCy('home-logo').should('contain', 'conduit');
+  }
 }
 
 export default HomePageObject;
