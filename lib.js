@@ -1,4 +1,4 @@
-const config = require('./front/config')
+const config = require('./front/config');
 
 async function deleteOldestForDemo(Model) {
   if (config.isDemo) {
@@ -8,29 +8,29 @@ async function deleteOldestForDemo(Model) {
       offset: config.demoMaxObjs,
       limit: config.maxObjsInMemory,
       attributes: ['id'],
-    })
+    });
     if (old.length) {
-      await Model.destroy({ where: { id: old.map((row) => row.id) } })
+      await Model.destroy({ where: { id: old.map((row) => row.id) } });
     }
   }
 }
-exports.deleteOldestForDemo = deleteOldestForDemo
+exports.deleteOldestForDemo = deleteOldestForDemo;
 
 // https://stackoverflow.com/questions/14382725/how-to-get-the-correct-ip-address-of-a-client-into-a-node-socket-io-app-hosted-o/14382990#14382990
 // Works on Heroku 2021.
 function getClientIp(req) {
-  return req.header('x-forwarded-for')
+  return req.header('x-forwarded-for');
 }
-exports.getClientIp = getClientIp
+exports.getClientIp = getClientIp;
 
 class ValidationError extends Error {
   constructor(errors, status) {
-    super()
-    this.errors = errors
-    this.status = status
+    super();
+    this.errors = errors;
+    this.status = status;
   }
 }
-exports.ValidationError = ValidationError
+exports.ValidationError = ValidationError;
 
 async function getIndexTags(sequelize) {
   return (
@@ -40,25 +40,25 @@ async function getIndexTags(sequelize) {
         ['name', 'ASC'],
       ],
     })
-  ).map((tag) => tag.name)
+  ).map((tag) => tag.name);
 }
-exports.getIndexTags = getIndexTags
+exports.getIndexTags = getIndexTags;
 
 function validatePositiveInteger(s) {
-  const i = Number(s)
-  let ok = s !== '' && Number.isInteger(i) && i >= 0
-  return [i, ok]
+  const i = Number(s);
+  let ok = s !== '' && Number.isInteger(i) && i >= 0;
+  return [i, ok];
 }
-exports.validatePositiveInteger = validatePositiveInteger
+exports.validatePositiveInteger = validatePositiveInteger;
 
 function validateParam(obj, prop, validator, defaultValue) {
-  let param = obj[prop]
+  let param = obj[prop];
   if (typeof param === 'undefined') {
-    return defaultValue
+    return defaultValue;
   } else {
-    let [val, ok] = validator(param)
+    let [val, ok] = validator(param);
     if (ok) {
-      return val
+      return val;
     } else {
       throw new ValidationError(
         {
@@ -67,8 +67,8 @@ function validateParam(obj, prop, validator, defaultValue) {
           ],
         },
         422
-      )
+      );
     }
   }
 }
-exports.validateParam = validateParam
+exports.validateParam = validateParam;

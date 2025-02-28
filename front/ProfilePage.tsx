@@ -1,47 +1,47 @@
-import { useRouter } from 'next/router'
-import React from 'react'
-import useSWR from 'swr'
+import { useRouter } from 'next/router';
+import React from 'react';
+import useSWR from 'swr';
 
-import ArticleList from 'front/ArticleList'
-import CustomLink from 'front/CustomLink'
-import CustomImage from 'front/CustomImage'
-import LoadingSpinner from 'front/LoadingSpinner'
-import EditProfileButton from 'front/EditProfileButton'
+import ArticleList from 'front/ArticleList';
+import CustomLink from 'front/CustomLink';
+import CustomImage from 'front/CustomImage';
+import LoadingSpinner from 'front/LoadingSpinner';
+import EditProfileButton from 'front/EditProfileButton';
 import FollowUserButton, {
   FollowUserButtonContext,
-} from 'front/FollowUserButton'
-import fetcher from 'front/api'
-import { apiPath } from 'front/config'
-import useLoggedInUser from 'front/useLoggedInUser'
-import { AppContext } from 'front/ts'
-import routes from 'front/routes'
+} from 'front/FollowUserButton';
+import fetcher from 'front/api';
+import { apiPath } from 'front/config';
+import useLoggedInUser from 'front/useLoggedInUser';
+import { AppContext } from 'front/ts';
+import routes from 'front/routes';
 
 const ProfileHoc = (tab) => {
   return function ProfilePage({ profile, articles, articlesCount }) {
-    const [page, setPage] = React.useState(0)
-    const router = useRouter()
+    const [page, setPage] = React.useState(0);
+    const router = useRouter();
     const { data: profileApi } = useSWR(
       `${apiPath}/profiles/${profile?.username}`,
       fetcher(router.isFallback)
-    )
+    );
     if (profileApi !== undefined) {
-      profile = profileApi.profile
+      profile = profileApi.profile;
     }
-    const username = profile?.username
-    const bio = profile?.bio
-    const image = profile?.image
-    const loggedInUser = useLoggedInUser()
-    const isCurrentUser = loggedInUser && username === loggedInUser?.username
-    const [following, setFollowing] = React.useState(false)
+    const username = profile?.username;
+    const bio = profile?.bio;
+    const image = profile?.image;
+    const loggedInUser = useLoggedInUser();
+    const isCurrentUser = loggedInUser && username === loggedInUser?.username;
+    const [following, setFollowing] = React.useState(false);
     React.useEffect(() => {
-      setFollowing(profile?.following)
-    }, [profile?.following])
-    const { setTitle } = React.useContext(AppContext)
+      setFollowing(profile?.following);
+    }, [profile?.following]);
+    const { setTitle } = React.useContext(AppContext);
     React.useEffect(() => {
-      setTitle(username)
-    }, [setTitle, username])
+      setTitle(username);
+    }, [setTitle, username]);
     if (router.isFallback) {
-      return <LoadingSpinner />
+      return <LoadingSpinner />;
     }
     return (
       <>
@@ -56,7 +56,7 @@ const ProfileHoc = (tab) => {
                     className="user-img"
                   />
                   <h4>{username}</h4>
-                  <p>{bio}</p>
+                  <p data-cy="setting-new-bio">{bio}</p>
                   <EditProfileButton isCurrentUser={isCurrentUser} />
                   <FollowUserButtonContext.Provider
                     value={{ following, setFollowing }}
@@ -112,8 +112,8 @@ const ProfileHoc = (tab) => {
           </div>
         </div>
       </>
-    )
-  }
-}
+    );
+  };
+};
 
-export default ProfileHoc
+export default ProfileHoc;

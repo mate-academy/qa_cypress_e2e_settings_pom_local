@@ -1,11 +1,11 @@
-import React from 'react'
+import React from 'react';
 
-import CustomLink from 'front/CustomLink'
-import Maybe from 'front/Maybe'
-import routes from 'front/routes'
+import CustomLink from 'front/CustomLink';
+import Maybe from 'front/Maybe';
+import routes from 'front/routes';
 
 interface EditProfileButtonProps {
-  isCurrentUser: boolean
+  isCurrentUser: boolean;
 }
 
 const EditProfileButton = ({ isCurrentUser }: EditProfileButtonProps) => (
@@ -17,6 +17,6 @@ const EditProfileButton = ({ isCurrentUser }: EditProfileButtonProps) => (
       <i className="ion-gear-a" /> Edit Profile Settings
     </CustomLink>
   </Maybe>
-)
+);
 
-export default EditProfileButton
+export default EditProfileButton;

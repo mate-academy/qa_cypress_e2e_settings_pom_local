@@ -1,34 +1,34 @@
-import Router from 'next/router'
-import React from 'react'
-import { mutate, trigger } from 'swr'
+import Router from 'next/router';
+import React from 'react';
+import { mutate, trigger } from 'swr';
 
-import { AUTH_LOCAL_STORAGE_NAME } from 'front'
-import SettingsForm from 'front/SettingsForm'
-import checkLogin from 'front/checkLogin'
-import storage from 'front/localStorageHelper'
-import { AppContext } from 'front/ts'
-import { deleteCookie } from 'front'
+import { AUTH_LOCAL_STORAGE_NAME } from 'front';
+import SettingsForm from 'front/SettingsForm';
+import checkLogin from 'front/checkLogin';
+import storage from 'front/localStorageHelper';
+import { AppContext } from 'front/ts';
+import { deleteCookie } from 'front';
 
 const Settings = () => {
   React.useEffect(() => {
-    const loggedInUser = storage(AUTH_LOCAL_STORAGE_NAME)
-    const isLoggedIn = checkLogin(loggedInUser)
+    const loggedInUser = storage(AUTH_LOCAL_STORAGE_NAME);
+    const isLoggedIn = checkLogin(loggedInUser);
     if (!isLoggedIn) {
-      Router.push(`/`)
+      Router.push(`/`);
     }
-  })
+  });
   const handleLogout = async (e) => {
-    e.preventDefault()
-    window.localStorage.removeItem('user')
-    deleteCookie('auth')
-    mutate('user', null)
-    Router.push(`/`).then(() => trigger('user'))
-  }
-  const title = 'Your Settings'
-  const { setTitle } = React.useContext(AppContext)
+    e.preventDefault();
+    window.localStorage.removeItem('user');
+    deleteCookie('auth');
+    mutate('user', null);
+    Router.push(`/`).then(() => trigger('user'));
+  };
+  const title = 'Your Settings';
+  const { setTitle } = React.useContext(AppContext);
   React.useEffect(() => {
-    setTitle(title)
-  }, [setTitle, title])
+    setTitle(title);
+  }, [setTitle, title]);
   return (
     <>
       <div className="settings-page">
@@ -38,7 +38,11 @@ const Settings = () => {
               <h1 className="text-xs-center">{title}</h1>
               <SettingsForm />
               <hr />
-              <button className="btn btn-outline-danger" onClick={handleLogout}>
+              <button
+                className="btn btn-outline-danger"
+                data-cy="setting-logout"
+                onClick={handleLogout}
+              >
                 Or click here to logout.
               </button>
             </div>
@@ -46,7 +50,7 @@ const Settings = () => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Settings
+export default Settings;

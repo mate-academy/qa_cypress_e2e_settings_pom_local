@@ -1,53 +1,53 @@
-import Router from 'next/router'
-import React from 'react'
+import Router from 'next/router';
+import React from 'react';
 
-import { setupUserLocalStorage } from 'front'
-import ListErrors from 'front/ListErrors'
-import UserAPI from 'front/api/user'
-import { useCtrlEnterSubmit } from 'front/ts'
+import { setupUserLocalStorage } from 'front';
+import ListErrors from 'front/ListErrors';
+import UserAPI from 'front/api/user';
+import { useCtrlEnterSubmit } from 'front/ts';
 
 const LoginForm = ({ register = false }) => {
-  const [isLoading, setLoading] = React.useState(false)
-  const [errors, setErrors] = React.useState([])
-  const [username, setUsername] = React.useState('')
-  const [email, setEmail] = React.useState('')
-  const [password, setPassword] = React.useState('')
+  const [isLoading, setLoading] = React.useState(false);
+  const [errors, setErrors] = React.useState([]);
+  const [username, setUsername] = React.useState('');
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
   const handleUsernameChange = React.useCallback(
     (e) => setUsername(e.target.value),
     [setUsername]
-  )
+  );
   const handleEmailChange = React.useCallback(
     (e) => setEmail(e.target.value),
     []
-  )
+  );
   const handlePasswordChange = React.useCallback(
     (e) => setPassword(e.target.value),
     []
-  )
+  );
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setLoading(true)
+    e.preventDefault();
+    setLoading(true);
     try {
-      let data, status
+      let data, status;
       if (register) {
-        ;({ data, status } = await UserAPI.register(username, email, password))
+        ({ data, status } = await UserAPI.register(username, email, password));
       } else {
-        ;({ data, status } = await UserAPI.login(email, password))
+        ({ data, status } = await UserAPI.login(email, password));
       }
       if (status !== 200 && data?.errors) {
-        setErrors(data.errors)
+        setErrors(data.errors);
       }
       if (data?.user) {
-        await setupUserLocalStorage(data, setErrors)
-        Router.push('/')
+        await setupUserLocalStorage(data, setErrors);
+        Router.push('/');
       }
     } catch (error) {
-      console.error(error)
+      console.error(error);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
-  useCtrlEnterSubmit(handleSubmit)
+  };
+  useCtrlEnterSubmit(handleSubmit);
   return (
     <>
       <ListErrors errors={errors} />
@@ -57,6 +57,7 @@ const LoginForm = ({ register = false }) => {
             <fieldset className="form-group">
               <input
                 className="form-control form-control-lg"
+                data-cy="name-sign-in"
                 type="text"
                 placeholder="Username"
                 value={username}
@@ -95,7 +96,7 @@ const LoginForm = ({ register = false }) => {
         </fieldset>
       </form>
     </>
-  )
-}
+  );
+};
 
-export default LoginForm
+export default LoginForm;
