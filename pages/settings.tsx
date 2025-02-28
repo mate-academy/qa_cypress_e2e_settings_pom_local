@@ -1,6 +1,7 @@
 import Router from 'next/router'
 import React from 'react'
-import { mutate, trigger } from 'swr'
+import { mutate } from 'swr'
+import trigger from 'swr'
 
 import { AUTH_LOCAL_STORAGE_NAME } from 'front'
 import SettingsForm from 'front/SettingsForm'
@@ -38,7 +39,7 @@ const Settings = () => {
               <h1 className="text-xs-center">{title}</h1>
               <SettingsForm />
               <hr />
-              <button className="btn btn-outline-danger" onClick={handleLogout}>
+              <button data-cy="logoutBtn-set" className="btn btn-outline-danger" onClick={handleLogout}>
                 Or click here to logout.
               </button>
             </div>
