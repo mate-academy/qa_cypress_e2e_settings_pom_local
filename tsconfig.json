@@ -2,7 +2,11 @@
   "compilerOptions": {
     "baseUrl": ".",
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
@@ -20,9 +24,21 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": false,
-    "suppressImplicitAnyIndexErrors": true,
+    // "suppressImplicitAnyIndexErrors": true,
     "incremental": true
   },
-  "exclude": ["node_modules"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "cypress/support/commands.js", "cypress/support/commands.js", "cypress/support/e2e.js", "cypress/support/e2e.js", "cypress.config.js", "cypress.config.js"]
+  "exclude": [
+    "node_modules"
+  ],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "cypress/support/commands.js",
+    "cypress/support/commands.js",
+    "cypress/support/e2e.js",
+    "cypress/support/e2e.js",
+    "cypress.config.js",
+    "cypress.config.js"
+  ]
 }
