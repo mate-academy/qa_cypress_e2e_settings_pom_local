@@ -7,10 +7,19 @@ class HomePageObject extends PageObject {
     return cy.getByDataCy('profile-link');
   }
 
+  get globalFead() {
+    return cy.get('.link').contains('Global Feed');
+  }
+
   assertHeaderContainUsername(username) {
     this.usernameLink
       .should('contain', username);
   }
+
+	clickGlobalFead() {
+		this.globalFead.click();
+	}
+
 }
 
 export default HomePageObject;
