@@ -1,4 +1,5 @@
 /// <reference types="cypress" />
+const faker = require('faker');
 // ***********************************************
 // This example commands.ts shows you how to
 // create various custom commands and overwrite
@@ -30,27 +31,29 @@ Cypress.Commands.add('getByDataCy', (selector) => {
   cy.get(`[data-cy^="${selector}"]`);
 });
 
-Cypress.Commands.add('register', (email = 'riot@qa.team', username = 'riot', password = '12345Qwert!') => {
+Cypress.Commands.add('register', (email = 'artqa12@geam.com',
+ username = 'artqa23', password = 'art123qwert') => {
   cy.request('POST', '/api/users', {
     user: {
-      email,
-      username,
-      password
+      email: faker.internet.email(),
+      username: faker.name.firstName(),
+      password: 'dasdsad1q21dqAS'
     }
   });
 });
 
-Cypress.Commands.add('login', (email = 'riot@qa.team', username = 'riot', password = '12345Qwert!') => {
+Cypress.Commands.add('login', (email, username, password) => {
   cy.request('POST', '/api/users', {
     user: {
-      email,
-      username,
-      password
+      email: faker.internet.email(),
+      username: faker.name.firstName(),
+      password: 'dqwdwqd123'
     }
-  }).then(response => {
+  }).then((response) => {
     const user = {
       bio: response.body.user.bio,
-      effectiveImage: "https://static.productionready.io/images/smiley-cyrus.jpg",
+      effectiveImage: 'https://static.productionready. \
+      io/images/smiley-cyrus.jpg',
       email: response.body.user.email,
       image: response.body.user.image,
       token: response.body.user.token,
