@@ -46,7 +46,8 @@ const ProfileHoc = (tab) => {
     return (
       <>
         <div className="profile-page">
-          <div className="user-info">
+          <div className="user-info"
+          data-cy='user-info'>
             <div className="container">
               <div className="row">
                 <div className="col-xs-12 col-md-10 offset-md-1">
