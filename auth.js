@@ -1,20 +1,20 @@
-const jwt = require('express-jwt')
+const jwt = require('express-jwt');
 
-const secret = require('./front/config').secret
+const secret = require('./front/config').secret;
 
 function getTokenFromHeader(authorization) {
   if (
     (authorization && authorization.split(' ')[0] === 'Token') ||
     (authorization && authorization.split(' ')[0] === 'Bearer')
   ) {
-    return authorization.split(' ')[1]
+    return authorization.split(' ')[1];
   }
-  return null
+  return null;
 }
 
 function getTokenFromRequest(req) {
-  let ret = getTokenFromHeader(req.headers.authorization)
-  if (ret) return ret
+  let ret = getTokenFromHeader(req.headers.authorization);
+  if (ret) return ret;
   // If one day we want to allow API GET requests with the cookie.
   // Does not work for Next.js routes.
   //if (
@@ -26,7 +26,7 @@ function getTokenFromRequest(req) {
   //  if (ret)
   //    return ret
   //}
-  return null
+  return null;
 }
 
 module.exports = {
@@ -41,4 +41,4 @@ module.exports = {
     credentialsRequired: false,
     getToken: getTokenFromRequest,
   }),
-}
+};

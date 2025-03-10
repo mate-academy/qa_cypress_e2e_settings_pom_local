@@ -1,22 +1,22 @@
-let isProduction
+let isProduction;
 if (process.env.NEXT_PUBLIC_NODE_ENV === undefined) {
-  isProduction = process.env.NODE_ENV === 'production'
+  isProduction = process.env.NODE_ENV === 'production';
 } else {
-  isProduction = process.env.NEXT_PUBLIC_NODE_ENV === 'production'
+  isProduction = process.env.NEXT_PUBLIC_NODE_ENV === 'production';
 }
 
-let demoMaxObjs
+let demoMaxObjs;
 if (isProduction) {
-  demoMaxObjs = 1000
+  demoMaxObjs = 1000;
 } else {
-  demoMaxObjs = 10
+  demoMaxObjs = 10;
 }
 
-let databaseUrl
+let databaseUrl;
 if (process.env.NODE_ENV === 'test') {
-  databaseUrl = process.env.DATABASE_URL_TEST
+  databaseUrl = process.env.DATABASE_URL_TEST;
 } else {
-  databaseUrl = process.env.DATABASE_URL
+  databaseUrl = process.env.DATABASE_URL;
 }
 
 module.exports = {
@@ -75,4 +75,4 @@ module.exports = {
     },
     logging: true,
   },
-}
+};

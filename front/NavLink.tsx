@@ -16,7 +16,7 @@ const NavLink = ({ href, onClick, children, dataCy }: NavLinkProps) => {
   return (
     <Link href={href} passHref>
       <a
-        data-cy={dataCy}  // Assigning the value of dataCy to the data-cy attribute
+        data-cy="sign-in-link"  // Assigning the value of dataCy to the data-cy attribute
         onClick={onClick}
         className={`${
           (encodeURIComponent(asPath) === encodeURIComponent(href) &&

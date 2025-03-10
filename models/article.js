@@ -1,5 +1,5 @@
-const slug = require('slug')
-const { DataTypes, Op, Transaction } = require('sequelize')
+const slug = require('slug');
+const { DataTypes, Op, Transaction } = require('sequelize');
 
 module.exports = (sequelize) => {
   const Article = sequelize.define(
@@ -11,7 +11,7 @@ module.exports = (sequelize) => {
           message: 'Slug must be unique.',
         },
         set(v) {
-          this.setDataValue('slug', v.toLowerCase())
+          this.setDataValue('slug', v.toLowerCase());
         },
         allowNull: false,
       },
@@ -35,11 +35,11 @@ module.exports = (sequelize) => {
             article.slug =
               slug(article.title) +
               '-' +
-              ((Math.random() * Math.pow(36, 6)) | 0).toString(36)
+              ((Math.random() * Math.pow(36, 6)) | 0).toString(36);
           }
         },
         beforeDestroy: async (article, options) => {
-          await article.deleteEmptyTags(options.transaction)
+          await article.deleteEmptyTags(options.transaction);
         },
       },
       indexes: [
@@ -48,7 +48,7 @@ module.exports = (sequelize) => {
         },
       ],
     }
-  )
+  );
 
   // Delete tags that are only associated to this article, and which will therefore be
   // deleted after this article is deleted.
@@ -91,7 +91,7 @@ module.exports = (sequelize) => {
         1
       ),
       transaction,
-    })
+    });
 
     // Equivalent to the above but in multiple queries. Keeping around in a comments just in case.
     // Should also be converted to promise.
@@ -106,9 +106,9 @@ module.exports = (sequelize) => {
       await sequelize.models.Tag.destroy({
         where: { id: emptyTags.map((tag) => tag.id) },
         transaction,
-      })
+      });
     }
-  }
+  };
 
   // This method should always be used instead of the default destroy because it also destroys
   // tags that might now have no articles, and this need to be in a SERIALIZABLE transaction
@@ -118,33 +118,33 @@ module.exports = (sequelize) => {
     await sequelize.transaction(
       Transaction.ISOLATION_LEVELS.SERIALIZABLE,
       async (t) => {
-        await this.destroy({ transaction: t })
+        await this.destroy({ transaction: t });
       }
-    )
-  }
+    );
+  };
 
   Article.prototype.toJson = async function (user, opts = {}) {
     // We first check if those have already been fetched. This is ideally done
     // for example from JOINs on a query that fetches multiple articles like the
     // queries that show article lists on the home page.
     // https://github.com/cirosantilli/node-express-sequelize-nextjs-realworld-example-app/issues/5
-    const authorPromise = this.author ? this.author : this.getAuthor()
-    const tagPromise = opts.tags ? opts.tags : this.getTags()
-    let favoritePromise
+    const authorPromise = this.author ? this.author : this.getAuthor();
+    const tagPromise = opts.tags ? opts.tags : this.getTags();
+    let favoritePromise;
     if (user) {
       favoritePromise =
         opts.favorited === undefined
           ? user.hasFavorite(this.id)
-          : opts.favorited
+          : opts.favorited;
     } else {
-      favoritePromise = false
+      favoritePromise = false;
     }
     const [tags, favorited, favoritesCount, author] = await Promise.all([
       await tagPromise,
       await favoritePromise,
       this.countFavoritedBy(),
       (await authorPromise).toProfileJSONFor(user),
-    ])
+    ]);
     return {
       slug: this.slug,
       title: this.title,
@@ -156,8 +156,8 @@ module.exports = (sequelize) => {
       favorited,
       favoritesCount,
       author,
-    }
-  }
+    };
+  };
 
-  return Article
-}
+  return Article;
+};

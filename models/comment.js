@@ -1,9 +1,9 @@
-const { DataTypes } = require('sequelize')
+const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
   const Comment = sequelize.define('Comment', {
     body: DataTypes.STRING,
-  })
+  });
 
   Comment.prototype.toJson = async function (user) {
     return {
@@ -12,7 +12,7 @@ module.exports = (sequelize) => {
       createdAt: this.createdAt.toISOString(),
       updatedAt: this.updatedAt.toISOString(),
       author: await this.author.toProfileJSONFor(user),
-    }
-  }
-  return Comment
-}
+    };
+  };
+  return Comment;
+};
