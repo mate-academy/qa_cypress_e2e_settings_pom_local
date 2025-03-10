@@ -39,7 +39,7 @@ const Navbar = () => {
               </NavLink>
             </NavbarItem>
             <NavbarItem>
-              <NavLink href={routes.userEdit()}>
+              <NavLink dataCy="settings-link" href={routes.userEdit()}>
                 <i className="ion-gear-a" />
                 &nbsp;Settings
               </NavLink>
