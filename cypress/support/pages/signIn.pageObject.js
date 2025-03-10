@@ -26,6 +26,10 @@ class SignInPageObject extends PageObject {
   clickSignInBtn() {
     this.signInBtn.click();
   }
+
+  assertUpdatedEmail(email){
+    this.emailField.should('have.value', email);
+  }
 }
 
 export default SignInPageObject;
