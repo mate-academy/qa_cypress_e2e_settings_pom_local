@@ -29,6 +29,9 @@ describe('Sign In page', () => {
   });
 
   it('should not provide an ability to log in with wrong credentials', () => {
-
+    signInPage.visit();
+    cy.register(user.email, user.username, 'wrong pass');
+    signInPage.clickSignInBtn();
+     homePage.assertHeaderNotContainUsername(user.username);
   });
 });
