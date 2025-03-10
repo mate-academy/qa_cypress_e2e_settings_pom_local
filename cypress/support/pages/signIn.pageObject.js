@@ -26,6 +26,12 @@ class SignInPageObject extends PageObject {
   clickSignInBtn() {
     this.signInBtn.click();
   }
+
+  login(email, password) {
+    this.emailField.type(email);
+    this.passwordField.type(password);
+    this.signInBtn.click();
+  }
 }
 
 export default SignInPageObject;
