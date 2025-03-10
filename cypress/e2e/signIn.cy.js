@@ -2,10 +2,10 @@
 /// <reference types='../support' />
 
 import SignInPageObject from '../support/pages/signIn.pageObject';
-import homePageObject from '../support/pages/home.pageObject';
+import HomePageObject from '../support/pages/home.pageObject';
 
 const signInPage = new SignInPageObject();
-const homePage = new homePageObject();
+const homePage = new HomePageObject();
 
 describe('Sign In page', () => {
   let user;
@@ -29,6 +29,12 @@ describe('Sign In page', () => {
   });
 
   it('should not provide an ability to log in with wrong credentials', () => {
+    signInPage.visit();
 
+    signInPage.typeEmail(user.email);
+    signInPage.typePassword(' ');
+    signInPage.clickSignInBtn();
+
+    signInPage.assertErrorText('is invalid');
   });
 });

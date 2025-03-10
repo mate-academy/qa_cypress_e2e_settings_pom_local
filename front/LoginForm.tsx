@@ -57,6 +57,7 @@ const LoginForm = ({ register = false }) => {
             <fieldset className="form-group">
               <input
                 className="form-control form-control-lg"
+                data-cy="username-sign-up"
                 type="text"
                 placeholder="Username"
                 value={username}

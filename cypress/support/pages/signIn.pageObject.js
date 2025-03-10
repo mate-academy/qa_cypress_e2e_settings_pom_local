@@ -15,6 +15,10 @@ class SignInPageObject extends PageObject {
     return cy.getByDataCy('sign-in-btn');
   }
 
+  get errorText() {
+    return cy.getByDataCy('error-text');
+  }
+
   typeEmail(email) {
     this.emailField.type(email);
   }
@@ -25,6 +29,11 @@ class SignInPageObject extends PageObject {
 
   clickSignInBtn() {
     this.signInBtn.click();
+  }
+
+  assertErrorText(text) {
+    this.errorText.contains(text)
+      .should('exist');
   }
 }
 
