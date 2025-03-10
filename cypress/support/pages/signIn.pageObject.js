@@ -2,6 +2,10 @@ import PageObject from '../PageObject';
 
 class SignInPageObject extends PageObject {
   url = '/user/login';
+  
+  visit() {
+    cy.visit(this.url);
+  }
 
   get emailField() {
     return cy.getByDataCy('email-sign-in');
