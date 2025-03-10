@@ -1,28 +1,41 @@
-import { defineConfig } from 'cypress';
-import { faker } from '@faker-js/faker';
-import { clear } from './dataBase';
+const { defineConfig } = require('cypress');
+const { faker } = require('@faker-js/faker');
+const { clear } = require('./dataBase');
 
 module.exports = defineConfig({
   e2e: {
     baseUrl: 'http://localhost:3000',
+    viewportHeight: 650,
+    viewportWidth: 850,
     setupNodeEvents(on, config) {
       on('task', {
         generateUser() {
-          let randomNumber = Math.ceil(Math.random(1000) * 1000);
-          let userName = faker.name.firstName() + `${randomNumber}`;
+          const randomNumber = Math.ceil(Math.random() * 1000);
+          const userName = faker.name.firstName().toLowerCase() + randomNumber;
           return {
-            username: userName.toLowerCase(),
-            email: 'test'+`${randomNumber}`+'@mail.com',
-            password: '12345Qwert!',
+            username: userName,
+            email: `test${randomNumber}@mail.com`,
+            password: faker.internet.password(),
+            bio: faker.lorem.word(),
+          };
+        },
+        generateUpdateData() {
+          const userName = faker.internet.userName().toLowerCase() + '_update';
+          const newEmail = faker.internet.email().toLowerCase();
+          return {
+            username: userName,
+            bio: faker.lorem.sentence(),
+            email: newEmail,
+            password: 'newPassword1!',
           };
         },
         generateArticle() {
           return {
             title: faker.lorem.word(),
-            description: faker.lorem.words(),
-            body: faker.lorem.words(),
-            tag: faker.lorem.word()
-          };;
+            description: faker.lorem.words(10),
+            body: faker.lorem.paragraphs(1),
+            tag: faker.lorem.word(),
+          };
         },
         'db:clear'() {
           clear();
