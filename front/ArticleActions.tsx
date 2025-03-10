@@ -51,6 +51,7 @@ const ArticleActions = ({ article }) => {
           <button
             className="btn btn-outline-danger btn-sm"
             onClick={handleDelete}
+            data-cy="article-delete"
           >
             <i className="ion-trash-a" /> Delete Article
           </button>

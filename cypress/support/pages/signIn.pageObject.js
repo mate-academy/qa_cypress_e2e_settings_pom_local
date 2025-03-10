@@ -26,6 +26,14 @@ class SignInPageObject extends PageObject {
   clickSignInBtn() {
     this.signInBtn.click();
   }
+
+  checkNotValidCase() {
+    cy.contains('li', 'email or password')
+      .should('exist');
+
+    cy.contains('li', 'is invalid')
+      .should('exist');
+  }
 }
 
 export default SignInPageObject;
