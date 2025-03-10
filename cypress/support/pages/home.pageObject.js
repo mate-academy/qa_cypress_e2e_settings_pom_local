@@ -8,9 +8,17 @@ class HomePageObject extends PageObject {
   }
 
   assertHeaderContainUsername(username) {
-    this.usernameLink
-      .should('contain', username);
+    this.usernameLink.should('contain', username);
   }
+
+  assertUserIsNotLoggedIn() {
+    this.usernameLink.should('not.exist');
+  }
+
+  clickUsernameLink() {
+    this.usernameLink.click();
+  }
+
 }
 
 export default HomePageObject;
