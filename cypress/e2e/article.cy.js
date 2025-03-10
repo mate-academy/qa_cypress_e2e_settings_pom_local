@@ -2,23 +2,15 @@
 /// <reference types="../support" />
 
 describe('Article', () => {
-  before(() => {
-
-  });
+  before(() => {});
 
   beforeEach(() => {
     cy.task('db:clear');
   });
 
-  it('should be created using New Article form', () => {
+  it('should be created using New Article form', () => {});
 
-  });
+  it('should be edited using Edit button', () => {});
 
-  it('should be edited using Edit button', () => {
-
-  });
-
-  it('should be deleted using Delete button', () => {
-
-  });
+  it('should be deleted using Delete button', () => {});
 });

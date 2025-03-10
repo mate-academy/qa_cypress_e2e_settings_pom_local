@@ -24,5 +24,15 @@
     "incremental": true
   },
   "exclude": ["node_modules"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "cypress/support/commands.js", "cypress/support/commands.js", "cypress/support/e2e.js", "cypress/support/e2e.js", "cypress.config.js", "cypress.config.js"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "cypress/support/commands.js",
+    "cypress/support/commands.js",
+    "cypress/support/e2e.js",
+    "cypress/support/e2e.js",
+    "cypress.config.js",
+    "cypress.config.js"
+  ]
 }

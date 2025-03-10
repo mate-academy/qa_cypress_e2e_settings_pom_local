@@ -16,7 +16,7 @@ describe('Sign In page', () => {
       user = generateUser;
     });
   });
-  
+
   it('should provide an ability to log in with existing credentials', () => {
     signInPage.visit();
     cy.register(user.email, user.username, user.password);
@@ -28,7 +28,5 @@ describe('Sign In page', () => {
     homePage.assertHeaderContainUsername(user.username);
   });
 
-  it('should not provide an ability to log in with wrong credentials', () => {
-
-  });
+  it('should not be able to log in with wrong credentials', () => {});
 });
