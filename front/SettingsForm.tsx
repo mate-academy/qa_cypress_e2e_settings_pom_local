@@ -65,6 +65,7 @@ const SettingsForm = () => {
               placeholder="URL of profile picture"
               value={userInfo.image ? userInfo.image : ''}
               onChange={updateState('image')}
+              data-cy='url-of-profile-picture'
             />
           </fieldset>
           <fieldset className="form-group">
@@ -72,8 +73,10 @@ const SettingsForm = () => {
               className="form-control form-control-lg"
               type="text"
               placeholder="Username"
+              data-cy='username-field'
               value={userInfo.username}
               onChange={updateState('username')}
+              
             />
           </fieldset>
           <fieldset className="form-group">
@@ -81,6 +84,7 @@ const SettingsForm = () => {
               className="form-control form-control-lg"
               rows={8}
               placeholder="Short bio about you"
+              data-cy='user-bio-field'
               value={userInfo.bio}
               onChange={updateState('bio')}
             />
@@ -90,6 +94,7 @@ const SettingsForm = () => {
               className="form-control form-control-lg"
               type="email"
               placeholder="Email"
+              data-cy='email-field'
               value={userInfo.email}
               onChange={updateState('email')}
             />
@@ -99,6 +104,7 @@ const SettingsForm = () => {
               className="form-control form-control-lg"
               type="password"
               placeholder="New Password"
+              data-cy='new-password-field'
               value={userInfo.password}
               onChange={updateState('password')}
               autoComplete="new-password"
