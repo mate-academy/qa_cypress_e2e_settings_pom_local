@@ -28,6 +28,16 @@ module.exports = defineConfig({
           clear();
           return null;
         },
+        generateNewUser() {
+          let randomNumber = Math.ceil(Math.random(1000) * 1000);
+          let userName = faker.name.firstName() + `${randomNumber}`
+          return {
+            bio: faker.random.words(),
+            username: userName.toLowerCase(),
+            email: userName.toLowerCase() + '@mail.com',
+            password: 'Mate1234!',
+          };
+        },
       });
     },
   },
