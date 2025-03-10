@@ -116,7 +116,7 @@ const ArticleList = ({
   if (error) return <ErrorMessage message="Cannot load recent articles..." />
   if (!data && showSpinner) return <LoadingSpinner />
   if (articles?.length === 0) {
-    return <div className="article-preview">No articles are here... yet.</div>
+    return <div className="article-preview" data-cy="article-list">No articles are here... yet.</div>
   }
   return (
     <>

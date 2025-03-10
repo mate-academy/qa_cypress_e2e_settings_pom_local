@@ -29,9 +29,9 @@ const FollowUserButton = ({ profile }) => {
   }
   return (
     <button
-      className={`btn btn-sm action-btn ${
-        following ? 'btn-secondary' : 'btn-outline-secondary'
-      }`}
+      data-cy={following ? 'unfollow-btn' : 'follow-btn'}
+      className={`btn btn-sm action-btn ${following ? 'btn-secondary' : 'btn-outline-secondary'
+        }`}
       onClick={handleClick}
     >
       <i className="ion-plus-round" /> &nbsp;{' '}
