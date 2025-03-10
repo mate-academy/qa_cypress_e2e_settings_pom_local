@@ -5,6 +5,8 @@ import { clear } from './dataBase';
 module.exports = defineConfig({
   e2e: {
     baseUrl: 'http://localhost:3000',
+    viewportWidth: 1920,
+    viewportHeight: 1080,
     setupNodeEvents(on, config) {
       on('task', {
         generateUser() {
@@ -22,7 +24,7 @@ module.exports = defineConfig({
             description: faker.lorem.words(),
             body: faker.lorem.words(),
             tag: faker.lorem.word()
-          };;
+          };
         },
         'db:clear'() {
           clear();

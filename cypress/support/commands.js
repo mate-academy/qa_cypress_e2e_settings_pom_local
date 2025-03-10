@@ -30,17 +30,29 @@ Cypress.Commands.add('getByDataCy', (selector) => {
   cy.get(`[data-cy^="${selector}"]`);
 });
 
-Cypress.Commands.add('register', (email = 'riot@qa.team', username = 'riot', password = '12345Qwert!') => {
-  cy.request('POST', '/api/users', {
+Cypress.Commands.add('getByPlaceholder', (placeholder) => {
+  cy.get(`[placeholder="${placeholder}"]`);
+});
+
+Cypress.Commands.add('login', (email, password) => {
+  cy.request('POST', '/api/users/login', {
     user: {
       email,
-      username,
       password
     }
+  }).then(response => {
+    const user = {
+      email: response.body.user.email,
+      token: response.body.user.token,
+      username: response.body.user.username,
+    };
+    expect(response.status).to.eq(200);
+    window.localStorage.setItem('user', JSON.stringify(user));
+    cy.setCookie('auth', response.body.user.token);
   });
 });
 
-Cypress.Commands.add('login', (email = 'riot@qa.team', username = 'riot', password = '12345Qwert!') => {
+Cypress.Commands.add('register', (email = 'riot@qa.team', username = 'riot', password = '12345Qwert!') => {
   cy.request('POST', '/api/users', {
     user: {
       email,
