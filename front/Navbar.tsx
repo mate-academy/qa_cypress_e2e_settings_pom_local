@@ -1,5 +1,4 @@
 import React from 'react'
-
 import CustomImage from 'front/CustomImage'
 import CustomLink from 'front/CustomLink'
 import Maybe from 'front/Maybe'
@@ -8,9 +7,7 @@ import { appName } from 'front/config'
 import useLoggedInUser from 'front/useLoggedInUser'
 import { AppContext, resetIndexState } from 'front/ts'
 import routes from 'front/routes'
-
 const NavbarItem = ({ children }) => <li className="nav-item">{children}</li>
-
 const Navbar = () => {
   const loggedInUser = useLoggedInUser()
   const { setPage, setTab } = React.useContext(AppContext)
@@ -40,7 +37,7 @@ const Navbar = () => {
             </NavbarItem>
             <NavbarItem>
               <NavLink href={routes.userEdit()}>
-                <i className="ion-gear-a" />
+                <i className="ion-gear-a"/>
                 &nbsp;Settings
               </NavLink>
             </NavbarItem>
@@ -57,7 +54,7 @@ const Navbar = () => {
           </Maybe>
           <Maybe test={!loggedInUser}>
             <NavbarItem>
-              <NavLink href={routes.userLogin()}>Sign in</NavLink>
+              <NavLink href={routes.userLogin()}  data-cy="sign-in-link">Sign in</NavLink>
             </NavbarItem>
             <NavbarItem>
               <NavLink href={routes.userNew()}>Sign up</NavLink>
@@ -68,5 +65,4 @@ const Navbar = () => {
     </nav>
   )
 }
-
 export default Navbar
