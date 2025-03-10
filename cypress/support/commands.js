@@ -30,7 +30,7 @@ Cypress.Commands.add('getByDataCy', (selector) => {
   cy.get(`[data-cy^="${selector}"]`);
 });
 
-Cypress.Commands.add('register', (email = 'riot@qa.team', username = 'riot', password = '12345Qwert!') => {
+Cypress.Commands.add('register', (email, username, password) => {
   cy.request('POST', '/api/users', {
     user: {
       email,
@@ -40,11 +40,11 @@ Cypress.Commands.add('register', (email = 'riot@qa.team', username = 'riot', pas
   });
 });
 
-Cypress.Commands.add('login', (email = 'riot@qa.team', username = 'riot', password = '12345Qwert!') => {
+Cypress.Commands.add('login', (username, email, password) => {
   cy.request('POST', '/api/users', {
     user: {
-      email,
       username,
+      email,
       password
     }
   }).then(response => {
