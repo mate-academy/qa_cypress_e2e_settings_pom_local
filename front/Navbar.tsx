@@ -40,7 +40,7 @@ const Navbar = () => {
             </NavbarItem>
             <NavbarItem>
               <NavLink href={routes.userEdit()}>
-                <i className="ion-gear-a" />
+                <i className="ion-gear-a"/>
                 &nbsp;Settings
               </NavLink>
             </NavbarItem>
@@ -57,7 +57,7 @@ const Navbar = () => {
           </Maybe>
           <Maybe test={!loggedInUser}>
             <NavbarItem>
-              <NavLink href={routes.userLogin()}>Sign in</NavLink>
+              <NavLink href={routes.userLogin()}  data-cy="sign-in-link">Sign in</NavLink>
             </NavbarItem>
             <NavbarItem>
               <NavLink href={routes.userNew()}>Sign up</NavLink>
