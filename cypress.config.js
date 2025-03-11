@@ -5,6 +5,7 @@ import { clear } from './dataBase';
 module.exports = defineConfig({
   e2e: {
     baseUrl: 'http://localhost:3000',
+    defaultCommandTimeout: 8000,
     setupNodeEvents(on, config) {
       on('task', {
         generateUser() {
