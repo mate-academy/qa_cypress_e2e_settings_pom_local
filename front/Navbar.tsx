@@ -17,7 +17,7 @@ const Navbar = () => {
   const clickHandler = () => resetIndexState(setPage, setTab, loggedInUser)
   return (
     <nav className="navbar navbar-light">
-      <div className="container">
+      <div className="container" data-cy = "header">
         <CustomLink
           href={routes.home()}
           onClick={clickHandler}
