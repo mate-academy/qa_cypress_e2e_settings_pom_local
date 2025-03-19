@@ -49,7 +49,7 @@ const ProfileHoc = (tab) => {
           <div className="user-info">
             <div className="container">
               <div className="row">
-                <div className="col-xs-12 col-md-10 offset-md-1">
+                <div data-cy='username' className="col-xs-12 col-md-10 offset-md-1">
                   <CustomImage
                     src={image}
                     alt="User's profile image"
