@@ -26,7 +26,8 @@
     "test-pg": "REALWORLD_PG=true npm test --",
     "test-pg-next": "npm run build-dev && REALWORLD_PG=true NODE_ENV_NEXT_SERVER_ONLY=production REALWORLD_TEST_NEXT=true npm test -- --timeout 100000",
     "tsc": "tsc",
-    "test-e2e": "cypress run --browser chrome"
+    "test-e2e": "cypress run --browser chrome",
+    "test-e2e-mac": "cypress open --browser chrome"
   },
   "repository": {
     "type": "git",

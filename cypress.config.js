@@ -17,12 +17,30 @@ module.exports = defineConfig({
           };
         },
         generateArticle() {
+          const title = faker.lorem.sentence();
+          const description = faker.lorem.paragraph();
+          const body = faker.lorem.paragraphs();
+
           return {
-            title: faker.lorem.word(),
-            description: faker.lorem.words(),
-            body: faker.lorem.words(),
-            tag: faker.lorem.word()
-          };;
+            title: title,
+            description: description,
+            body: body,
+          };
+        },
+        generateSettings() {
+          const url = faker.internet.url();
+          const username = faker.internet.userName();
+          const bio = faker.lorem.paragraph();
+          const email = faker.internet.email();
+          const password = faker.internet.password();
+
+          return {
+            url: url,
+            username: username,
+            bio: bio,
+            email: email,
+            password: password
+          };
         },
         'db:clear'() {
           clear();

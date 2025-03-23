@@ -9,6 +9,7 @@ interface CustomLinkProps {
   onClick?: () => void
   children: React.ReactNode
   shallow?: boolean
+  dataCy?: string
 }
 
 const CustomLink = ({
@@ -17,13 +18,14 @@ const CustomLink = ({
   onClick,
   children,
   shallow,
+  dataCy,
 }: CustomLinkProps) => {
   if (shallow === undefined) {
     shallow = false
   }
   return (
     <Link href={href} passHref shallow={shallow}>
-      <a onClick={onClick} className={className || ''}>
+      <a data-cy={dataCy} onClick={onClick} className={className || ''}>
         {children}
       </a>
     </Link>

@@ -54,7 +54,7 @@ const CommentInput = () => {
   }
   return (
     <>
-      <ul className="error-messages">
+      <ul className="error-messages" data-cy="error-messages">
         {/* TODO. Reference does not handle those errors either right now.
         but the unconditional (and likely buggy) presence of this is visible. */}
       </ul>

@@ -30,7 +30,13 @@ Cypress.Commands.add('getByDataCy', (selector) => {
   cy.get(`[data-cy^="${selector}"]`);
 });
 
-Cypress.Commands.add('register', (email = 'riot@qa.team', username = 'riot', password = '12345Qwert!') => {
+Cypress.Commands.add(
+  'register',
+  (
+    email = 'riot@qa.team',
+    username = 'riot',
+    password = '12345Qwert!'
+  ) => {
   cy.request('POST', '/api/users', {
     user: {
       email,
@@ -40,17 +46,24 @@ Cypress.Commands.add('register', (email = 'riot@qa.team', username = 'riot', pas
   });
 });
 
-Cypress.Commands.add('login', (email = 'riot@qa.team', username = 'riot', password = '12345Qwert!') => {
+Cypress.Commands.add(
+  'login',
+  (
+    email = 'riot@qa.team',
+    username = 'riot',
+    password = '12345Qwert!'
+  ) => {
   cy.request('POST', '/api/users', {
     user: {
       email,
       username,
       password
     }
-  }).then(response => {
+  }).then((response) => {
     const user = {
       bio: response.body.user.bio,
-      effectiveImage: "https://static.productionready.io/images/smiley-cyrus.jpg",
+      effectiveImage: 'https://static.productionready' +
+        '.io/images/smiley-cyrus.jpg',
       email: response.body.user.email,
       image: response.body.user.image,
       token: response.body.user.token,
@@ -58,5 +71,26 @@ Cypress.Commands.add('login', (email = 'riot@qa.team', username = 'riot', passwo
     };
     window.localStorage.setItem('user', JSON.stringify(user));
     cy.setCookie('auth', response.body.user.token);
+  });
+});
+
+Cypress.Commands.add('createArticle', (title, description, body) => {
+  cy.getCookie('auth').then((token) => {
+    cy.request({
+      method: 'POST',
+      url: '/api/articles',
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+        'Content-Type': 'application/json'
+      },
+      body: {
+        article: {
+          title: title,
+          description: description,
+          body: body,
+          tagList: [],
+        },
+      },
+    });
   });
 });

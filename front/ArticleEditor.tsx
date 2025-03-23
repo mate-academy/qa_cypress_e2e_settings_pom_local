@@ -111,6 +111,7 @@ export default function ArticleEditorHoc(isnew = false) {
                       <input
                         className="form-control form-control-lg"
                         type="text"
+                        data-cy="title"
                         placeholder="Article Title"
                         value={posting.title}
                         onChange={handleTitle}
@@ -120,6 +121,7 @@ export default function ArticleEditorHoc(isnew = false) {
                       <input
                         className="form-control"
                         type="text"
+                        data-cy="description"
                         placeholder="What's this article about?"
                         value={posting.description}
                         onChange={handleDescription}
@@ -129,6 +131,7 @@ export default function ArticleEditorHoc(isnew = false) {
                       <textarea
                         className="form-control"
                         rows={8}
+                        data-cy="body"
                         placeholder="Write your article (in markdown)"
                         value={posting.body}
                         onChange={handleBody}
@@ -142,6 +145,7 @@ export default function ArticleEditorHoc(isnew = false) {
                     <button
                       className="btn btn-lg pull-xs-right btn-primary"
                       type="button"
+                      data-cy="publish-article"
                       disabled={isLoading}
                       onClick={handleSubmit}
                     >
