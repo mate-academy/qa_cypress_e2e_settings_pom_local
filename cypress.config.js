@@ -8,12 +8,28 @@ module.exports = defineConfig({
     setupNodeEvents(on, config) {
       on('task', {
         generateUser() {
-          let randomNumber = Math.ceil(Math.random(1000) * 1000);
-          let userName = faker.name.firstName() + `${randomNumber}`;
+          let randomNumber = Math.ceil(Math.random() * 1000);
+          let userName = faker.person.firstName() + `${randomNumber}`;
           return {
             username: userName.toLowerCase(),
-            email: 'test'+`${randomNumber}`+'@mail.com',
+            email: 'test'+`${randomNumber}`+'@gmail.com',
             password: '12345Qwert!',
+          };
+        },
+        generateDataUserSettings() {
+          let randomNumber = Math.ceil(Math.random() * 1000);
+          let userName = faker.person.firstName() + Math.ceil
+            (Math.random() * 1000);
+          return {
+            username: userName.toLowerCase(),
+            newUserName: faker.person.firstName() + Math.ceil
+            (Math.random() * 1000),
+            bio: faker.lorem.words(3),
+            email: 'test'+`${randomNumber}`+'@gmail.com',
+            newEmail: `${userName}`+`${randomNumber}`+'@gmail.com',
+            password: '1qaz2wsx',
+            newPassword: faker.internet.password() + Math.ceil
+              (Math.random() * 1000)
           };
         },
         generateArticle() {
@@ -22,7 +38,7 @@ module.exports = defineConfig({
             description: faker.lorem.words(),
             body: faker.lorem.words(),
             tag: faker.lorem.word()
-          };;
+          };
         },
         'db:clear'() {
           clear();
