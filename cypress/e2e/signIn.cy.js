@@ -16,7 +16,7 @@ describe('Sign In page', () => {
       user = generateUser;
     });
   });
-  
+
   it('should provide an ability to log in with existing credentials', () => {
     signInPage.visit();
     cy.register(user.email, user.username, user.password);

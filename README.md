@@ -6,7 +6,7 @@
 1. Clone **your** forked repository.
 1. Clone [this](https://github.com/iBrianWarner/realworld) repo into you repo.
 1. Create a new branch `git checkout -b e2e_testing`.
-1. Run the [app](./DEV.adoc) (Local development with SQLite).
+1. Run the [app](./DEV.a doc) (Local development with SQLite).
 1. Resolve tasks.
 1. Record a video of your running your tests (you can use Loom).
 1. Check yourself before submitting the task with a [Cypress checklist](https://mate-academy.github.io/qa-program/checklists/cypress.html).
