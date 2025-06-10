@@ -57,7 +57,7 @@ const Navbar = () => {
           </Maybe>
           <Maybe test={!loggedInUser}>
             <NavbarItem>
-              <NavLink href={routes.userLogin()}>Sign in</NavLink>
+              <NavLink href={routes.userLogin()} dataCy='navbar-signIn'>Sign in</NavLink>
             </NavbarItem>
             <NavbarItem>
               <NavLink href={routes.userNew()}>Sign up</NavLink>

@@ -56,7 +56,7 @@ const ProfileHoc = (tab) => {
                     className="user-img"
                   />
                   <h4>{username}</h4>
-                  <p>{bio}</p>
+                  <p data-cy="profile-bio">{bio}</p>
                   <EditProfileButton isCurrentUser={isCurrentUser} />
                   <FollowUserButtonContext.Provider
                     value={{ following, setFollowing }}
@@ -75,9 +75,8 @@ const ProfileHoc = (tab) => {
                     <li className="nav-item">
                       <CustomLink
                         href={routes.userView(encodeURIComponent(username))}
-                        className={`nav-link${
-                          tab === 'my-posts' ? ' active' : ''
-                        }`}
+                        className={`nav-link${tab === 'my-posts' ? ' active' : ''
+                          }`}
                       >
                         My Posts
                       </CustomLink>
@@ -87,9 +86,8 @@ const ProfileHoc = (tab) => {
                         href={routes.userViewLikes(
                           encodeURIComponent(username)
                         )}
-                        className={`nav-link${
-                          tab === 'favorites' ? ' active' : ''
-                        }`}
+                        className={`nav-link${tab === 'favorites' ? ' active' : ''
+                          }`}
                       >
                         Favorited Posts
                       </CustomLink>

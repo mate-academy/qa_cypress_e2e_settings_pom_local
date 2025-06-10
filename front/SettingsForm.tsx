@@ -92,6 +92,7 @@ const SettingsForm = () => {
               placeholder="Email"
               value={userInfo.email}
               onChange={updateState('email')}
+              data-cy='settingsPage-profile-email'
             />
           </fieldset>
           <fieldset className="form-group">
@@ -102,6 +103,7 @@ const SettingsForm = () => {
               value={userInfo.password}
               onChange={updateState('password')}
               autoComplete="new-password"
+              data-cy='settingsPage-profile-password'
             />
           </fieldset>
           <button

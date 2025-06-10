@@ -1,44 +1,44 @@
-const router = require('express').Router()
-const auth = require('../auth')
-const { Transaction } = require('sequelize')
+const router = require('express').Router();
+const auth = require('../auth');
+const { Transaction } = require('sequelize');
 
-const config = require('../front/config.js')
-const lib = require('../lib.js')
+const config = require('../front/config.js');
+const lib = require('../lib.js');
 
 async function setArticleTags(req, article, tagList, transaction) {
   await req.app.get('sequelize').models.Tag.bulkCreate(
     tagList.map((tag) => {
-      return { name: tag }
+      return { name: tag };
     }),
     {
       ignoreDuplicates: true,
       transaction,
     }
-  )
+  );
   // IDs may be missing from the above, so we have to do a find.
   // https://github.com/sequelize/sequelize/issues/11223#issuecomment-864185973
   const tags2 = await req.app.get('sequelize').models.Tag.findAll({
     where: { name: tagList },
     transaction,
-  })
-  return article.setTags(tags2, { transaction })
+  });
+  return article.setTags(tags2, { transaction });
 }
 
 function validateArticle(req, res, article, tagList) {
-  let ret
+  let ret;
   if (typeof tagList !== 'undefined') {
     if (config.isDemo) {
       if (tagList.length > 10) {
-        ret = `too many tags: ${tagList.length}`
+        ret = `too many tags: ${tagList.length}`;
       }
       for (let tag of tagList) {
         if (config.blacklistTags.has(tag.toLowerCase())) {
-          ret = `blacklisted tag: ${tag}`
+          ret = `blacklisted tag: ${tag}`;
         }
       }
     }
   }
-  return ret
+  return ret;
 }
 
 // Preload article objects on routes with ':article'
@@ -51,13 +51,13 @@ router.param('article', function (req, res, next, slug) {
     })
     .then(function (article) {
       if (!article) {
-        return res.sendStatus(404)
+        return res.sendStatus(404);
       }
-      req.article = article
-      return next()
+      req.article = article;
+      return next();
     })
-    .catch(next)
-})
+    .catch(next);
+});
 
 router.param('comment', function (req, res, next, id) {
   req.app
@@ -68,38 +68,38 @@ router.param('comment', function (req, res, next, id) {
     })
     .then(function (comment) {
       if (!comment) {
-        return res.sendStatus(404)
+        return res.sendStatus(404);
       }
-      req.comment = comment
-      return next()
+      req.comment = comment;
+      return next();
     })
-    .catch(next)
-})
+    .catch(next);
+});
 
 router.get('/', auth.optional, async function (req, res, next) {
   try {
-    let query = {}
+    let query = {};
     const limit = lib.validateParam(
       req.query,
       'limit',
       lib.validatePositiveInteger,
       20
-    )
+    );
     const offset = lib.validateParam(
       req.query,
       'offset',
       lib.validatePositiveInteger,
       0
-    )
-    const include = []
+    );
+    const include = [];
 
-    let loggedUserId = req.payload ? req.payload.id : undefined
+    let loggedUserId = req.payload ? req.payload.id : undefined;
 
     // Author include.
     const authorInclude = {
       model: req.app.get('sequelize').models.User,
       as: 'author',
-    }
+    };
     // TODO get if user follows author on JOIN here.
     if (loggedUserId) {
       //authorInclude.include = [{
@@ -114,18 +114,18 @@ router.get('/', auth.optional, async function (req, res, next) {
       //}]
     }
     if (req.query.author) {
-      authorInclude.where = { username: req.query.author }
+      authorInclude.where = { username: req.query.author };
     }
-    include.push(authorInclude)
+    include.push(authorInclude);
 
-    let favoritedPrecalc = false
+    let favoritedPrecalc = false;
     if (req.query.favorited) {
       // Select only posts that have been favorited by this given.
       include.push({
         model: req.app.get('sequelize').models.User,
         as: 'favoritedBy',
         where: { username: req.query.favorited },
-      })
+      });
     } else if (loggedUserId) {
       // Add "did the logged in user favorite this post" to the JOIN to not have to
       // do it individually article by article.
@@ -145,8 +145,8 @@ router.get('/', auth.optional, async function (req, res, next) {
             model: req.app.get('sequelize').models.User,
           },
         ],
-      })
-      favoritedPrecalc = true
+      });
+      favoritedPrecalc = true;
     }
 
     // Tag include.
@@ -154,9 +154,9 @@ router.get('/', auth.optional, async function (req, res, next) {
       const tagInclude = {
         model: req.app.get('sequelize').models.Tag,
         as: 'tags',
-      }
-      tagInclude.where = { name: req.query.tag }
-      include.push(tagInclude)
+      };
+      tagInclude.where = { name: req.query.tag };
+      include.push(tagInclude);
     }
 
     const [{ count: articlesCount, rows: articles }, user] = await Promise.all([
@@ -170,26 +170,26 @@ router.get('/', auth.optional, async function (req, res, next) {
       req.payload
         ? req.app.get('sequelize').models.User.findByPk(loggedUserId)
         : null,
-    ])
+    ]);
     return res.json({
       articles: await Promise.all(
         articles.map((article) => {
-          const tags = req.query.tag ? undefined : article.tags
+          const tags = req.query.tag ? undefined : article.tags;
           const favorited = favoritedPrecalc
             ? !!article.UserFavoriteArticles.length
-            : undefined
+            : undefined;
           // TODO get if user follows author on JOIN here.
           //console.error(article.author.followed.map(u => u.id));
           //const authorFollowed = loggedUserId ? undefined : undefined
-          return article.toJson(user, { tags, favorited })
+          return article.toJson(user, { tags, favorited });
         })
       ),
       articlesCount: articlesCount,
-    })
+    });
   } catch (error) {
-    next(error)
+    next(error);
   }
-})
+});
 
 router.get('/feed', auth.required, async function (req, res, next) {
   try {
@@ -198,45 +198,45 @@ router.get('/feed', auth.required, async function (req, res, next) {
       'limit',
       lib.validatePositiveInteger,
       20
-    )
+    );
     const offset = lib.validateParam(
       req.query,
       'offset',
       lib.validatePositiveInteger,
       0
-    )
+    );
     const user = await req.app
       .get('sequelize')
-      .models.User.findByPk(req.payload.id)
+      .models.User.findByPk(req.payload.id);
     if (!user) {
-      return res.sendStatus(401)
+      return res.sendStatus(401);
     }
     return res.json(
       await user.findAndCountArticlesByFollowedToJson(offset, limit)
-    )
+    );
   } catch (error) {
-    next(error)
+    next(error);
   }
-})
+});
 
 // Create article
 router.post('/', auth.required, async function (req, res, next) {
   try {
     const user = await req.app
       .get('sequelize')
-      .models.User.findByPk(req.payload.id)
+      .models.User.findByPk(req.payload.id);
     if (!user) {
-      return res.sendStatus(401)
+      return res.sendStatus(401);
     }
     if (!req.body.article) {
-      return res.status(422).json({ errors: { article: "can't be blank" } })
+      return res.status(422).json({ errors: { article: 'can\'t be blank' } });
     }
     let article = new (req.app.get('sequelize').models.Article)(
       req.body.article
-    )
-    article.authorId = user.id
-    const tagList = req.body.article.tagList
-    if (validateArticle(req, res, article, tagList)) return
+    );
+    article.authorId = user.id;
+    const tagList = req.body.article.tagList;
+    if (validateArticle(req, res, article, tagList)) return;
     //await article.save()
     //await setArticleTags(req, article, tagList)
     await req.app
@@ -247,22 +247,22 @@ router.post('/', auth.required, async function (req, res, next) {
           await Promise.all([
             article.save({ transaction }),
             setArticleTags(req, article, tagList, transaction),
-          ])
+          ]);
         }
-      )
+      );
     await Promise.all([
       lib.deleteOldestForDemo(req.app.get('sequelize').models.Article),
       lib.deleteOldestForDemo(req.app.get('sequelize').models.Tag),
       // TODO does not have a ID, and I can't find how to do IN check with
       // (tagId, articleId) tuples in sequelize, and lazy to add ID.
       //lib.deleteOldestForDemo(req.app.get('sequelize').models.ArticleTag),
-    ])
-    article.author = user
-    return res.json({ article: await article.toJson(user) })
+    ]);
+    article.author = user;
+    return res.json({ article: await article.toJson(user) });
   } catch (error) {
-    next(error)
+    next(error);
   }
-})
+});
 
 // Get article
 router.get('/:article', auth.optional, async function (req, res, next) {
@@ -272,75 +272,75 @@ router.get('/:article', auth.optional, async function (req, res, next) {
         ? req.app.get('sequelize').models.User.findByPk(req.payload.id)
         : null,
       req.article.getAuthor(),
-    ])
-    const [user] = results
-    return res.json({ article: await req.article.toJson(user) })
+    ]);
+    const [user] = results;
+    return res.json({ article: await req.article.toJson(user) });
   } catch (error) {
-    next(error)
+    next(error);
   }
-})
+});
 
 // Update article
 router.put('/:article', auth.required, async function (req, res, next) {
   try {
     const user = await req.app
       .get('sequelize')
-      .models.User.findByPk(req.payload.id)
+      .models.User.findByPk(req.payload.id);
     if (req.article.authorId.toString() === req.payload.id.toString()) {
-      const article = req.article
+      const article = req.article;
       if (req.body.article) {
         if (typeof req.body.article.title !== 'undefined') {
-          article.title = req.body.article.title
+          article.title = req.body.article.title;
         }
         if (typeof req.body.article.description !== 'undefined') {
-          article.description = req.body.article.description
+          article.description = req.body.article.description;
         }
         if (typeof req.body.article.body !== 'undefined') {
-          article.body = req.body.article.body
+          article.body = req.body.article.body;
         }
-        const tagList = req.body.article.tagList
-        if (validateArticle(req, res, article, tagList)) return
+        const tagList = req.body.article.tagList;
+        if (validateArticle(req, res, article, tagList)) return;
         await req.app
           .get('sequelize')
           .transaction(
             Transaction.ISOLATION_LEVELS.SERIALIZABLE,
             async (transaction) => {
-              await article.deleteEmptyTags(transaction)
+              await article.deleteEmptyTags(transaction);
               await Promise.all([
                 typeof tagList === 'undefined'
                   ? null
                   : setArticleTags(req, article, tagList, transaction),
                 article.save({ transaction }),
-              ])
+              ]);
             }
-          )
+          );
       }
-      return res.json({ article: await article.toJson(user) })
+      return res.json({ article: await article.toJson(user) });
     } else {
-      return res.sendStatus(403)
+      return res.sendStatus(403);
     }
   } catch (error) {
-    next(error)
+    next(error);
   }
-})
+});
 
 // Delete article
 router.delete('/:article', auth.required, async function (req, res, next) {
   try {
-    const user = req.app.get('sequelize').models.User.findByPk(req.payload.id)
+    const user = req.app.get('sequelize').models.User.findByPk(req.payload.id);
     if (!user) {
-      return res.sendStatus(401)
+      return res.sendStatus(401);
     }
     if (req.article.author.id.toString() === req.payload.id.toString()) {
-      await req.article.destroy2()
-      return res.sendStatus(204)
+      await req.article.destroy2();
+      return res.sendStatus(204);
     } else {
-      return res.sendStatus(403)
+      return res.sendStatus(403);
     }
   } catch (error) {
-    next(error)
+    next(error);
   }
-})
+});
 
 // Favorite an article
 router.post(
@@ -348,26 +348,26 @@ router.post(
   auth.required,
   async function (req, res, next) {
     try {
-      const articleId = req.article.id
+      const articleId = req.article.id;
       const [user, article] = await Promise.all([
         req.app.get('sequelize').models.User.findByPk(req.payload.id),
         req.app.get('sequelize').models.Article.findByPk(articleId),
-      ])
+      ]);
       if (!user) {
-        return res.sendStatus(401)
+        return res.sendStatus(401);
       }
       if (!article) {
-        return res.sendStatus(404)
+        return res.sendStatus(404);
       }
-      await user.addFavorite(articleId)
+      await user.addFavorite(articleId);
       // TODO same as ArticleTag
       //await lib.deleteOldestForDemo(req.app.get('sequelize').models.UserFavoriteArticle)
-      return res.json({ article: await article.toJson(user) })
+      return res.json({ article: await article.toJson(user) });
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
-)
+);
 
 // Unfavorite an article
 router.delete(
@@ -375,24 +375,24 @@ router.delete(
   auth.required,
   async function (req, res, next) {
     try {
-      const articleId = req.article.id
+      const articleId = req.article.id;
       const [user, article] = await Promise.all([
         req.app.get('sequelize').models.User.findByPk(req.payload.id),
         req.app.get('sequelize').models.Article.findByPk(articleId),
-      ])
+      ]);
       if (!user) {
-        return res.sendStatus(401)
+        return res.sendStatus(401);
       }
       if (!article) {
-        return res.sendStatus(404)
+        return res.sendStatus(404);
       }
-      await user.removeFavorite(articleId)
-      return res.json({ article: await article.toJson(user) })
+      await user.removeFavorite(articleId);
+      return res.json({ article: await article.toJson(user) });
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
-)
+);
 
 // Return an article's comments
 router.get(
@@ -400,32 +400,32 @@ router.get(
   auth.optional,
   async function (req, res, next) {
     try {
-      let user
+      let user;
       if (req.payload) {
         user = await req.app
           .get('sequelize')
-          .models.User.findByPk(req.payload.id)
+          .models.User.findByPk(req.payload.id);
       } else {
-        user = null
+        user = null;
       }
       const comments = await req.article.getComments({
         order: [['createdAt', 'DESC']],
         include: [
           { model: req.app.get('sequelize').models.User, as: 'author' },
         ],
-      })
+      });
       return res.json({
         comments: await Promise.all(
           comments.map(function (comment) {
-            return comment.toJson(user)
+            return comment.toJson(user);
           })
         ),
-      })
+      });
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
-)
+);
 
 // Create a new comment
 router.post(
@@ -435,27 +435,27 @@ router.post(
     try {
       const user = await req.app
         .get('sequelize')
-        .models.User.findByPk(req.payload.id)
+        .models.User.findByPk(req.payload.id);
       if (!user) {
-        return res.sendStatus(401)
+        return res.sendStatus(401);
       }
       if (!req.body.comment) {
-        return res.status(422).json({ errors: { comment: "can't be blank" } })
+        return res.status(422).json({ errors: { comment: 'can\'t be blank' } });
       }
       const comment = await req.app.get('sequelize').models.Comment.create(
         Object.assign({}, req.body.comment, {
           articleId: req.article.id,
           authorId: user.id,
         })
-      )
-      await lib.deleteOldestForDemo(req.app.get('sequelize').models.Comment)
-      comment.author = user
-      return res.json({ comment: await comment.toJson(user) })
+      );
+      await lib.deleteOldestForDemo(req.app.get('sequelize').models.Comment);
+      comment.author = user;
+      return res.json({ comment: await comment.toJson(user) });
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
-)
+);
 
 // Delete a comment
 router.delete(
@@ -463,17 +463,17 @@ router.delete(
   auth.required,
   async function (req, res, next) {
     try {
-      const author = await req.comment.getAuthor()
+      const author = await req.comment.getAuthor();
       if (author.id.toString() === req.payload.id.toString()) {
-        await req.comment.destroy()
-        return res.sendStatus(204)
+        await req.comment.destroy();
+        return res.sendStatus(204);
       } else {
-        res.sendStatus(403)
+        res.sendStatus(403);
       }
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
-)
+);
 
-module.exports = router
+module.exports = router;
