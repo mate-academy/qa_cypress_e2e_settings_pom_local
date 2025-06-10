@@ -2,12 +2,12 @@
 /// <reference types='../support' />
 
 import SignInPageObject from '../support/pages/signIn.pageObject';
-import homePageObject from '../support/pages/home.pageObject';
+import HomePageObject from '../support/pages/home.pageObject';
 
 const signInPage = new SignInPageObject();
-const homePage = new homePageObject();
+const homePage = new HomePageObject();
 
-describe('Sign In page', () => {
+describe('Sign In Page', () => {
   let user;
 
   before(() => {
@@ -16,19 +16,32 @@ describe('Sign In page', () => {
       user = generateUser;
     });
   });
-  
+
+  beforeEach(() => {
+    cy.reload(); // Ensures a clean state before each test
+  });
+
   it('should provide an ability to log in with existing credentials', () => {
+    cy.register(user.username, user.password, user.email);
     signInPage.visit();
-    cy.register(user.email, user.username, user.password);
 
     signInPage.typeEmail(user.email);
     signInPage.typePassword(user.password);
     signInPage.clickSignInBtn();
 
-    homePage.assertHeaderContainUsername(user.username);
+    homePage.assertHeaderContainsUsername(user.username);
   });
 
   it('should not provide an ability to log in with wrong credentials', () => {
+    signInPage.visit();
 
+    signInPage.typeEmail('wrong-email@example.com');
+    signInPage.typePassword('wrongPassword123');
+    signInPage.clickSignInBtn();
+
+    // Assert error message is displayed
+    cy.contains('.error-message', 'Invalid email or password').should(
+      'be.visible'
+    );
   });
 });
