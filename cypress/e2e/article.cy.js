@@ -1,24 +1,25 @@
+/*eslint-disable*/
 /// <reference types="cypress" />
 /// <reference types="../support" />
 
-describe('Article', () => {
-  before(() => {
+import ArticlePageObject from '../support/pages/article.pageObject';
 
-  });
+describe('Article Management', () => {
+  const articlePage = new ArticlePageObject();
+  const articleTitle = 'My Test Article';
+  const newTitle = 'My Updated Article';
+  const description = 'desc';
+  const body = 'body';
 
-  beforeEach(() => {
-    cy.task('db:clear');
-  });
+  it('should create, edit, and delete an article', () => {
+    articlePage.visit();
+    articlePage.createArticle({ title: articleTitle, description, body });
+    articlePage.assertArticleExists(articleTitle);
 
-  it('should be created using New Article form', () => {
+    articlePage.editArticle(newTitle);
+    articlePage.assertArticleUpdated(newTitle);
 
-  });
-
-  it('should be edited using Edit button', () => {
-
-  });
-
-  it('should be deleted using Delete button', () => {
-
+    articlePage.deleteArticle();
+    articlePage.assertArticleDeleted(newTitle);
   });
 });

@@ -1,16 +1,18 @@
 import PageObject from '../PageObject';
 
 class HomePageObject extends PageObject {
-  url = '/#/';
-
-  get usernameLink() {
-    return cy.getByDataCy('profile-link');
+  constructor() {
+    super('/#/'); // Set default home page URL
   }
 
-  assertHeaderContainUsername(username) {
-    this.usernameLink
-      .should('contain', username);
+  get usernameLink() {
+    return cy.get('[data-qa=profile-link]'); // Ensure data-qa attribute exists in UI
+  }
+
+  assertHeaderContainsUsername(username) { // Fixed method name
+    this.usernameLink.should('contain', username);
   }
 }
 
 export default HomePageObject;
+
