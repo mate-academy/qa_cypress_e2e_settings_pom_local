@@ -56,7 +56,7 @@ const ProfileHoc = (tab) => {
                     className="user-img"
                   />
                   <h4>{username}</h4>
-                  <p>{bio}</p>
+                  <p data-cy="profile-bio"> {bio} </p>
                   <EditProfileButton isCurrentUser={isCurrentUser} />
                   <FollowUserButtonContext.Provider
                     value={{ following, setFollowing }}
@@ -87,6 +87,7 @@ const ProfileHoc = (tab) => {
                         href={routes.userViewLikes(
                           encodeURIComponent(username)
                         )}
+                        data-cy="profile-link"
                         className={`nav-link${
                           tab === 'favorites' ? ' active' : ''
                         }`}
