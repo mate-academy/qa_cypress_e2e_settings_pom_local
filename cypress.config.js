@@ -8,9 +8,9 @@ module.exports = defineConfig({
     setupNodeEvents(on, config) {
       on('task', {
         generateUser() {
-          let randomNumber = Math.ceil(Math.random(1000) * 1000);
+          let randomNumber = Math.ceil(Math.random() * 1000);
 
-          let userName = `${faker.person
+          let userName = `${faker.name
             .firstName()
             .replace(/[^\w]+/g, '')
             .toLowerCase()}${randomNumber}`;
