@@ -1,3 +1,4 @@
+// cypress.config.js
 import { defineConfig } from 'cypress';
 import { faker } from '@faker-js/faker';
 import { clear } from './dataBase';
@@ -8,12 +9,17 @@ module.exports = defineConfig({
     setupNodeEvents(on, config) {
       on('task', {
         generateUser() {
-          let randomNumber = Math.ceil(Math.random(1000) * 1000);
-          let userName = faker.name.firstName() + `${randomNumber}`;
+          let randomNumber = Math.ceil(Math.random() * 1000); 
+          let userName = faker.string.alpha({ 
+            length: 8, casing: 'lower' }) + randomNumber; 
           return {
-            username: userName.toLowerCase(),
-            email: 'test'+`${randomNumber}`+'@mail.com',
-            password: '12345Qwert!',
+            username: userName,
+            email: faker.internet.email().toLowerCase(),
+            password: faker.internet.password({ 
+              length: 12, upper: true, 
+              lower: true, 
+              numeric: true, 
+              symbols: true }),
           };
         },
         generateArticle() {
@@ -22,7 +28,7 @@ module.exports = defineConfig({
             description: faker.lorem.words(),
             body: faker.lorem.words(),
             tag: faker.lorem.word()
-          };;
+          };
         },
         'db:clear'() {
           clear();
