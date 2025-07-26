@@ -8,8 +8,8 @@ module.exports = defineConfig({
     setupNodeEvents(on, config) {
       on('task', {
         generateUser() {
-          let randomNumber = Math.ceil(Math.random(1000) * 1000);
-          let userName = faker.name.firstName() + `${randomNumber}`;
+          let randomNumber = Math.ceil(Math.random() * 1000);
+          let userName = faker.person.firstName() + `${randomNumber}`;
           return {
             username: userName.toLowerCase(),
             email: 'test'+`${randomNumber}`+'@mail.com',
@@ -28,6 +28,10 @@ module.exports = defineConfig({
           clear();
           return null;
         },
+        generateRandomString(length) {
+          // return faker.lorem.words(length);
+           return faker.string.alphanumeric(length);
+        }
       });
     },
   },
