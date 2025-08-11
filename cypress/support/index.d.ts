@@ -1,9 +1,21 @@
 /// <reference types="cypress" />
 
 declare namespace Cypress {
-  interface Chainable<Subject> {
-    getByDataCy(selector: string): Chainable<any>
-    register(email: string, username: string, password: string): Chainable<any>
-    login(email: string, username: string, password: string): Chainable<any>
+  interface Chainable<Subject = any> {
+    /**
+     * Быстрый селектор по data-cy
+     * cy.getByDataCy('settings-save')
+     */
+    getByDataCy(selector: string): Chainable<JQuery<HTMLElement>>
+
+    /**
+     * Создать пользователя и залогиниться.
+     * Возвращает объект user { username, email, password }.
+     */
+    signupAndLogin(): Chainable<{
+      username: string
+      email: string
+      password: string
+    }>
   }
 }

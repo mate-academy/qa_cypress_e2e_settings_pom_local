@@ -1,34 +1,28 @@
-import { defineConfig } from 'cypress';
-import { faker } from '@faker-js/faker';
-import { clear } from './dataBase';
+/* eslint-disable max-len */
+// cypress.config.js
+const { defineConfig } = require('cypress');
+const { execSync } = require('child_process');
 
 module.exports = defineConfig({
   e2e: {
     baseUrl: 'http://localhost:3000',
+    specPattern: 'cypress/e2e/**/*.cy.js',
+    supportFile: 'cypress/support/e2e.js',
+
     setupNodeEvents(on, config) {
+      // РЕГИСТРАЦИЯ ТАСКОВ ДЛЯ CI/ЛОКАЛЬНЫХ ТЕСТОВ
       on('task', {
-        generateUser() {
-          let randomNumber = Math.ceil(Math.random(1000) * 1000);
-          let userName = faker.name.firstName() + `${randomNumber}`;
-          return {
-            username: userName.toLowerCase(),
-            email: 'test'+`${randomNumber}`+'@mail.com',
-            password: '12345Qwert!',
-          };
-        },
-        generateArticle() {
-          return {
-            title: faker.lorem.word(),
-            description: faker.lorem.words(),
-            body: faker.lorem.words(),
-            tag: faker.lorem.word()
-          };;
-        },
         'db:clear'() {
-          clear();
+          execSync('node bin/generate-demo-data.js --empty', { stdio: 'inherit' });
+          return null;
+        },
+        'db:seed'() {
+          execSync('node bin/generate-demo-data.js', { stdio: 'inherit' });
           return null;
         },
       });
+
+      return config;
     },
   },
 });
