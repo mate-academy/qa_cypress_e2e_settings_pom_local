@@ -1,24 +1,45 @@
 /// <reference types="cypress" />
 /// <reference types="../support" />
 
-describe('Article', () => {
-  before(() => {
-
-  });
+describe('Article flow', () => {
+  let user;
+  let article;
 
   beforeEach(() => {
-    cy.task('db:clear');
+    cy.task('generateUser').then((generatedUser) => {
+      user = generatedUser;
+      cy.login(user.email, user.username, user.password);
+    });
   });
 
-  it('should be created using New Article form', () => {
-
+  it('should create an article and see it in profile', () => {
+    cy.task('generateArticle').then((generatedArticle) => {
+      article = generatedArticle;
+      cy.createArticle(
+        article.title,
+        article.description,
+        article.body
+      );
+      cy.visit(`/profile/${user.username.toLowerCase()}`);
+      cy.contains('h1', article.title).should('be.visible');
+    });
   });
 
-  it('should be edited using Edit button', () => {
-
-  });
-
-  it('should be deleted using Delete button', () => {
-
+  it('should delete the article', () => {
+    cy.task('generateArticle').then((generatedArticle) => {
+      article = generatedArticle;
+      cy.createArticle(
+        article.title,
+        article.description,
+        article.body
+      );
+      cy.visit(`/profile/${user.username.toLowerCase()}`);
+      cy.contains('h1', article.title)
+        .click();
+      cy.contains('button', 'Delete Article')
+        .click();
+      cy.contains('.article-preview', 'No articles are here... yet.')
+        .should('be.visible');
+    });
   });
 });
