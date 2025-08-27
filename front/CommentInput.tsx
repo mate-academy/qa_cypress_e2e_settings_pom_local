@@ -54,7 +54,7 @@ const CommentInput = () => {
   }
   return (
     <>
-      <ul className="error-messages">
+      <ul className="error-messages" data-cy='error-messages'>
         {/* TODO. Reference does not handle those errors either right now.
         but the unconditional (and likely buggy) presence of this is visible. */}
       </ul>
@@ -64,6 +64,7 @@ const CommentInput = () => {
             <textarea
               rows={3}
               className="form-control"
+              data-cy="comment-textarea"
               placeholder="Write a comment..."
               value={content}
               onChange={handleChange}
@@ -76,7 +77,7 @@ const CommentInput = () => {
               src={loggedInUser.effectiveImage}
               alt="author profile image"
             />
-            <button className="btn btn-sm btn-primary" type="submit">
+            <button className="btn btn-sm btn-primary" type="submit" data-cy="post-comment-btn">
               Post Comment
             </button>
           </div>

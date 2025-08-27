@@ -16,7 +16,7 @@ const Navbar = () => {
   const { setPage, setTab } = React.useContext(AppContext)
   const clickHandler = () => resetIndexState(setPage, setTab, loggedInUser)
   return (
-    <nav className="navbar navbar-light">
+    <nav className="navbar navbar-light" data-cy="navbar">
       <div className="container">
         <CustomLink
           href={routes.home()}
@@ -57,10 +57,10 @@ const Navbar = () => {
           </Maybe>
           <Maybe test={!loggedInUser}>
             <NavbarItem>
-              <NavLink href={routes.userLogin()}>Sign in</NavLink>
+              <NavLink href={routes.userLogin()} dataCy='sign-in'>Sign in</NavLink>
             </NavbarItem>
             <NavbarItem>
-              <NavLink href={routes.userNew()}>Sign up</NavLink>
+              <NavLink href={routes.userNew()} dataCy='sign-up'>Sign up</NavLink>
             </NavbarItem>
           </Maybe>
         </ul>
