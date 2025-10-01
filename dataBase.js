@@ -1,30 +1,24 @@
-const { Sequelize } = require('sequelize');
-
-const sequilize = new Sequelize({
-  dialect: 'sqlite',
-  storage: './db.sqlite3'
-});
-
+// dataBase.js
 async function clear() {
-  const t = await sequilize.transaction();
-
   try {
-    await sequilize.query('DELETE FROM Article;');
-    await sequilize.query('DELETE FROM User;');
-    await sequilize.query('DELETE FROM Tag;');
-    await sequilize.query('DELETE FROM ArticleTag;');
-    await sequilize.query('DELETE FROM UserFollowUser;');
-    await sequilize.query('DELETE FROM UserFavoriteArticle;');
-    await sequilize.query('DELETE FROM Comment;');
-
-    await t.commit();
-
-    console.log('DB was cleared');
-  } catch (error) {
-    await t.rollback();
-
-    console.log(`Can't clear DB`);
+    const { sequelize } = require('./api/models') // ✅ require inside
+    await sequelize.truncate({ cascade: true })
+    return null
+  } catch (err) {
+    console.error('❌ Clear failed:', err)
+    throw err
   }
 }
 
-module.exports = { clear };
+async function reset() {
+  try {
+    const { sequelize } = require('./api/models')
+    await sequelize.sync({ force: true })
+    return null
+  } catch (err) {
+    console.error('❌ Reset failed:', err)
+    throw err
+  }
+}
+
+module.exports = { clear, reset }

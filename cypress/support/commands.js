@@ -1,62 +1,40 @@
-/// <reference types="cypress" />
-// ***********************************************
-// This example commands.ts shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-//
+import { faker } from '@faker-js/faker'
 
-Cypress.Commands.add('getByDataCy', (selector) => {
-  cy.get(`[data-cy^="${selector}"]`);
-});
+Cypress.Commands.add('registerAndLogin', () => {
+  const email = faker.internet.email().toLowerCase()
+  const username = faker.internet.userName().toLowerCase()
+  const password = faker.internet.password()
 
-Cypress.Commands.add('register', (email = 'riot@qa.team', username = 'riot', password = '12345Qwert!') => {
   cy.request('POST', '/api/users', {
-    user: {
-      email,
-      username,
-      password
-    }
-  });
-});
+    user: { username, email, password },
+  }).then((res) => {
+    const { user } = res.body
+    cy.window().then((win) => {
+      win.localStorage.setItem('user', JSON.stringify(user)) // ✅ match login
+    })
+    cy.setCookie('auth', user.token) // ✅ set cookie
+    Cypress.env('currentUser', user) // useful for assertions
+  })
 
-Cypress.Commands.add('login', (email = 'riot@qa.team', username = 'riot', password = '12345Qwert!') => {
-  cy.request('POST', '/api/users', {
-    user: {
-      email,
-      username,
-      password
-    }
-  }).then(response => {
-    const user = {
-      bio: response.body.user.bio,
-      effectiveImage: "https://static.productionready.io/images/smiley-cyrus.jpg",
-      email: response.body.user.email,
-      image: response.body.user.image,
-      token: response.body.user.token,
-      username: response.body.user.username,
-    };
-    window.localStorage.setItem('user', JSON.stringify(user));
-    cy.setCookie('auth', response.body.user.token);
-  });
-});
+  return cy.wrap({ email, username, password })
+})
+
+Cypress.Commands.add('login', (email, password) => {
+  cy.request('POST', '/api/users/login', {
+    user: { email, password },
+  }).then((res) => {
+    const { user } = res.body
+    cy.window().then((win) => {
+      win.localStorage.setItem('user', JSON.stringify(user))
+    })
+    cy.setCookie('auth', user.token)
+    Cypress.env('currentUser', user)
+  })
+})
+
+Cypress.Commands.add('logout', () => {
+  cy.clearCookies()
+  cy.window().then((win) => {
+    win.localStorage.removeItem('user')
+  })
+})
