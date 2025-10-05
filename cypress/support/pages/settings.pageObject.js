@@ -3,7 +3,7 @@ import PageObject from '../PageObject';
 const selectorMap = {
   username: '[data-cy="settings-username-input"]',
   email: '[data-cy="settings-email-input"]',
-  bio: '[data-cy="settings-bio-input"]',
+  bio:   '[data-cy="settings-bio-input"]',
   password: '[data-cy="settings-password-input"]',
 };
 
@@ -18,6 +18,10 @@ class SettingsPageObject extends PageObject {
     return cy.get('[data-cy="logout-btn"]');
   }
 
+  /**
+   * @param {'username'|'email'|'bio'|'password'} field
+   * @param {string} newValue
+   */
   changeItem(field, newValue) {
     const selector = selectorMap[field];
     if (!selector) {
@@ -25,13 +29,13 @@ class SettingsPageObject extends PageObject {
     }
 
     // eslint-disable-next-line cypress/unsafe-to-chain-command
-    cy.get(selector).clear().type(newValue);
+    return cy.get(selector).clear().type(newValue);
   }
 
   clickOnUpdateSettingsBtn() {
-    cy.intercept('PUT', '/api/user').as('updateUser');
+    cy.intercept('PUT', '**/api/user').as('updateUser');
     this.updateSettingsBtn.click();
-    cy.wait('@updateUser');
+    cy.wait('@updateUser').its('response.statusCode').should('eq', 200);
   }
 
   checkUrl(username) {

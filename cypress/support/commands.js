@@ -26,37 +26,41 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 //
 
+/// <reference types="cypress" />
+
 Cypress.Commands.add('getByDataCy', (selector) => {
-  cy.get(`[data-cy^="${selector}"]`);
+  return cy.get(`[data-cy^="${selector}"]`);
 });
 
-Cypress.Commands.add('register', (email = 'riot@qa.team', username = 'riot', password = '12345Qwert!') => {
-  cy.request('POST', '/api/users', {
-    user: {
-      email,
-      username,
-      password
+Cypress.Commands.add(
+  'register',
+  (email = 'riot@qa.team', username = 'riot', password = '12345Qwert!') => {
+    cy.request('POST', '/api/users', {
+      user: { email, username, password },
+    });
+  }
+);
+
+Cypress.Commands.add('login', (email, username, password) => {
+  cy.request({
+    method: 'POST',
+    url: '/api/users/login',
+    body: { user: { email, password } },
+    failOnStatusCode: false,
+  }).then((resp) => {
+    if (resp.status === 200 && resp.body?.user?.token) {
+      window.localStorage.setItem('jwt', resp.body.user.token);
+      cy.setCookie('auth', resp.body.user.token);
+      cy.visit('/');
+    } else {
+      cy.visit('/login');
+      cy.get('[data-cy="login-email-input"]').type(email);
+      cy.get('[data-cy="login-password-input"]').type(password);
+      cy.get('[data-cy="login-submit-btn"]').click();
     }
   });
 });
 
-Cypress.Commands.add('login', (email = 'riot@qa.team', username = 'riot', password = '12345Qwert!') => {
-  cy.request('POST', '/api/users', {
-    user: {
-      email,
-      username,
-      password
-    }
-  }).then(response => {
-    const user = {
-      bio: response.body.user.bio,
-      effectiveImage: "https://static.productionready.io/images/smiley-cyrus.jpg",
-      email: response.body.user.email,
-      image: response.body.user.image,
-      token: response.body.user.token,
-      username: response.body.user.username,
-    };
-    window.localStorage.setItem('user', JSON.stringify(user));
-    cy.setCookie('auth', response.body.user.token);
-  });
+Cypress.Commands.add('logout', () => {
+  cy.get('[data-cy="logout-btn"]').click();
 });
