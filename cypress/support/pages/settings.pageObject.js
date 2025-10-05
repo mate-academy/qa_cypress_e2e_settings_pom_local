@@ -1,24 +1,41 @@
 import PageObject from '../PageObject';
 
+const selectorMap = {
+  username: '[data-cy="settings-username-input"]',
+  email: '[data-cy="settings-email-input"]',
+  bio: '[data-cy="settings-bio-input"]',
+  password: '[data-cy="settings-password-input"]',
+};
+
 class SettingsPageObject extends PageObject {
   url = '/settings';
 
   get updateSettingsBtn() {
-    return cy.contains('button', 'Update Settings');
+    return cy.get('[data-cy="update-settings-btn"]');
   }
 
-  changeItem(placeholder, newValue) {
-    cy.get(`[placeholder="${placeholder}"]`).as('input');
-    cy.get('@input').clear();
-    cy.get('@input').type(newValue);
+  get logoutBtn() {
+    return cy.get('[data-cy="logout-btn"]');
+  }
+
+  changeItem(field, newValue) {
+    const selector = selectorMap[field];
+    if (!selector) {
+      throw new Error(`Invalid field key: ${field}`);
+    }
+
+    // eslint-disable-next-line cypress/unsafe-to-chain-command
+    cy.get(selector).clear().type(newValue);
+  }
+
+  clickOnUpdateSettingsBtn() {
+    cy.intercept('PUT', '/api/user').as('updateUser');
+    this.updateSettingsBtn.click();
+    cy.wait('@updateUser');
   }
 
   checkUrl(username) {
     cy.url().should('include', `/profile/${username}`);
-  }
-
-  clickOnUpdateSettingsBtn() {
-    this.updateSettingsBtn.click();
   }
 }
 
