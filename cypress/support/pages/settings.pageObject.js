@@ -4,7 +4,8 @@ class SettingsPageObject extends PageObject {
   url = '/settings';
 
   visit() {
-    cy.visit(this.url);
+
+    return cy.visit(this.url);
   }
 
   get usernameInput() {
@@ -32,35 +33,38 @@ class SettingsPageObject extends PageObject {
   }
 
   changeUsername(value) {
-    this.usernameInput.clear().type(value);
-    return this;
+  
+    return this.usernameInput.clear().type(value);
   }
 
   changeEmail(value) {
-    this.emailInput.clear().type(value);
-    return this;
+ 
+    return this.emailInput.clear().type(value);
   }
 
   changeBio(value) {
-    this.bioInput.clear().type(value);
-    return this;
+
+    return this.bioInput.clear().type(value);
   }
 
   changePassword(value) {
-    this.passwordInput.clear().type(value);
-    return this;
+ 
+    return this.passwordInput.clear().type(value);
   }
 
   clickOnUpdateSettingsBtn() {
-    this.updateSettingsBtn.click();
+ 
+    return this.updateSettingsBtn.click();
   }
 
   clickLogout() {
-    this.logoutBtn.click();
+
+    return this.logoutBtn.click();
   }
 
   checkUrl(username) {
-    cy.url().should('include', `/profile/${username}`);
+
+    return cy.url().should('include', `/profile/${username}`);
   }
 }
 

@@ -1,15 +1,6 @@
-import PageObject from '../PageObject';
-
-class HomePageObject extends PageObject {
-  url = '/#/';
-
-  get usernameLink() {
-    return cy.getByDataCy('profile-link');
-  }
-
+class HomePageObject {
   assertHeaderContainUsername(username) {
-    this.usernameLink
-      .should('contain', username);
+    cy.get('[data-cy="header-username"]').should('contain', username);
   }
 }
 
