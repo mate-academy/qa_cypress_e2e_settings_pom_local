@@ -3,22 +3,64 @@ import PageObject from '../PageObject';
 class SettingsPageObject extends PageObject {
   url = '/settings';
 
+  visit() {
+    cy.visit(this.url);
+  }
+
+  get usernameInput() {
+    return cy.getByDataCy('settings-username');
+  }
+
+  get emailInput() {
+    return cy.getByDataCy('settings-email');
+  }
+
+  get bioInput() {
+    return cy.getByDataCy('settings-bio');
+  }
+
+  get passwordInput() {
+    return cy.getByDataCy('settings-password');
+  }
+
   get updateSettingsBtn() {
-    return cy.contains('button', 'Update Settings');
+    return cy.getByDataCy('update-settings-btn');
   }
 
-  changeItem(placeholder, newValue) {
-    cy.get(`[placeholder="${placeholder}"]`).as('input');
-    cy.get('@input').clear();
-    cy.get('@input').type(newValue);
+  get logoutBtn() {
+    return cy.getByDataCy('logout-btn');
   }
 
-  checkUrl(username) {
-    cy.url().should('include', `/profile/${username}`);
+  changeUsername(value) {
+    this.usernameInput.clear().type(value);
+    return this;
+  }
+
+  changeEmail(value) {
+    this.emailInput.clear().type(value);
+    return this;
+  }
+
+  changeBio(value) {
+    this.bioInput.clear().type(value);
+    return this;
+  }
+
+  changePassword(value) {
+    this.passwordInput.clear().type(value);
+    return this;
   }
 
   clickOnUpdateSettingsBtn() {
     this.updateSettingsBtn.click();
+  }
+
+  clickLogout() {
+    this.logoutBtn.click();
+  }
+
+  checkUrl(username) {
+    cy.url().should('include', `/profile/${username}`);
   }
 }
 
