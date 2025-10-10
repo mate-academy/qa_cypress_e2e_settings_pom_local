@@ -1,32 +1,11 @@
-/// <reference types="cypress" />
-/// <reference types="../support" />
+// settings.js
+export const BASE_URL = 'http://localhost:3000';
+export const API_URL = 'http://localhost:3000/api';
 
-describe('Settings page', () => {
-  before(() => {
+export const DEFAULT_TIMEOUT = 10000;
 
-  });
-
-  beforeEach(() => {
-
-  });
-
-  it('should provide an ability to update username', () => {
-
-  });
-
-  it('should provide an ability to update bio', () => {
-
-  });
-
-  it('should provide an ability to update an email', () => {
-
-  });
-
-  it('should provide an ability to update password', () => {
-
-  });
-
-  it('should provide an ability to log out', () => {
-
-  });
-});
+export const ENDPOINTS = {
+  login: `${API_URL}/users/login`,
+  register: `${API_URL}/users`,
+  articles: `${API_URL}/articles`,
+};

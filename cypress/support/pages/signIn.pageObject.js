@@ -1,30 +1,30 @@
-import PageObject from '../PageObject';
+/* eslint-disable cypress/unsafe-to-chain-command */
+class SignInPageObject {
+  url = '/login';
 
-class SignInPageObject extends PageObject {
-  url = '/user/login';
-
-  get emailField() {
-    return cy.getByDataCy('email-sign-in');
-  }
-
-  get passwordField() {
-    return cy.getByDataCy('password-sign-in');
-  }
-
-  get signInBtn() {
-    return cy.getByDataCy('sign-in-btn');
+  visit() {
+  
+    return cy.visit(this.url);
   }
 
   typeEmail(email) {
-    this.emailField.type(email);
+
+    return cy.get('[data-cy="sign-in-email"]').clear().type(email);
   }
 
   typePassword(password) {
-    this.passwordField.type(password);
+
+    return cy.get('[data-cy="sign-in-password"]').clear().type(password);
   }
 
   clickSignInBtn() {
-    this.signInBtn.click();
+
+    return cy.get('[data-cy="sign-in-btn"]').click();
+  }
+
+  getError() {
+ 
+    return cy.get('[data-cy="sign-in-error"]');
   }
 }
 
