@@ -1,9 +1,3 @@
-/// <reference types='cypress' />
-/// <reference types='../support' />
-
-import SignInPageObject from '../support/pages/signIn.pageObject';
-import homePageObject from '../support/pages/home.pageObject';
-
 const signInPage = new SignInPageObject();
 const homePage = new homePageObject();
 

@@ -1,24 +1,25 @@
-/// <reference types="cypress" />
-/// <reference types="../support" />
+import PageObject from '../PageObject';
 
-describe('Article', () => {
-  before(() => {
+class SettingsPageObject extends PageObject {
+  url = '/settings';
 
-  });
+  get updateSettingsBtn() {
+    return cy.contains('button', 'Update Settings');
+  }
 
-  beforeEach(() => {
-    cy.task('db:clear');
-  });
+  changeItem(placeholder, newValue) {
+    cy.get(`[placeholder="${placeholder}"]`).as('input');
+    cy.get('@input').clear();
+    cy.get('@input').type(newValue);
+  }
 
-  it('should be created using New Article form', () => {
+  checkUrl(username) {
+    cy.url().should('include', `/profile/${username}`);
+  }
 
-  });
+  clickOnUpdateSettingsBtn() {
+    this.updateSettingsBtn.click();
+  }
+}
 
-  it('should be edited using Edit button', () => {
-
-  });
-
-  it('should be deleted using Delete button', () => {
-
-  });
-});
+export default SettingsPageObject;
