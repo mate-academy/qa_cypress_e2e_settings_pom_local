@@ -54,6 +54,7 @@ const IndexPage = ({ articles, articlesCount, ssr, tags }) => {
                   </Maybe>
                   <li className="nav-item">
                     <a
+                      data-cy="global-feed"
                       className={`link nav-link${
                         tab === 'global' ? ' active' : ''
                       }`}

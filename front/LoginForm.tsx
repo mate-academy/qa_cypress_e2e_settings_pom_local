@@ -56,6 +56,7 @@ const LoginForm = ({ register = false }) => {
           {register && (
             <fieldset className="form-group">
               <input
+              data-cy="username-sign-in"
                 className="form-control form-control-lg"
                 type="text"
                 placeholder="Username"

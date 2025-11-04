@@ -19,6 +19,7 @@ const ArticleMeta = ({ article }) => {
         <CustomLink
           href={routes.userView(encodeURIComponent(article.author?.username))}
           className="author"
+          data-cy="article-author"
         >
           {article.author?.username}
         </CustomLink>

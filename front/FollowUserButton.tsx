@@ -29,6 +29,7 @@ const FollowUserButton = ({ profile }) => {
   }
   return (
     <button
+      data-cy="follow-unfollow-user"
       className={`btn btn-sm action-btn ${
         following ? 'btn-secondary' : 'btn-outline-secondary'
       }`}

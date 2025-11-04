@@ -74,6 +74,7 @@ const ProfileHoc = (tab) => {
                   <ul className="nav nav-pills outline-active">
                     <li className="nav-item">
                       <CustomLink
+                      data-cy="article-description"
                         href={routes.userView(encodeURIComponent(username))}
                         className={`nav-link${
                           tab === 'my-posts' ? ' active' : ''

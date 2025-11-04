@@ -29,6 +29,7 @@ const TagInput = ({ tagList, addTag, removeTag }) => {
     <>
       <fieldset className="form-group">
         <input
+          data-cy="tags-field"
           className="form-control"
           type="text"
           placeholder={

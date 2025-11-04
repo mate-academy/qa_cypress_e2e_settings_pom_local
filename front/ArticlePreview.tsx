@@ -36,13 +36,13 @@ const ArticlePreview = ({ article }) => {
         href={routes.articleView(preview.slug)}
         className="preview-link"
       >
-        <h1>{preview.title}</h1>
-        <p>{preview.description}</p>
+        <h1 data-cy="article-link">{preview.title}</h1>
+        <p data-cy="article-description">{preview.description}</p>
         <span>Read more...</span>
         <ul className="tag-list">
           {preview.tagList.map((tag, index) => {
             return (
-              <li className="tag-default tag-pill tag-outline" key={index}>
+              <li data-cy="article-tag" className="tag-default tag-pill tag-outline" key={index}>
                 {tag}
               </li>
             )

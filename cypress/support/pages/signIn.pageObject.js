@@ -26,6 +26,14 @@ class SignInPageObject extends PageObject {
   clickSignInBtn() {
     this.signInBtn.click();
   }
+
+  get unluckySignInMessage() {
+    return cy.getByDataCy('error-message');
+  }
+
+  assertErrorMessage(message) {
+    this.unluckySignInMessage.should('contain', message);
+  }
 }
 
 export default SignInPageObject;
