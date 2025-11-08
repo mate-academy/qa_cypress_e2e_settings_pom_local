@@ -11,7 +11,6 @@ describe('Sign Up page', () => {
   let user;
 
   before(() => {
-        cy.task('db:clear');
     cy.task('generateUser').then((generateUser) => {
       user = generateUser;
     });
@@ -19,10 +18,11 @@ describe('Sign Up page', () => {
 
 
   beforeEach(() => {
+            cy.task('db:clear');
     signUpPage.visit();
   });
 
-  it.only('should provide ability to register', () => {
+  it('should provide ability to register', () => {
     signUpPage.typeUserName(user.username);
     signUpPage.typeEmail(user.email);
     signUpPage.typePassword(user.password);

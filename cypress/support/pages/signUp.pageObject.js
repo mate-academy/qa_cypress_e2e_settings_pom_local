@@ -4,7 +4,7 @@ class SignUpPageObject extends PageObject {
     url='/user/register';
 
     get usernameInput() {
-        return cy.inputByPlaceholder('Username');
+        return cy.getByDataCy('username-sign-in');
     }
     get emailInput() {
         return cy.getByDataCy('email-sign-in');

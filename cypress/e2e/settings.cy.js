@@ -5,6 +5,7 @@ import SignInPageObject from '../support/pages/signIn.pageObject';
 import HomePageObject from '../support/pages/home.pageObject';
 import SettingsInPageObject from '../support/pages/settings.pageObject';
 import { faker } from '@faker-js/faker';
+import { sign } from 'crypto';
 
 const signInPage = new SignInPageObject();
 const homePage = new HomePageObject();
@@ -17,14 +18,9 @@ describe('Settings page', () => {
     });
   });
   beforeEach(() => {
-    signInPage.visit('/user/login');
     cy.task('db:clear');
-        cy.register(user.email, user.username, user.password);
-
-    signInPage.typeEmail(user.email);
-    signInPage.typePassword(user.password);
-    signInPage.clickSignInBtn();
-
+    cy.login(user.email, user.username, user.password);
+        signInPage.visit('/');
     homePage.assertHeaderContainUsername(user.username);
     settingsPage.clickSettingsBtn();
   });
@@ -59,18 +55,16 @@ describe('Settings page', () => {
   it('should provide an ability to update password', () => {
     settingsPage.typeNewPassword('NewPassword!!!');
     settingsPage.clickSubmitBtn();
+    homePage.clickSettingsLink();
     settingsPage.clickLogoutBtn();
-          cy.clearAllCookies();
-          cy.clearAllLocalStorage();
-
-        signInPage.signInBtn();
-          cy.clearAllCookies();
-          cy.clearAllLocalStorage();
-              signInPage.typeEmail(user.email);
-    signInPage.typePassword('NewPassword!!!');
+    homePage.clickSignInNav();
+    signInPage.emailField
+    .type(user.email);
+    signInPage.passwordField
+    .type('NewPassword!!!');
     signInPage.clickSignInBtn();
-          settingsPage.profileLink
-        .should('contain.text', user.username.toLocaleLowerCase());      
+    homePage.assertHeaderContainUsername(user.username);
+   
   });
 
   it('should provide an ability to log out', () => {

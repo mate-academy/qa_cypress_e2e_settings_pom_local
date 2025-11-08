@@ -4,12 +4,13 @@ import { clear } from './dataBase';
 
 module.exports = defineConfig({
   watchForFileChanges: false,
+  defaultCommandTimeout: 10000,
   e2e: {
     baseUrl: 'http://localhost:3000',
     setupNodeEvents(on, config) {
       on('task', {
         generateUser() {
-          let randomNumber = String(Math.ceil(Math.random(1000) * 1000));
+          let randomNumber = faker.string.numeric(4);
           let userName = faker.person.firstName() + `${randomNumber}`;
           return {
             username: userName.toLowerCase(),

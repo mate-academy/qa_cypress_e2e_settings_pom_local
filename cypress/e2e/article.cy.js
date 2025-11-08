@@ -14,7 +14,6 @@ describe('Article', () => {
   let article;
 
   before(() => {
-        cy.task('db:clear');
     cy.task('generateUser').then((generateUser) => {
       user = generateUser;
     });
@@ -24,12 +23,8 @@ describe('Article', () => {
   });
 
   beforeEach(() => {
-
-    signInPage.visit();
+        cy.task('db:clear');
      cy.login(user.email, user.username, user.password);
-      signInPage.typeEmail(user.email);
-    signInPage.typePassword(user.password);
-    signInPage.clickSignInBtn();
   });
 
   it('should be created using New Article form', () => {
@@ -38,10 +33,9 @@ describe('Article', () => {
     articleInPage.typeDescription(article.description);
     articleInPage.typeBody(article.body);
     articleInPage.typeTags(article.tag);
-    articleInPage.clickPublishArticleBtn();
-    homeInPage.visit();
-    homeInPage.clickGlobalFeedBtn();
-    homeInPage.assertNewArticle(article.title, article.description);
+    articleInPage.clickArticleBtn();
+    homeInPage.assertTitleInBanner(article.title);
+    homeInPage.assertBodyUnderBanner(article.body);
   });
 
   it('should be edited using Edit button', () => {
@@ -50,32 +44,25 @@ describe('Article', () => {
     articleInPage.typeDescription(article.description);
     articleInPage.typeBody(article.body);
     articleInPage.typeTags(article.tag);
-    articleInPage.clickPublishArticleBtn();
-    homeInPage.visit();
-    homeInPage.clickGlobalFeedBtn();
-    homeInPage.openArticle();
+    articleInPage.clickArticleBtn();
     homeInPage.clickInEditionOfArticle();
-    articleInPage.descriptionInput
+    articleInPage.bodyInput
     .clear()
     .type('New Editted Text!!!');
-    articleInPage.clickUpdateArticleBtn();
-    homeInPage.visit();
-    homeInPage.clickGlobalFeedBtn();
+    articleInPage.clickArticleBtn();
     homeInPage.assertNewArticle(article.title, 'New Editted Text!!!');
 
   });
 
-  it.only('should be deleted using Delete button', () => {
+  it('should be deleted using Delete button', () => {
     articleInPage.visit();
     articleInPage.typeTitle(article.title);
     articleInPage.typeDescription(article.description);
     articleInPage.typeBody(article.body);
     articleInPage.typeTags(article.tag);
-    articleInPage.clickPublishArticleBtn();
-    homeInPage.visit();
-    homeInPage.clickGlobalFeedBtn();
-    homeInPage.openArticle();
+    articleInPage.clickArticleBtn();
     homeInPage.clickInDeletionOfArticle();
+    homeInPage.clickHomeLink();
     homeInPage.clickGlobalFeedBtn();
     homeInPage.assertDeletedArticle(article.title, article.description);
   });

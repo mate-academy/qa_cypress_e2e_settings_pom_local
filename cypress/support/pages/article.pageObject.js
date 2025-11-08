@@ -4,29 +4,23 @@ class ArticlePageObject extends PageObject {
     url = '/editor';
 
     get titleInput() {
-      return cy.inputByPlaceholder('Article Title');
+      return cy.getByDataCy('editor-art-title');
     }
 
     get descriptionInput() {
-      return cy.inputByPlaceholder(`What's this article about?`);
+      return cy.getByDataCy('editor-art-description');
     }
     
     get bodyInput() {
-        return cy.inputByPlaceholder('Write your article (in markdown)');
+        return cy.getByDataCy('editor-art-body');
     }
 
     get tagInput() {
-        return cy.inputByPlaceholder('Enter tags');
+        return cy.getByDataCy('editor-art-tags');
     }
 
-    get publishArticleBtn() {
-        return cy.contains('button', 'Publish Article')
-          .click();
-    }
-
-        get updateArticleBtn() {
-        return cy.contains('button', 'Update Article')
-          .click();
+    get articleBtn() {
+        return cy.getByDataCy('handle-article-btn');
     }
 
     typeTitle(title) {
@@ -48,13 +42,9 @@ class ArticlePageObject extends PageObject {
         .type(tags);
     }
 
-    clickPublishArticleBtn() {
-        this.publishArticleBtn
-          .click();
-    }
-
-        clickUpdateArticleBtn() {
-        this.updateArticleBtn
+    clickArticleBtn() {
+        this.articleBtn
+          .click()
           .click();
     }
 }

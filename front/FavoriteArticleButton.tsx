@@ -63,6 +63,7 @@ const FavoriteArticleButton = (props) => {
     <button
       className={favorited ? FAVORITED_CLASS : NOT_FAVORITED_CLASS}
       onClick={() => handleClickFavorite()}
+      data-cy='follow-user-btn'
     >
       <i className="ion-heart" />
       {props.showText ? ' ' : ''}

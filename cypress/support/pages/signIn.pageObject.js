@@ -16,7 +16,7 @@ class SignInPageObject extends PageObject {
   }
 
   get errorMessage() {
-    return  cy.get('.error-messages');
+    return  cy.getByDataCy('login-errors');
   }
 
   typeEmail(email) {

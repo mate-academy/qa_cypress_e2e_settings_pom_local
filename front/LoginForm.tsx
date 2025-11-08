@@ -60,6 +60,7 @@ const LoginForm = ({ register = false }) => {
                 type="text"
                 placeholder="Username"
                 value={username}
+                data-cy='password-sign-in'
                 onChange={handleUsernameChange}
               />
             </fieldset>

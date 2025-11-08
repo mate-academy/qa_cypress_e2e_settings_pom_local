@@ -7,37 +7,34 @@ class SettingInPageObject extends PageObject {
       // getters for buttons
 
         get settingsBtn() {
-    return cy.get('[href="/settings"]');
+    return cy.getByDataCy('settings-link');
   }
 
   get submitBtn() {
-    return cy.get('[type="submit"]');
+    return cy.getByDataCy('update-settings');
   }
 
   get logoutBtn() {
-    return cy.contains('.btn-outline-danger', 'Or click here to logout.');
+    return cy.getByDataCy('logout-btn');
   }
 
   // getters for values
 
-  get bioInProfile() {
-    return cy.get('.col-xs-12 > p');
+
+        get settingsEmail() {
+    return cy.getByDataCy('settings-email');
   }
 
-        get emailByPlaceholder() {
-    return cy.inputByPlaceholder('Email');
+  get settingsPassword() {
+return cy.getByDataCy('settings-password');
   }
 
-  get passwordByPlaceholder() {
-return cy.inputByPlaceholder('Password');
+  get settingsBio() {
+return cy.getByDataCy('settings-bio');
   }
 
-  get bioByPlaceholder() {
-return cy.inputByPlaceholder('Short bio about you');
-  }
-
-  get userNameByPlaceholder() {
-    return cy.inputByPlaceholder('Username');
+  get settingsUserName() {
+    return cy.getByDataCy('settings-username');
   }
 
   //methods for buttons
@@ -57,30 +54,30 @@ return cy.inputByPlaceholder('Short bio about you');
   //methods for updating values
 
   typeNewUserName(updatedUserName) {
-    this.userNameByPlaceholder.clear().type(updatedUserName);
+    this.settingsUserName.clear().type(updatedUserName);
   }
 
   typeNewEmail(updatedEmail) {
-    this.emailByPlaceholder.clear().type(updatedEmail);
+    this.settingsEmail.clear().type(updatedEmail);
   }
 
   typeNewBio(updatedBio) {
-    this.bioByPlaceholder.clear().type(updatedBio);
+    this.settingsBio.clear().type(updatedBio);
   }
 
   typeNewPassword(updatedPassword) {
-    this.passwordByPlaceholder.clear().type(updatedPassword);
+    this.settingsPassword.clear().type(updatedPassword);
   }
 
   // methods for checking values
 
   checkUpdatedBio(updatedBio) {
-    this.bioInProfile
+    this.settingsBio
     .should('contain.text', updatedBio);
   }
 
   checkUpdatedEmail(updatedEmail) {
-    this.emailByPlaceholder
+    this.settingsEmail
     .should('have.value', updatedEmail);
   }
 }
