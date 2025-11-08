@@ -114,6 +114,7 @@ export default function ArticleEditorHoc(isnew = false) {
                         placeholder="Article Title"
                         value={posting.title}
                         onChange={handleTitle}
+                        data-cy='editor-art-title'
                       />
                     </fieldset>
                     <fieldset className="form-group">
@@ -123,6 +124,7 @@ export default function ArticleEditorHoc(isnew = false) {
                         placeholder="What's this article about?"
                         value={posting.description}
                         onChange={handleDescription}
+                        data-cy='editor-art-description'
                       />
                     </fieldset>
                     <fieldset className="form-group">
@@ -132,6 +134,7 @@ export default function ArticleEditorHoc(isnew = false) {
                         placeholder="Write your article (in markdown)"
                         value={posting.body}
                         onChange={handleBody}
+                        data-cy='editor-art-body'
                       />
                     </fieldset>
                     <TagInput
@@ -144,6 +147,7 @@ export default function ArticleEditorHoc(isnew = false) {
                       type="button"
                       disabled={isLoading}
                       onClick={handleSubmit}
+                      data-cy='handle-article-btn'
                     >
                       {isnew ? 'Publish' : 'Update'} Article
                     </button>

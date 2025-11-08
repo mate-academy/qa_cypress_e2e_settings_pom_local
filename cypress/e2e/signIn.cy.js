@@ -16,11 +16,13 @@ describe('Sign In page', () => {
       user = generateUser;
     });
   });
+
+  beforeEach(() => {
+        signInPage.visit();
+  });
   
   it('should provide an ability to log in with existing credentials', () => {
-    signInPage.visit();
     cy.register(user.email, user.username, user.password);
-
     signInPage.typeEmail(user.email);
     signInPage.typePassword(user.password);
     signInPage.clickSignInBtn();
@@ -29,6 +31,9 @@ describe('Sign In page', () => {
   });
 
   it('should not provide an ability to log in with wrong credentials', () => {
-
+    signInPage.typeEmail('wrongmail@example.com');
+    signInPage.typePassword('WrongPassword!!!');
+    signInPage.clickSignInBtn();
+    signInPage.assertErrorMessage();
   });
 });

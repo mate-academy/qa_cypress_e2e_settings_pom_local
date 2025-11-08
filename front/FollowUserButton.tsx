@@ -33,6 +33,7 @@ const FollowUserButton = ({ profile }) => {
         following ? 'btn-secondary' : 'btn-outline-secondary'
       }`}
       onClick={handleClick}
+      data-cy='follow-user'
     >
       <i className="ion-plus-round" /> &nbsp;{' '}
       {following ? 'Unfollow' : 'Follow'} {username}

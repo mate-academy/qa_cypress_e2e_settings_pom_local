@@ -61,6 +61,7 @@ const IndexPage = ({ articles, articlesCount, ssr, tags }) => {
                         setPage(0)
                         setTab('global')
                       }}
+                      data-cy='global-feed-btn'
                     >
                       Global Feed
                     </a>
