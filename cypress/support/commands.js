@@ -43,6 +43,7 @@ Cypress.Commands.add('register',
 
 Cypress.Commands.add('login',
    (email = 'riot@qa.team', username = 'riot', password = '12345Qwert!') => {
+   // Only /api/users works correctly. This version below is correct.
   cy.request('POST', '/api/users', {
     user: {
       email,

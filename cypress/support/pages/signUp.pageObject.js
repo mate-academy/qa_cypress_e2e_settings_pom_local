@@ -14,7 +14,7 @@ class SignUpPageObject extends PageObject {
         return cy.getByDataCy('password-sign-in');
     }
     get signUpBtn() {
-        return cy.getByDataCy('sign-in-btn');
+        return cy.getByDataCy('sign-up-btn');
     }
 
  typeUserName(username) {

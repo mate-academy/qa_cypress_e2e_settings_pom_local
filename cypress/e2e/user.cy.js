@@ -42,7 +42,7 @@ describe('Follow/unfollow button', () => {
     
   });
 
-  it.only('should provide an ability to unfollow the another user', () => {
+  it('should provide an ability to unfollow the another user', () => {
             articleInPage.typeTitle(article.title);
     articleInPage.typeDescription(article.description);
     articleInPage.typeBody(article.body);

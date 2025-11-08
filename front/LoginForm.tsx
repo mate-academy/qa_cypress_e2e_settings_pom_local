@@ -60,7 +60,7 @@ const LoginForm = ({ register = false }) => {
                 type="text"
                 placeholder="Username"
                 value={username}
-                data-cy='password-sign-in'
+                data-cy='username-sign-in'
                 onChange={handleUsernameChange}
               />
             </fieldset>
@@ -86,7 +86,7 @@ const LoginForm = ({ register = false }) => {
             />
           </fieldset>
           <button
-            data-cy="sign-in-btn"
+            data-cy="sign-up-btn"
             className="btn btn-lg btn-primary pull-xs-right"
             type="submit"
             disabled={isLoading}

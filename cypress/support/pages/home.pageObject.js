@@ -87,6 +87,11 @@ get signUpInNavigation() {
     .click();
   }
 
+  clickProfileLink() {
+    this.profileLink
+    .click();
+  }
+
   clickFollowBtn() {
     this.followBtn
     .click();

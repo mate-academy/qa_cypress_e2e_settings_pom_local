@@ -30,7 +30,7 @@ return cy.getByDataCy('settings-password');
   }
 
   get settingsBio() {
-return cy.getByDataCy('settings-bio');
+return cy.getByDataCy('profile-bio');
   }
 
   get settingsUserName() {

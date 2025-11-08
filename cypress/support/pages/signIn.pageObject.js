@@ -12,7 +12,7 @@ class SignInPageObject extends PageObject {
   }
 
   get signInBtn() {
-    return cy.getByDataCy('sign-in-btn');
+    return cy.getByDataCy('sign-up-btn');
   }
 
   get errorMessage() {
