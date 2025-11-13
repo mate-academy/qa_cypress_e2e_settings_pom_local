@@ -35,6 +35,7 @@ const TagInput = ({ tagList, addTag, removeTag }) => {
             isDemo ? 'Press Enter, Tab or Comma to add a tag' : 'Enter tags'
           }
           value={tag}
+          data-cy="article-tag"
           onChange={changeTagInput}
           onBlur={handleAddTag}
           onKeyDown={handleTagInputKeyDown}

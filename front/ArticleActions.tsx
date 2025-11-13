@@ -46,9 +46,10 @@ const ArticleActions = ({ article }) => {
             href={routes.articleEdit(article.slug)}
             className="btn btn-outline-secondary btn-sm"
           >
-            <i className="ion-edit" /> Edit Article
+            <i className="ion-edit" data-cy="article-edit" /> Edit Article
           </CustomLink>
           <button
+            data-cy="article-delete"
             className="btn btn-outline-danger btn-sm"
             onClick={handleDelete}
           >

@@ -68,7 +68,7 @@ const ArticlePage = ({ article, comments }: ArticlePageProps) => {
       <div className="article-page">
         <div className="banner">
           <div className="container">
-            <h1>{article.title}</h1>
+            <h1 data-cy="article-title">{article.title}</h1>
             <FavoriteArticleButtonContext.Provider
               value={{
                 favorited,
@@ -89,7 +89,7 @@ const ArticlePage = ({ article, comments }: ArticlePageProps) => {
           </div>
         </div>
         <div className="container page">
-          <div className="row article-content">
+          <div data-cy="article-body" className="row article-content">
             <div className="col-md-12">
               <div dangerouslySetInnerHTML={markup} />
               <ul className="tag-list">
