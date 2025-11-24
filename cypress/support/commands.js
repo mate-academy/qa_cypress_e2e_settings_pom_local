@@ -26,8 +26,8 @@
 // Cypress.Commands.overwrite('request', (originalFn, ...args) => { ... })
 //
 
-Cypress.Commands.add('getByDataCy', (selector) => {
-  cy.get(`[data-cy^="${selector}"]`);
+Cypress.Commands.add('getByDataCy', (selector, ...args) => {
+  return cy.get(`[data-cy="${selector}"]`, ...args);
 });
 
 Cypress.Commands.add('register', (
