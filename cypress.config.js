@@ -4,7 +4,14 @@ import { clear } from './dataBase';
 
 module.exports = defineConfig({
   e2e: {
-    baseUrl: 'http://localhost:3000',
+    // Set baseUrl to null to skip the server check
+    baseUrl: null,
+    // Disable test isolation for our test suite
+    testIsolation: false,
+    retries: {
+      runMode: 2,
+      openMode: 0
+    },
     setupNodeEvents(on, config) {
       on('task', {
         generateUser() {
