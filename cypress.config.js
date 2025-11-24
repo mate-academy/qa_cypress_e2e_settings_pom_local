@@ -5,6 +5,15 @@ import { clear } from './dataBase';
 module.exports = defineConfig({
   e2e: {
     baseUrl: 'http://localhost:3000',
+    testIsolation: true,
+    retries: {
+      runMode: 2,
+      openMode: 0
+    },
+    viewportWidth: 1280,
+    viewportHeight: 800,
+    defaultCommandTimeout: 10000,
+    responseTimeout: 30000,
     setupNodeEvents(on, config) {
       on('task', {
         generateUser() {
