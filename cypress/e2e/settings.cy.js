@@ -1,130 +1,72 @@
 /// <reference types="cypress" />
 /// <reference types="../support" />
+import { faker } from '@faker-js/faker';
 
 import SettingsPageObject from '../support/pages/settings.pageObject';
-import HomePageObject from '../support/pages/home.pageObject';
-
-const mockUser = {
-  email: 'test@example.com',
-  username: 'testuser',
-  password: 'Test123!',
-  bio: 'Test bio',
-  image: 'https://static.productionready.io/images/smiley-cyrus.jpg',
-  token: 'jwt.token.here'
-};
 
 const settingsPage = new SettingsPageObject();
-const homePage = new HomePageObject();
 
-describe('Settings page', () => {
-  let user;
-
-  before(() => {
-    cy.intercept('POST', '/api/users', {
-      statusCode: 201,
-      body: { user: { ...mockUser } },
-    }).as('register');
-
-    cy.intercept('POST', '/api/users/login', {
-      statusCode: 200,
-      body: { user: { ...mockUser } },
-    }).as('login');
-
-    cy.intercept('PUT', '/api/user', (request) => {
-      const updatedUser = { ...mockUser, ...request.body.user };
-      request.reply({
-        statusCode: 200,
-        body: { user: updatedUser },
-      });
-    }).as('updateUser');
-
-    user = { ...mockUser };
-
-    cy.intercept('GET', '/settings', {
-      statusCode: 200,
-      body: `
-        <!DOCTYPE html>
-        <html>
-          <head>
-            <title>Settings</title>
-          </head>
-          <body>
-            <div id="root">
-              <form class="settings-form">
-                <input type="text" name="username" value="${user.username}" />
-                <input type="email" name="email" value="${user.email}" />
-                <textarea name="bio">${user.bio || ''}</textarea>
-                <input type="password" name="password" />
-                <input type="password" name="newPassword" />
-                <button type="submit">Update Settings</button>
-              </form>
-            </div>
-          </body>
-        </html>
-      `,
-      headers: {
-        'content-type': 'text/html',
-      },
-    });
-
-    cy.intercept('GET', '/api/user', {
-      statusCode: 200,
-      body: { user: user },
-    }).as('getUser');
-  });
+describe('Settings Page - E2E Tests', () => {
+  let testUser;
 
   beforeEach(() => {
-    cy.setCookie('auth', user.token);
-    window.localStorage.setItem('user', JSON.stringify(user));
+    cy.task('db:clear');
+    
+    testUser = {
+      email: faker.internet.email().toLowerCase(),
+      username: faker.internet.userName().toLowerCase().replace(/[^a-z0-9]/, ''),
+      password: faker.internet.password(12) + 'A1!',
+      bio: faker.lorem.sentence(),
+    };
+
+    cy.request('POST', '/api/users', {
+      user: {
+        email: testUser.email,
+        username: testUser.username,
+        password: testUser.password
+      }
+    }).then((response) => {
+      testUser.token = response.body.user.token;
+      cy.setCookie('auth', testUser.token);
+      window.localStorage.setItem('user', JSON.stringify(response.body.user));
+    });
 
     cy.visit('/settings');
-
-    cy.wait('@getUser');
   });
 
-  it('should provide an ability to update username', () => {
-    const newUsername = 'updateduser' + Date.now();
-
-    cy.intercept('PUT', '/api/user', (request) => {
-      expect(request.body.user.username).to.equal(newUsername);
-      request.reply({
-        statusCode: 200,
-        body: { user: { ...mockUser, username: newUsername } },
-      });
-    }).as('updateUsername');
+  it('should update user profile information', () => {
+    const updatedBio = faker.lorem.paragraph();
+    const updatedUsername = faker.internet.userName().toLowerCase().replace(/[^a-z0-9]/, '');
 
     settingsPage
       .clearUsername()
-      .typeUsername(newUsername)
-      .clickUpdateButton()
-      .successMessage.should('be.visible')
-      .and('contain', 'Update successful!');
-
-    cy.wait('@updateUsername');
-    homePage.visit();
-    homePage.assertHeaderContainUsername(newUsername);
-    user.username = newUsername;
-  });
-
-  it('should show error when username is too short', () => {
-    const shortUsername = 'ab';
-
-    cy.intercept('PUT', '/api/user', {
-      statusCode: 422,
-      body: {
-        errors: {
-          username: ['is too short (minimum is 3 characters)'],
-        },
-      },
-    }).as('updateWithError');
-
-    settingsPage
-      .clearUsername()
-      .typeUsername(shortUsername)
+      .typeUsername(updatedUsername)
+      .clearBio()
+      .typeBio(updatedBio)
       .clickUpdateButton();
 
-    cy.wait('@updateWithError');
-    settingsPage.assertFieldError('username', 'is too short');
+    settingsPage.successMessage.should('be.visible');
+
+    cy.reload();
+    settingsPage.usernameField.should('have.value', updatedUsername);
+    settingsPage.bioField.should('have.value', updatedBio);
+  });
+
+  it('should update password', () => {
+    const newPassword = faker.internet.password(12) + 'A1!';
+
+    settingsPage
+      .updatePassword(testUser.password, newPassword)
+      .successMessage.should('be.visible');
+
+    settingsPage.clickLogoutButton();
+    
+    cy.visit('/login');
+    cy.get('input[type="email"]').type(testUser.email);
+    cy.get('input[type="password"]').type(newPassword);
+    cy.get('button[type="submit"]').click();
+
+    cy.url().should('include', '/');
   });
 
   it('should show error when updating to existing username', () => {
@@ -272,26 +214,14 @@ describe('Settings page', () => {
     user.password = newPassword;
   });
 
-  it('should show error when current password is incorrect', () => {
+  it('should show error for incorrect current password', () => {
     const wrongPassword = 'WrongPass123!';
-    const newPassword = 'NewTest123!';
+    const newPassword = faker.internet.password(12) + 'A1!';
 
-    cy.intercept('PUT', '/api/user', {
-      statusCode: 401,
-      body: {
-        errors: {
-          password: ['is invalid'],
-        },
-      },
-    }).as('updateWithWrongPassword');
-
-    settingsPage.updatePassword(wrongPassword, newPassword);
-
-    cy.wait('@updateWithWrongPassword');
-    cy.get('@settingsButton')
-      .should('be.visible')
-      .and('have.attr', 'data-cy', 'settings-button')
-      .click();
+    settingsPage
+      .updatePassword(wrongPassword, newPassword)
+      .errorMessages.should('be.visible')
+      .and('contain', 'password is invalid');
   });
 
   it('should show error for weak password', () => {

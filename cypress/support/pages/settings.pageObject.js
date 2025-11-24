@@ -1,33 +1,42 @@
 import PageObject from '../PageObject';
 
 class SettingsPageObject extends PageObject {
-  get usernameField() {
-    return cy.getByDataCy('settings-username');
+  get usernameField() { 
+    return cy.getByDataCy('settings-username'); 
   }
-  get emailField() {
-    return cy.getByDataCy('settings-email');
+
+  get emailField() { 
+    return cy.getByDataCy('settings-email'); 
   }
-  get bioField() {
-    return cy.getByDataCy('settings-bio');
+
+  get bioField() { 
+    return cy.getByDataCy('settings-bio'); 
   }
-  get currentPasswordField() {
-    return cy.getByDataCy('settings-current-password');
+
+  get currentPasswordField() { 
+    return cy.getByDataCy('settings-current-password'); 
   }
-  get newPasswordField() {
-    return cy.getByDataCy('settings-new-password');
+
+  get newPasswordField() { 
+    return cy.getByDataCy('settings-new-password'); 
   }
-  get updateButton() {
-    return cy.getByDataCy('settings-update-button');
+
+  get updateButton() { 
+    return cy.getByDataCy('settings-update-button'); 
   }
-  get logoutButton() {
-    return cy.getByDataCy('settings-logout-button');
+
+  get logoutButton() { 
+    return cy.getByDataCy('settings-logout-button'); 
   }
-  get successMessage() {
-    return cy.getByDataCy('success-message');
+
+  get successMessage() { 
+    return cy.getByDataCy('success-message'); 
   }
-  get errorMessages() {
-    return cy.getByDataCy('error-message');
+
+  get errorMessages() { 
+    return cy.getByDataCy('error-message'); 
   }
+
   get fieldErrors() {
     return cy.get('.error-messages');
   }
