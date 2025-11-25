@@ -85,7 +85,7 @@ const LoginForm = ({ register = false }) => {
             />
           </fieldset>
           <button
-            data-cy="sign-in-btn"
+            data-cy="form-sign-in-btn"
             className="btn btn-lg btn-primary pull-xs-right"
             type="submit"
             disabled={isLoading}
