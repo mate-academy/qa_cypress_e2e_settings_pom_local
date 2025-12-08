@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /// <reference types="cypress" />
 // ***********************************************
 // This example commands.ts shows you how to
@@ -37,6 +38,8 @@ Cypress.Commands.add('register', (email = 'riot@qa.team', username = 'riot', pas
       username,
       password
     }
+  }).then((response) => {
+    expect(response.status).to.eq(200);
   });
 });
 
@@ -47,16 +50,23 @@ Cypress.Commands.add('login', (email = 'riot@qa.team', username = 'riot', passwo
       username,
       password
     }
-  }).then(response => {
+  }).then((response) => {
     const user = {
       bio: response.body.user.bio,
-      effectiveImage: "https://static.productionready.io/images/smiley-cyrus.jpg",
+      effectiveImage: 'https://static.productionready.io/images/smiley-cyrus.jpg',
       email: response.body.user.email,
       image: response.body.user.image,
       token: response.body.user.token,
       username: response.body.user.username,
     };
-    window.localStorage.setItem('user', JSON.stringify(user));
+    cy.window().then((win) => {
+      win.localStorage.setItem('user', JSON.stringify(user));
+    });
     cy.setCookie('auth', response.body.user.token);
   });
+});
+
+Cypress.Commands.add('assertPageUrl', (url) => {
+  // cy.hash().should("eq", "#" + url);
+  cy.url().should('eq', Cypress.config().baseUrl + url);
 });

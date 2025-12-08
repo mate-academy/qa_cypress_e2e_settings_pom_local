@@ -15,12 +15,16 @@ class SignInPageObject extends PageObject {
     return cy.getByDataCy('sign-in-btn');
   }
 
+  get errorMessages() {
+    return cy.get('.error-messages > :nth-child(1)');
+  }
+
   typeEmail(email) {
-    this.emailField.type(email);
+    this.emailField.type(email); return this;
   }
 
   typePassword(password) {
-    this.passwordField.type(password);
+    this.passwordField.type(password); return this;
   }
 
   clickSignInBtn() {
