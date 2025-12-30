@@ -38,6 +38,7 @@ const TagInput = ({ tagList, addTag, removeTag }) => {
           onChange={changeTagInput}
           onBlur={handleAddTag}
           onKeyDown={handleTagInputKeyDown}
+          data-cy='article-tags'
         />
         <div className="tag-list">
           {tagList.map((tag, index) => (

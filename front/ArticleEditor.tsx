@@ -114,6 +114,7 @@ export default function ArticleEditorHoc(isnew = false) {
                         placeholder="Article Title"
                         value={posting.title}
                         onChange={handleTitle}
+                        data-cy='article-input'
                       />
                     </fieldset>
                     <fieldset className="form-group">
@@ -123,6 +124,7 @@ export default function ArticleEditorHoc(isnew = false) {
                         placeholder="What's this article about?"
                         value={posting.description}
                         onChange={handleDescription}
+                        data-cy='article-description'
                       />
                     </fieldset>
                     <fieldset className="form-group">
@@ -132,18 +134,21 @@ export default function ArticleEditorHoc(isnew = false) {
                         placeholder="Write your article (in markdown)"
                         value={posting.body}
                         onChange={handleBody}
+                        data-cy="article-textarea"
                       />
                     </fieldset>
                     <TagInput
                       tagList={posting.tagList}
                       addTag={addTag}
                       removeTag={removeTag}
+                      
                     />
                     <button
                       className="btn btn-lg pull-xs-right btn-primary"
                       type="button"
                       disabled={isLoading}
                       onClick={handleSubmit}
+                      data-cy="article-submit"
                     >
                       {isnew ? 'Publish' : 'Update'} Article
                     </button>
