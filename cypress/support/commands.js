@@ -26,6 +26,8 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 //
 
+import { faker } from '@faker-js/faker';
+
 Cypress.Commands.add('getByDataCy', (selector) => {
   cy.get(`[data-cy^="${selector}"]`);
 });
@@ -41,7 +43,7 @@ Cypress.Commands.add('register', (email = 'riot@qa.team', username = 'riot', pas
 });
 
 Cypress.Commands.add('login', (email = 'riot@qa.team', username = 'riot', password = '12345Qwert!') => {
-  cy.request('POST', '/api/users', {
+  cy.request('POST', '/api/users/login', {
     user: {
       email,
       username,
@@ -59,4 +61,20 @@ Cypress.Commands.add('login', (email = 'riot@qa.team', username = 'riot', passwo
     window.localStorage.setItem('user', JSON.stringify(user));
     cy.setCookie('auth', response.body.user.token);
   });
+});
+
+Cypress.Commands.add('generateUsername', () => {
+  return `${faker.person.lastName().toLocaleLowerCase()}${faker.number.int({ min: 1000, max: 9999 })}`;
+});
+
+Cypress.Commands.add('generateBio', () => {
+  return faker.person.bio();
+});
+
+Cypress.Commands.add('generateEmail', () => {
+  return faker.internet.email();
+});
+
+Cypress.Commands.add('generatePassword', () => {
+  return faker.internet.password({ length: 10, pattern: /[a-zA-Z0-9!@#$%^&*()]/ });
 });
