@@ -10,7 +10,6 @@ const homePage = new HomePageObject();
 
 describe('Settings page', () => {
   let user;
-  let originalPassword;
 
   before(() => {
     cy.task('db:clear');
@@ -20,7 +19,6 @@ describe('Settings page', () => {
     // Generate fresh user for each test to avoid state pollution
     cy.task('generateUser').then((generatedUser) => {
       user = generatedUser;
-      originalPassword = generatedUser.password;
       cy.register(user.email, user.username, user.password);
       cy.visit('/');
       cy.login(user.email, user.password);
