@@ -1,61 +1,64 @@
 /// <reference types="cypress" />
-// ***********************************************
-// This example commands.ts shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-//
 
+import { faker } from '@faker-js/faker';
+
+// ===============================
+// Utils
+// ===============================
 Cypress.Commands.add('getByDataCy', (selector) => {
-  cy.get(`[data-cy^="${selector}"]`);
+  return cy.get(`[data-cy="${selector}"]`);
 });
 
-Cypress.Commands.add('register', (email = 'riot@qa.team', username = 'riot', password = '12345Qwert!') => {
+// ===============================
+// Test data generator (REQUIRED)
+// ===============================
+Cypress.Commands.add('generateUser', () => {
+  const random = Math.floor(Math.random() * 100000);
+
+  return {
+    username: `user${random}`,
+    email: `user${random}@mail.com`,
+    password: faker.internet.password({
+      length: 12,
+      memorable: false,
+      pattern: /[A-Za-z0-9!@#$%^&*]/,
+    }),
+    // used only for password update test
+    newPassword: faker.internet.password({
+      length: 14,
+      memorable: false,
+      pattern: /[A-Za-z0-9!@#$%^&*]/,
+    }),
+  };
+});
+
+// ===============================
+// Auth commands
+// ===============================
+
+// REGISTER
+Cypress.Commands.add('register', (email, username, password) => {
   cy.request('POST', '/api/users', {
-    user: {
-      email,
-      username,
-      password
-    }
+    user: { email, username, password },
   });
 });
 
-Cypress.Commands.add('login', (email = 'riot@qa.team', username = 'riot', password = '12345Qwert!') => {
-  cy.request('POST', '/api/users', {
-    user: {
-      email,
-      username,
-      password
-    }
-  }).then(response => {
+// LOGIN
+Cypress.Commands.add('login', (email, password) => {
+  cy.request('POST', '/api/users/login', {
+    user: { email, password },
+  }).then((response) => {
     const user = {
       bio: response.body.user.bio,
-      effectiveImage: "https://static.productionready.io/images/smiley-cyrus.jpg",
+      effectiveImage:
+        response.body.user.image ||
+        'https://static.productionready.io/images/smiley-cyrus.jpg',
       email: response.body.user.email,
       image: response.body.user.image,
       token: response.body.user.token,
       username: response.body.user.username,
     };
+
     window.localStorage.setItem('user', JSON.stringify(user));
     cy.setCookie('auth', response.body.user.token);
   });

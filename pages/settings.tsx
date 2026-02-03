@@ -17,6 +17,7 @@ const Settings = () => {
       Router.push(`/`)
     }
   })
+
   const handleLogout = async (e) => {
     e.preventDefault()
     window.localStorage.removeItem('user')
@@ -24,11 +25,14 @@ const Settings = () => {
     mutate('user', null)
     Router.push(`/`).then(() => trigger('user'))
   }
+
   const title = 'Your Settings'
   const { setTitle } = React.useContext(AppContext)
+
   React.useEffect(() => {
     setTitle(title)
   }, [setTitle, title])
+
   return (
     <>
       <div className="settings-page">
@@ -36,9 +40,16 @@ const Settings = () => {
           <div className="row">
             <div className="col-md-6 offset-md-3 col-xs-12">
               <h1 className="text-xs-center">{title}</h1>
+
               <SettingsForm />
+
               <hr />
-              <button className="btn btn-outline-danger" onClick={handleLogout}>
+
+              <button
+                className="btn btn-outline-danger"
+                onClick={handleLogout}
+                data-cy="settings-logout"
+              >
                 Or click here to logout.
               </button>
             </div>

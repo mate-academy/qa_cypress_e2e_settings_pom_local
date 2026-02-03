@@ -18,21 +18,27 @@ const SettingsForm = () => {
     email: '',
     password: '',
   })
+
   const loggedInUser = useLoggedInUser()
+
   React.useEffect(() => {
     if (!loggedInUser) return
     setUserInfo((prev) => Object.assign(prev, loggedInUser))
   }, [loggedInUser])
+
   const updateState = (field) => (e) => {
     setUserInfo({ ...userInfo, [field]: e.target.value })
   }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
+
     const user = { ...userInfo }
     if (!user.password) {
       delete user.password
     }
+
     const { data, status } = await axios.put(
       `${apiPath}/user`,
       JSON.stringify({ user }),
@@ -43,19 +49,25 @@ const SettingsForm = () => {
         },
       }
     )
+
     setLoading(false)
+
     if (status !== 200) {
       setErrors(data.errors.body)
     }
+
     if (data?.user) {
       await setupUserLocalStorage(data, setErrors)
       Router.push(`/profile/${user.username}`)
     }
   }
+
   useCtrlEnterSubmit(handleSubmit)
+
   return (
     <React.Fragment>
       <ListErrors errors={errors} />
+
       <form onSubmit={handleSubmit}>
         <fieldset>
           <fieldset className="form-group">
@@ -65,8 +77,10 @@ const SettingsForm = () => {
               placeholder="URL of profile picture"
               value={userInfo.image ? userInfo.image : ''}
               onChange={updateState('image')}
+              data-cy="settings-image"
             />
           </fieldset>
+
           <fieldset className="form-group">
             <input
               className="form-control form-control-lg"
@@ -74,8 +88,10 @@ const SettingsForm = () => {
               placeholder="Username"
               value={userInfo.username}
               onChange={updateState('username')}
+              data-cy="settings-username"
             />
           </fieldset>
+
           <fieldset className="form-group">
             <textarea
               className="form-control form-control-lg"
@@ -83,8 +99,10 @@ const SettingsForm = () => {
               placeholder="Short bio about you"
               value={userInfo.bio}
               onChange={updateState('bio')}
+              data-cy="settings-bio"
             />
           </fieldset>
+
           <fieldset className="form-group">
             <input
               className="form-control form-control-lg"
@@ -92,8 +110,10 @@ const SettingsForm = () => {
               placeholder="Email"
               value={userInfo.email}
               onChange={updateState('email')}
+              data-cy="settings-email"
             />
           </fieldset>
+
           <fieldset className="form-group">
             <input
               className="form-control form-control-lg"
@@ -102,12 +122,15 @@ const SettingsForm = () => {
               value={userInfo.password}
               onChange={updateState('password')}
               autoComplete="new-password"
+              data-cy="settings-password"
             />
           </fieldset>
+
           <button
             className="btn btn-lg btn-primary pull-xs-right"
             type="submit"
             disabled={isLoading}
+            data-cy="settings-submit"
           >
             Update Settings
           </button>

@@ -15,6 +15,7 @@ const Navbar = () => {
   const loggedInUser = useLoggedInUser()
   const { setPage, setTab } = React.useContext(AppContext)
   const clickHandler = () => resetIndexState(setPage, setTab, loggedInUser)
+
   return (
     <nav className="navbar navbar-light">
       <div className="container">
@@ -25,27 +26,44 @@ const Navbar = () => {
         >
           {appName.toLowerCase()}
         </CustomLink>
+
         <ul className="nav navbar-nav pull-xs-right">
           <NavbarItem>
-            <NavLink dataCy="home-link" href={routes.home()} onClick={clickHandler}>
+            <NavLink
+              dataCy="home-link"
+              href={routes.home()}
+              onClick={clickHandler}
+            >
               Home
             </NavLink>
           </NavbarItem>
+
           <Maybe test={loggedInUser}>
             <NavbarItem>
-              <NavLink href={routes.articleNew()} dataCy="new-article-link">
+              <NavLink
+                href={routes.articleNew()}
+                dataCy="new-article-link"
+              >
                 <i className="ion-compose" />
                 &nbsp;New Article
               </NavLink>
             </NavbarItem>
+
             <NavbarItem>
-              <NavLink href={routes.userEdit()}>
+              <NavLink
+                href={routes.userEdit()}
+                dataCy="nav-settings"
+              >
                 <i className="ion-gear-a" />
                 &nbsp;Settings
               </NavLink>
             </NavbarItem>
+
             <NavbarItem>
-              <NavLink dataCy="profile-link" href={routes.userView(loggedInUser?.username)}>
+              <NavLink
+                href={routes.userView(loggedInUser?.username)}
+                dataCy="nav-username"
+              >
                 <CustomImage
                   className="user-pic"
                   src={loggedInUser?.effectiveImage}
@@ -55,12 +73,24 @@ const Navbar = () => {
               </NavLink>
             </NavbarItem>
           </Maybe>
+
           <Maybe test={!loggedInUser}>
             <NavbarItem>
-              <NavLink href={routes.userLogin()}>Sign in</NavLink>
+              <NavLink
+                href={routes.userLogin()}
+                dataCy="nav-sign-in"
+              >
+                Sign in
+              </NavLink>
             </NavbarItem>
+
             <NavbarItem>
-              <NavLink href={routes.userNew()}>Sign up</NavLink>
+              <NavLink
+                href={routes.userNew()}
+                dataCy="nav-sign-up"
+              >
+                Sign up
+              </NavLink>
             </NavbarItem>
           </Maybe>
         </ul>
