@@ -10,9 +10,11 @@ module.exports = defineConfig({
         generateUser() {
           let randomNumber = Math.ceil(Math.random(1000) * 1000);
           let userName = faker.name.firstName() + `${randomNumber}`;
+          let bio = faker.lorem.lines({ min: 1, max: 3 });
           return {
             username: userName.toLowerCase(),
             email: 'test'+`${randomNumber}`+'@mail.com',
+            bio,
             password: '12345Qwert!',
           };
         },
