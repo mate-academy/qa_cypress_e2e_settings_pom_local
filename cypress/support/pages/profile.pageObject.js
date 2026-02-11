@@ -4,11 +4,11 @@ class ProfilePageObject extends PageObject {
   url = '/profile';
 
   get username() {
-    return cy.getByDataCy('userName');
+    return cy.getByDataCy('profile-username');
   }
 
   get bio() {
-    return cy.getByDataCy('bio');
+    return cy.getByDataCy('profile-bio');
   }
 
   assertH4ContainContent(field, expectedText) {

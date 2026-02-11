@@ -41,11 +41,24 @@ describe('Settings page', () => {
   it('should provide an ability to update an email', () => {
     settingsPage.typeEmail(updatedUser.email);
     settingsPage.clickSubmitBtn();
+    homePage.clickSettingsLink();
+
+    settingsPage.assertEmailFieldContainUpdatedEmail(updatedUser.email);
   });
 
   it('should provide an ability to update password', () => {
     settingsPage.typePassword(updatedUser.password);
     settingsPage.clickSubmitBtn();
+
+    homePage.clickSettingsLink();
+    settingsPage.clickLogoutBtn();
+
+    cy.re_login({
+      email: 'riot@qa.team',  
+      password: updatedUser.password
+    }
+      
+    );
 
   });
 

@@ -28,7 +28,7 @@
 //
 
 Cypress.Commands.add('getByDataCy', (selector) => {
-  cy.get(`[data-cy^="${selector}"]`);
+  return cy.get(`[data-cy^="${selector}"]`);
 });
 
 Cypress.Commands.add('register', (email = 'riot@qa.team', username = 'riot', password = '12345Qwert!') => {
@@ -60,4 +60,23 @@ Cypress.Commands.add('login', (email = 'riot@qa.team', username = 'riot', passwo
     window.localStorage.setItem('user', JSON.stringify(user));
     cy.setCookie('auth', response.body.user.token);
   });
+});
+
+Cypress.Commands.add('re_login', (user) => {
+  return cy
+    .request('POST', '/api/users/login', {
+      user
+    })
+    .then((res) => {
+      const user = {
+      bio: res.body.user.bio,
+      effectiveImage: 'https://static.productionready.io/images/smiley-cyrus.jpg',
+      email: res.body.user.email,
+      image: res.body.user.image,
+      token: res.body.user.token,
+      username: res.body.user.username,
+    };
+    window.localStorage.setItem('user', JSON.stringify(user));
+      cy.setCookie('auth', res.body.user.token);
+    });
 });

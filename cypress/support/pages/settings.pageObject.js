@@ -4,11 +4,11 @@ class SettingsPageObject extends PageObject {
   url = '/settings';
 
   get usernameField() {
-    return cy.getByDataCy('username');
+    return cy.getByDataCy('settings-username');
   }
 
   get bioField() {
-    return cy.getByDataCy('bio');
+    return cy.getByDataCy('settings-bio');
   }
 
   get emailField() {
@@ -49,6 +49,11 @@ class SettingsPageObject extends PageObject {
 
   clickLogoutBtn() {
     this.logoutBtn.click();
+  }
+
+   assertEmailFieldContainUpdatedEmail(email) {
+    this.emailField
+      .should('have.value', email);
   }
 
 }

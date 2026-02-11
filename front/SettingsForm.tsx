@@ -74,7 +74,7 @@ const SettingsForm = () => {
               placeholder="Username"
               value={userInfo.username}
               onChange={updateState('username')}
-              data-cy="username"
+              data-cy="settings-username"
             />
           </fieldset>
           <fieldset className="form-group">
@@ -84,7 +84,7 @@ const SettingsForm = () => {
               placeholder="Short bio about you"
               value={userInfo.bio}
               onChange={updateState('bio')}
-              data-cy="bio"
+              data-cy="settings-bio"
             />
           </fieldset>
           <fieldset className="form-group">
