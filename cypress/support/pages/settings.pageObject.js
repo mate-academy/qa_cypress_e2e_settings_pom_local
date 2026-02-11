@@ -12,15 +12,15 @@ class SettingsPageObject extends PageObject {
   }
 
   get emailField() {
-    return cy.getByDataCy('email');
+    return cy.getByDataCy('settings-email');
   }
 
   get passwordField() {
-    return cy.getByDataCy('password');
+    return cy.getByDataCy('settings-password');
   }
 
   get submitBtn() {
-    return cy.getByDataCy('updateSettings');
+    return cy.getByDataCy('settings-submit');
   }
 
   get logoutBtn() {
@@ -28,31 +28,31 @@ class SettingsPageObject extends PageObject {
   }
   
   typeUsername(username) {
-    this.usernameField.clear().type(username);
+    return this.usernameField.clear().type(username);
   }
 
   typeBio(bio) {
-    this.bioField.clear().type(bio);
+    return this.bioField.clear().type(bio);
   }
 
   typeEmail(email) {
-    this.emailField.clear().type(email);
+    return this.emailField.clear().type(email);
   }
 
   typePassword(password) {
-    this.passwordField.clear().type(password);
+    return this.passwordField.clear().type(password);
   }
 
   clickSubmitBtn() {
-    this.submitBtn.click();
+    return this.submitBtn.click();
   }
 
   clickLogoutBtn() {
-    this.logoutBtn.click();
+    return this.logoutBtn.click();
   }
 
    assertEmailFieldContainUpdatedEmail(email) {
-    this.emailField
+    return this.emailField
       .should('have.value', email);
   }
 

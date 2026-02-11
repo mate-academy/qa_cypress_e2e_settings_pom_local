@@ -94,7 +94,7 @@ const SettingsForm = () => {
               placeholder="Email"
               value={userInfo.email}
               onChange={updateState('email')}
-              data-cy="email"
+              data-cy="settings-email"
             />
           </fieldset>
           <fieldset className="form-group">
@@ -105,14 +105,14 @@ const SettingsForm = () => {
               value={userInfo.password}
               onChange={updateState('password')}
               autoComplete="new-password"
-              data-cy="password"
+              data-cy="settings-password"
             />
           </fieldset>
           <button
             className="btn btn-lg btn-primary pull-xs-right"
             type="submit"
             disabled={isLoading}
-            data-cy="updateSettings"
+            data-cy="settings-submit"
           >
             Update Settings
           </button>

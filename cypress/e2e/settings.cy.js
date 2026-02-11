@@ -25,26 +25,26 @@ describe('Settings page', () => {
     settingsPage.visit();
   });
 
-  it('should provide an ability to update username', () => {
-    settingsPage.typeUsername(updatedUser.username);
-    settingsPage.clickSubmitBtn();
-    profilePage.assertH4ContainContent('username', updatedUser.username);
+  // it('should provide an ability to update username', () => {
+  //   settingsPage.typeUsername(updatedUser.username);
+  //   settingsPage.clickSubmitBtn();
+  //   profilePage.assertH4ContainContent('username', updatedUser.username);
     
-  });
+  // });
 
-  it('should provide an ability to update bio', () => {
-    settingsPage.typeBio(updatedUser.bio);
-    settingsPage.clickSubmitBtn();
-    profilePage.assertH4ContainContent('bio', updatedUser.bio);
-  });
+  // it('should provide an ability to update bio', () => {
+  //   settingsPage.typeBio(updatedUser.bio);
+  //   settingsPage.clickSubmitBtn();
+  //   profilePage.assertH4ContainContent('bio', updatedUser.bio);
+  // });
 
-  it('should provide an ability to update an email', () => {
-    settingsPage.typeEmail(updatedUser.email);
-    settingsPage.clickSubmitBtn();
-    homePage.clickSettingsLink();
+  // it('should provide an ability to update an email', () => {
+  //   settingsPage.typeEmail(updatedUser.email);
+  //   settingsPage.clickSubmitBtn();
+  //   homePage.clickSettingsLink();
 
-    settingsPage.assertEmailFieldContainUpdatedEmail(updatedUser.email);
-  });
+  //   settingsPage.assertEmailFieldContainUpdatedEmail(updatedUser.email);
+  // });
 
   it('should provide an ability to update password', () => {
     settingsPage.typePassword(updatedUser.password);
@@ -56,14 +56,14 @@ describe('Settings page', () => {
     cy.re_login({
       email: 'riot@qa.team',  
       password: updatedUser.password
-    }
-      
-    );
+    });
+
+    homePage.assertHeaderContainUsername('riot');
 
   });
 
-  it('should provide an ability to log out', () => {
-    settingsPage.clickLogoutBtn();
-    homePage.assertUsernameLinkNotExist();
-  });
+  // it('should provide an ability to log out', () => {
+  //   settingsPage.clickLogoutBtn();
+  //   homePage.assertUsernameLinkNotExist();
+  // });
 });

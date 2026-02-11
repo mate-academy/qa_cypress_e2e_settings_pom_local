@@ -12,16 +12,16 @@ class HomePageObject extends PageObject {
   }
 
   clickSettingsLink() {
-    this.settingsLink.click();
+    return this.settingsLink.click();
   }
 
   assertHeaderContainUsername(username) {
-    this.usernameLink
+    return this.usernameLink
       .should('contain', username);
   }
 
   assertUsernameLinkNotExist() {
-  this.usernameLink.should('not.exist');
+    return this.usernameLink.should('not.exist');
 }
 }
 

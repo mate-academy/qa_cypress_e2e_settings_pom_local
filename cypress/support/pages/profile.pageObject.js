@@ -1,7 +1,7 @@
 import PageObject from '../PageObject';
 
 class ProfilePageObject extends PageObject {
-  url = '/profile';
+  url = '/profiles/:username';
 
   get username() {
     return cy.getByDataCy('profile-username');
@@ -12,7 +12,7 @@ class ProfilePageObject extends PageObject {
   }
 
   assertH4ContainContent(field, expectedText) {
-    this[field].should('contain', expectedText);
+    return this[field].should('contain', expectedText);
   }
 }
 

@@ -68,7 +68,7 @@ Cypress.Commands.add('re_login', (user) => {
       user
     })
     .then((res) => {
-      const user = {
+      const currentUser = {
       bio: res.body.user.bio,
       effectiveImage: 'https://static.productionready.io/images/smiley-cyrus.jpg',
       email: res.body.user.email,
@@ -76,7 +76,7 @@ Cypress.Commands.add('re_login', (user) => {
       token: res.body.user.token,
       username: res.body.user.username,
     };
-    window.localStorage.setItem('user', JSON.stringify(user));
+    window.localStorage.setItem('user', JSON.stringify(currentUser));
       cy.setCookie('auth', res.body.user.token);
     });
 });
