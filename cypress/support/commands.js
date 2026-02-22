@@ -31,18 +31,24 @@ Cypress.Commands.add('getByDataCy', (selector) => {
 });
 
 // eslint-disable-next-line max-len
-Cypress.Commands.add('register', (email = 'riot@qa.team', username = 'riot', password = '12345Qwert!') => {
-  cy.request('POST', '/api/users', {
-    user: {
-      email,
-      username,
-      password
-    }
+Cypress.Commands.add('register',
+  (email = 'riot@qa.team',
+    username = 'riot',
+    password = '12345Qwert!') => {
+    cy.request('POST', '/api/users', {
+      user: {
+        email,
+        username,
+        password
+      }
+    });
   });
-});
 
 // eslint-disable-next-line max-len
-Cypress.Commands.add('login', (email = 'riot@qa.team', username = 'riot', password = '12345Qwert!') => {
+Cypress.Commands.add('login', (
+  email = 'riot@qa.team',
+  username = 'riot',
+  password = '12345Qwert!') => {
   cy.request('POST', '/api/users', {
     user: {
       email,
@@ -59,9 +65,28 @@ Cypress.Commands.add('login', (email = 'riot@qa.team', username = 'riot', passwo
       token: response.body.user.token,
       username: response.body.user.username,
     };
-    window.localStorage.setItem('user',
-      JSON.stringify(user)
-    );
+    window.localStorage.setItem('user', JSON.stringify(user));
     cy.setCookie('auth', response.body.user.token);
+  });
+});
+
+Cypress.Commands.add('apiLogin', (email, password) => {
+  cy.request({
+    method: 'POST',
+    url: '/api/users/login',
+    body: {
+      user: {
+        email,
+        password
+      }
+    }
+  }).then((response) => {
+    expect(response.status).to.eq(200);
+
+    const user = response.body.user;
+
+    window.localStorage.setItem('user', JSON.stringify(user));
+
+    cy.setCookie('auth', user.token);
   });
 });
