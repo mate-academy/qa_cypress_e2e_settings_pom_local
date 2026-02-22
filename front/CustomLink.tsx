@@ -23,7 +23,7 @@ const CustomLink = ({
   }
   return (
     <Link href={href} passHref shallow={shallow}>
-      <a onClick={onClick} className={className || ''}>
+      <a onClick={onClick} className={className || ''} data-cy="edit-btn">
         {children}
       </a>
     </Link>

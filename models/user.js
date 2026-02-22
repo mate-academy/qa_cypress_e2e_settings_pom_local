@@ -1,9 +1,9 @@
-const crypto = require('crypto')
-const jwt = require('jsonwebtoken')
-const Sequelize = require('sequelize')
-const { DataTypes, Op } = Sequelize
+const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
+const Sequelize = require('sequelize');
+const { DataTypes, Op } = Sequelize;
 
-const config = require('../front/config')
+const config = require('../front/config');
 
 module.exports = (sequelize) => {
   let User = sequelize.define(
@@ -12,7 +12,7 @@ module.exports = (sequelize) => {
       username: {
         type: DataTypes.STRING,
         set(v) {
-          this.setDataValue('username', v.toLowerCase())
+          this.setDataValue('username', v.toLowerCase());
         },
         unique: {
           msg: 'This username is taken.',
@@ -20,22 +20,27 @@ module.exports = (sequelize) => {
         validate: {
           min: {
             args: 3,
-            msg: 'Username must start with a letter, have no spaces, and be at least 3 characters.',
+            msg: 'Username must' +
+              'start with a letter, have no spaces,' +
+              'and be at least 3 characters.',
           },
           max: {
             args: 40,
-            msg: 'Username must start with a letter, have no spaces, and be at less than 40 characters.',
+            msg: 'Username must start with a letter,' +
+              'have no spaces,' +
+              'and be at less than 40 characters.',
           },
           is: {
             args: /^[A-Za-z][A-Za-z0-9-_]+$/i, // must start with letter and only have letters, numbers, dashes
-            msg: 'Username must start with a letter, have no spaces, and be 3 - 40 characters.',
+            msg: 'Username must start with a letter,' +
+              'have no spaces, and be 3 - 40 characters.',
           },
         },
       },
       email: {
         type: DataTypes.STRING,
         set(v) {
-          this.setDataValue('email', v.toLowerCase())
+          this.setDataValue('email', v.toLowerCase());
         },
         unique: {
           msg: 'This email is taken.',
@@ -62,12 +67,12 @@ module.exports = (sequelize) => {
     {
       indexes: [{ fields: ['username'] }, { fields: ['email'] }],
     }
-  )
+  );
 
   User.prototype.generateJWT = function () {
-    let today = new Date()
-    let exp = new Date(today)
-    exp.setDate(today.getDate() + 60)
+    let today = new Date();
+    let exp = new Date(today);
+    exp.setDate(today.getDate() + 60);
     return jwt.sign(
       {
         id: this.id,
@@ -75,8 +80,8 @@ module.exports = (sequelize) => {
         exp: parseInt(exp.getTime() / 1000),
       },
       config.secret
-    )
-  }
+    );
+  };
 
   User.prototype.toAuthJSON = function () {
     return {
@@ -85,8 +90,8 @@ module.exports = (sequelize) => {
       token: this.generateJWT(),
       bio: this.bio === undefined ? '' : this.bio,
       image: this.image === undefined ? '' : this.image,
-    }
-  }
+    };
+  };
 
   User.prototype.toProfileJSONFor = async function (user) {
     let data = {
@@ -99,9 +104,9 @@ module.exports = (sequelize) => {
         this.image ||
         'https://static.productionready.io/images/smiley-cyrus.jpg',
       following: user ? await user.hasFollow(this.id) : false,
-    }
-    return data
-  }
+    };
+    return data;
+  };
 
   User.prototype.findAndCountArticlesByFollowed = async function (
     offset,
@@ -129,25 +134,25 @@ module.exports = (sequelize) => {
           ],
         },
       ],
-    })
-  }
+    });
+  };
 
   User.prototype.findAndCountArticlesByFollowedToJson = async function (
     offset,
     limit
   ) {
     const { count: articlesCount, rows: articles } =
-      await this.findAndCountArticlesByFollowed(offset, limit)
+      await this.findAndCountArticlesByFollowed(offset, limit);
     const articlesJson = await Promise.all(
       articles.map((article) => {
-        return article.toJson(this)
+        return article.toJson(this);
       })
-    )
+    );
     return {
       articles: articlesJson,
       articlesCount,
-    }
-  }
+    };
+  };
 
   User.prototype.getArticleCountByFollowed = async function () {
     return (
@@ -175,22 +180,22 @@ module.exports = (sequelize) => {
           },
         ],
       })
-    ).dataValues.count
-  }
+    ).dataValues.count;
+  };
 
   User.validPassword = function (user, password) {
     let hash = crypto
       .pbkdf2Sync(password, user.salt, 10000, 512, 'sha512')
-      .toString('hex')
-    return user.hash === hash
-  }
+      .toString('hex');
+    return user.hash === hash;
+  };
 
   User.setPassword = function (user, password) {
-    user.salt = crypto.randomBytes(16).toString('hex')
+    user.salt = crypto.randomBytes(16).toString('hex');
     user.hash = crypto
       .pbkdf2Sync(password, user.salt, 10000, 512, 'sha512')
-      .toString('hex')
-  }
+      .toString('hex');
+  };
 
-  return User
-}
+  return User;
+};

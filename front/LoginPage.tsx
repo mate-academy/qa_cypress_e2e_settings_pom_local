@@ -29,7 +29,7 @@ const LoginPageHoc = ({ register = false }) => {
           <div className="container page">
             <div className="row">
               <div className="col-md-6 offset-md-3 col-xs-12">
-                <h1 className="text-xs-center">{title}</h1>
+                <h1 className="text-xs-center" data-cy="title-sign-in">{title}</h1>
                 <p className="text-xs-center">
                   <CustomLink
                     href={register ? routes.userLogin() : routes.userNew()}
