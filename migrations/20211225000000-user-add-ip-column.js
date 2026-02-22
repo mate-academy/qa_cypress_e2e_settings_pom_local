@@ -9,10 +9,10 @@ module.exports = {
           defaultValue: '',
         },
         { transaction }
-      )
+      );
     }),
   down: async (queryInterface) =>
     queryInterface.sequelize.transaction(async (transaction) => {
-      await queryInterface.removeColumn('User', 'ip', { transaction })
+      await queryInterface.removeColumn('User', 'ip', { transaction });
     }),
-}
+};

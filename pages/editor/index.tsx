@@ -1,3 +1,3 @@
-import ArticleEditorHoc from 'front/ArticleEditor'
+import ArticleEditorHoc from 'front/ArticleEditor';
 
-export default ArticleEditorHoc(true)
+export default ArticleEditorHoc(true);

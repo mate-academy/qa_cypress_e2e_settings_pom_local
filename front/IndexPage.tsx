@@ -25,7 +25,7 @@ const IndexPage = ({ articles, articlesCount, ssr, tags }) => {
       </Head>
       <div className="home-page">
         <Maybe test={!loggedInUser}>
-          <div className="banner">
+          <div className="banner" data-cy="home-banner">
             <div className="container">
               <h1 className="logo-font">{appName.toLowerCase()}</h1>
               <p>A place to share your knowledge.</p>
