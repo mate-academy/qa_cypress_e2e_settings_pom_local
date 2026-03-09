@@ -1,0 +1,45 @@
+import PageObject from '../PageObject'
+
+export class SettingsPageObject extends PageObject {
+  url = 'settings'
+
+  get usernameField() {
+    return cy.getByDataCy('username')
+  }
+
+  get bioField() {
+    return cy.getByDataCy('bio')
+  }
+
+  get emailField() {
+    return cy.getByDataCy('email')
+  }
+
+  get passwordField() {
+    return cy.getByDataCy('password')
+  }
+
+  get updateBtn() {
+    return cy.getByDataCy('update-btn')
+  }
+
+  typeUsername(username) {
+    this.usernameField.type(username)
+  }
+
+  typeBio(bio) {
+    this.bioField.type(bio)
+  }
+
+  typeEmail(email) {
+    this.emailField.type(email)
+  }
+
+  typePassword(password) {
+    this.passwordField.type(password)
+  }
+
+  clickSignInBtn() {
+    this.updateBtn.click()
+  }
+}
