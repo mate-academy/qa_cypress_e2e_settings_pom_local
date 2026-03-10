@@ -62,3 +62,7 @@ tmp.*
 /out/
 /.now/
 .now
+
+/node_modules
+/dist
+**/*.test.ts

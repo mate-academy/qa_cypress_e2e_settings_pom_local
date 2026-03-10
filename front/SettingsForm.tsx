@@ -1,119 +1,108 @@
-import axios from 'axios'
-import Router from 'next/router'
-import React from 'react'
+import React, { useState } from 'react'
 
-import { setupUserLocalStorage } from 'front'
-import { apiPath } from 'front/config'
-import ListErrors from 'front/ListErrors'
-import useLoggedInUser from 'front/useLoggedInUser'
-import { useCtrlEnterSubmit } from 'front/ts'
+interface UserInfo {
+  image?: string
+  username: string
+  bio?: string
+  email: string
+  password?: string
+}
 
-const SettingsForm = () => {
-  const [isLoading, setLoading] = React.useState(false)
-  const [errors, setErrors] = React.useState([])
-  const [userInfo, setUserInfo] = React.useState({
-    image: '',
-    username: '',
-    bio: '',
-    email: '',
-    password: '',
-  })
-  const loggedInUser = useLoggedInUser()
-  React.useEffect(() => {
-    if (!loggedInUser) return
-    setUserInfo((prev) => Object.assign(prev, loggedInUser))
-  }, [loggedInUser])
-  const updateState = (field) => (e) => {
-    setUserInfo({ ...userInfo, [field]: e.target.value })
+interface Props {
+  initialUser: UserInfo
+  isLoading: boolean
+  onSubmit: (data: UserInfo) => void
+}
+
+const SettingsForm: React.FC<Props> = ({
+  initialUser,
+  isLoading,
+  onSubmit,
+}) => {
+  const [userInfo, setUserInfo] = useState<UserInfo>(initialUser)
+
+  const updateState =
+    (field: keyof UserInfo) =>
+    (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setUserInfo({
+        ...userInfo,
+        [field]: event.target.value,
+      })
+    }
+
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault()
+    onSubmit(userInfo)
   }
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    setLoading(true)
-    const user = { ...userInfo }
-    if (!user.password) {
-      delete user.password
-    }
-    const { data, status } = await axios.put(
-      `${apiPath}/user`,
-      JSON.stringify({ user }),
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Token ${loggedInUser?.token}`,
-        },
-      }
-    )
-    setLoading(false)
-    if (status !== 200) {
-      setErrors(data.errors.body)
-    }
-    if (data?.user) {
-      await setupUserLocalStorage(data, setErrors)
-      Router.push(`/profile/${user.username}`)
-    }
-  }
-  useCtrlEnterSubmit(handleSubmit)
+
   return (
-    <React.Fragment>
-      <ListErrors errors={errors} />
-      <form onSubmit={handleSubmit}>
-        <fieldset>
-          <fieldset className="form-group">
-            <input
-              className="form-control"
-              type="text"
-              placeholder="URL of profile picture"
-              value={userInfo.image ? userInfo.image : ''}
-              onChange={updateState('image')}
-            />
-          </fieldset>
-          <fieldset className="form-group">
-            <input
-              className="form-control form-control-lg"
-              type="text"
-              placeholder="Username"
-              value={userInfo.username}
-              onChange={updateState('username')}
-            />
-          </fieldset>
-          <fieldset className="form-group">
-            <textarea
-              className="form-control form-control-lg"
-              rows={8}
-              placeholder="Short bio about you"
-              value={userInfo.bio}
-              onChange={updateState('bio')}
-            />
-          </fieldset>
-          <fieldset className="form-group">
-            <input
-              className="form-control form-control-lg"
-              type="email"
-              placeholder="Email"
-              value={userInfo.email}
-              onChange={updateState('email')}
-            />
-          </fieldset>
-          <fieldset className="form-group">
-            <input
-              className="form-control form-control-lg"
-              type="password"
-              placeholder="New Password"
-              value={userInfo.password}
-              onChange={updateState('password')}
-              autoComplete="new-password"
-            />
-          </fieldset>
-          <button
-            className="btn btn-lg btn-primary pull-xs-right"
-            type="submit"
-            disabled={isLoading}
-          >
-            Update Settings
-          </button>
+    <form onSubmit={handleSubmit}>
+      <fieldset disabled={isLoading}>
+        <fieldset className="form-group">
+          <input
+            data-cy="image-input"
+            className="form-control"
+            type="text"
+            placeholder="URL of profile picture"
+            value={userInfo.image || ''}
+            onChange={updateState('image')}
+          />
         </fieldset>
-      </form>
-    </React.Fragment>
+
+        <fieldset className="form-group">
+          <input
+            data-cy="username-input"
+            className="form-control form-control-lg"
+            type="text"
+            placeholder="Username"
+            value={userInfo.username}
+            onChange={updateState('username')}
+          />
+        </fieldset>
+
+        <fieldset className="form-group">
+          <textarea
+            data-cy="bio-input"
+            className="form-control form-control-lg"
+            rows={8}
+            placeholder="Short bio about you"
+            value={userInfo.bio || ''}
+            onChange={updateState('bio')}
+          />
+        </fieldset>
+
+        <fieldset className="form-group">
+          <input
+            data-cy="email-input"
+            className="form-control form-control-lg"
+            type="email"
+            placeholder="Email"
+            value={userInfo.email}
+            onChange={updateState('email')}
+          />
+        </fieldset>
+
+        <fieldset className="form-group">
+          <input
+            data-cy="password-input"
+            className="form-control form-control-lg"
+            type="password"
+            placeholder="New Password"
+            value={userInfo.password || ''}
+            onChange={updateState('password')}
+            autoComplete="new-password"
+          />
+        </fieldset>
+
+        <button
+          data-cy="update-settings-btn"
+          className="btn btn-lg btn-primary pull-xs-right"
+          type="submit"
+        >
+          Update Settings
+        </button>
+      </fieldset>
+    </form>
   )
 }
 
