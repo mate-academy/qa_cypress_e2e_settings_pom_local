@@ -19,6 +19,10 @@ class HomePageObject extends PageObject {
     return cy.getByDataCy('error-messages')
   }
 
+  get signInBtn() {
+    return cy.getByDataCy('sign-in')
+  }
+
   assertHeaderContainUsername(username) {
     this.usernameLink.should('contain', username)
   }
@@ -33,6 +37,10 @@ class HomePageObject extends PageObject {
 
   assertTitleBio(bio) {
     this.titleBio.should('contain', bio)
+  }
+
+  assertSignInBtn(btn) {
+    this.signInBtn.should('exist')
   }
 }
 

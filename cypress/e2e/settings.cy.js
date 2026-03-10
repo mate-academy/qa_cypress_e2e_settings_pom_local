@@ -11,12 +11,17 @@ const signInPage = new SignInPageObject()
 
 describe('Settings page', () => {
   let user
+  let userForUpdate
 
-  before(() => {
-    cy.task('db:clear')
-  })
+  before(() => {})
 
   beforeEach(() => {
+    cy.task('db:clear')
+
+    cy.task('generateUser').then((generatedUser) => {
+      userForUpdate = generatedUser
+    })
+
     cy.task('generateUser').then((generatedUser) => {
       user = generatedUser
 
@@ -26,49 +31,44 @@ describe('Settings page', () => {
       signInPage.typeEmail(user.email)
       signInPage.typePassword(user.password)
       signInPage.clickSignInBtn()
+
+      settingsPage.visit()
     })
-    settingsPage.visit()
   })
 
   it('should provide an ability to update username', () => {
-    settingsPage.visit()
-    const newUsername = user.username + '123'
+    settingsPage.typeUsername(userForUpdate.username)
+    settingsPage.clickUpdateBtn()
 
-    settingsPage.typeUsername(newUsername)
-    settingsPage.clickSignInBtn()
-
-    homePage.assertTitleUsername(newUsername)
+    homePage.assertTitleUsername(userForUpdate.username)
   })
 
   it('should provide an ability to update bio', () => {
-    settingsPage.visit()
-    const newBio = user.bio ? user.bio + 'asdf' : 'asdf'
+    const newBio = userForUpdate.bio ? userForUpdate.bio + 'asdf' : 'asdf'
 
     settingsPage.typeBio(newBio)
-    settingsPage.clickSignInBtn()
+    settingsPage.clickUpdateBtn()
 
     homePage.assertTitleBio(newBio)
   })
 
   it('should provide an ability to update an email', () => {
-    settingsPage.visit()
-    const newEmail = 'test@test.com'
-
-    settingsPage.typeEmail(newEmail)
-    settingsPage.clickSignInBtn()
+    settingsPage.typeEmail(userForUpdate.email)
+    settingsPage.clickUpdateBtn()
 
     settingsPage.visit()
 
-    settingsPage.emailField.should('contain', newEmail)
+    settingsPage.emailField.should('contain', userForUpdate.email)
   })
 
   it('should provide an ability to update password', () => {
-    settingsPage.visit()
-    const newPassword = '1234'
-
-    settingsPage.typeEmail(newPassword)
-    settingsPage.clickSignInBtn()
+    settingsPage.typeEmail(userForUpdate.password)
+    settingsPage.clickUpdateBtn()
   })
 
-  it('should provide an ability to log out', () => {})
+  it('should provide an ability to log out', () => {
+    settingsPage.clickLogoutBtn()
+
+    homePage.assertSignInBtn()
+  })
 })

@@ -23,6 +23,10 @@ export class SettingsPageObject extends PageObject {
     return cy.getByDataCy('update-btn')
   }
 
+  get logoutBtn() {
+    return cy.getByDataCy('logout-btn')
+  }
+
   typeUsername(username) {
     this.usernameField.type(username)
   }
@@ -39,7 +43,14 @@ export class SettingsPageObject extends PageObject {
     this.passwordField.type(password)
   }
 
-  clickSignInBtn() {
+  clickUpdateBtn() {
     this.updateBtn.click()
+  }
+  clickLogoutBtn() {
+    this.logoutBtn.click()
+  }
+
+  homePage() {
+    return cy.url().should('eq', 'http://localhost:3000/')
   }
 }
