@@ -1,25 +1,63 @@
 import PageObject from '../PageObject'
 
-class SettingsPageObject extends PageObject {
+class SettingsPage extends PageObject {
   url = '/settings'
 
+  get imageInput() {
+    return cy.get('[data-cy="image-input"]')
+  }
+
+  get usernameInput() {
+    return cy.get('[data-cy="username-input"]')
+  }
+
+  get bioInput() {
+    return cy.get('[data-cy="bio-input"]')
+  }
+
+  get emailInput() {
+    return cy.get('[data-cy="email-input"]')
+  }
+
+  get passwordInput() {
+    return cy.get('[data-cy="password-input"]')
+  }
+
   get updateSettingsBtn() {
-    return cy.contains('button', 'Update Settings')
+    return cy.get('[data-cy="update-settings-btn"]')
   }
 
-  changeItem(placeholder, newValue) {
-    cy.get(`[placeholder="${placeholder}"]`).as('input')
-    cy.get('@input').clear()
-    cy.get('@input').type(newValue)
+  get logoutBtn() {
+    return cy.get('[data-cy="logout-btn"]')
   }
 
-  checkUrl(username) {
-    cy.url().should('include', `/profile/${username}`)
+  updateImage(url) {
+    this.imageInput.clear().type(url)
   }
 
-  clickOnUpdateSettingsBtn() {
+  updateUsername(username) {
+    this.usernameInput.clear().type(username)
+  }
+
+  updateBio(bio) {
+    this.bioInput.clear().type(bio)
+  }
+
+  updateEmail(email) {
+    this.emailInput.clear().type(email)
+  }
+
+  updatePassword(password) {
+    this.passwordInput.clear().type(password)
+  }
+
+  saveSettings() {
     this.updateSettingsBtn.click()
+  }
+
+  logout() {
+    this.logoutBtn.click()
   }
 }
 
-export default SettingsPageObject
+export default new SettingsPage()

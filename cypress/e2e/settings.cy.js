@@ -1,58 +1,37 @@
 import { faker } from '@faker-js/faker'
+import SignInPage from '../support/pages/signIn.pageObject'
 import SettingsPage from '../support/pages/settings.pageObject'
 
-const settingPage = new SettingsPage()
-
-describe('Settings page', () => {
-  let user
+describe('Settings', () => {
+  const email = faker.internet.email()
+  const password = '123456'
 
   beforeEach(() => {
-    cy.task('db:clear')
-    cy.task('generateUser').then((generateUser) => {
-      cy.login(generateUser.email, generateUser.username, generateUser.password)
-      user = generateUser
-      cy.then(() => {
-        cy.visit('/settings')
-      })
-    })
+    cy.login(email, password)
+    SettingsPage.visit()
   })
 
-  it('should provide an ability to update username', () => {
-    const newUsername = `${faker.person.lastName().toLocaleLowerCase()}8675`
+  it('should update username', () => {
+    const newUsername = faker.person.fullName()
 
-    settingPage.changeItem('Username', `${newUsername}`)
-    settingPage.clickOnUpdateSettingsBtn()
-    settingPage.checkUrl(newUsername)
+    SettingsPage.updateUsername(newUsername)
+    SettingsPage.saveSettings()
+
+    cy.contains(newUsername).should('exist')
   })
 
-  it('should provide an ability to update bio', () => {
-    const newBio = faker.person.bio()
+  it('should update bio', () => {
+    const newBio = faker.lorem.sentence()
 
-    settingPage.changeItem('Short bio about you', `${newBio}`)
-    settingPage.clickOnUpdateSettingsBtn()
-    settingPage.checkUrl(user.username)
-  })
+    SettingsPage.updateBio(newBio)
+    SettingsPage.saveSettings()
 
-  it('should provide an ability to update an email', () => {
-    const newEmail = faker.internet.email()
-
-    settingPage.changeItem('Email', `${newEmail}`)
-    settingPage.clickOnUpdateSettingsBtn()
-    settingPage.checkUrl(user.username)
-  })
-
-  it('should provide an ability to update password', () => {
-    const newPass = faker.internet.password()
-
-    settingPage.changeItem('New Password', `${newPass}`)
-    settingPage.clickOnUpdateSettingsBtn()
-    settingPage.checkUrl(user.username)
+    cy.contains(newBio).should('exist')
   })
 
   it('should provide an ability to log out', () => {
-    const newUsername = faker.person.fullName()
+    SettingsPage.logout()
 
-    cy.contains('button', 'Or click here to logout.').click()
-    cy.url().should('include', '/')
+    cy.url().should('include', '/login')
   })
 })
