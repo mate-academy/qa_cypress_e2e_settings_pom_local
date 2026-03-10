@@ -9,11 +9,15 @@ const homePage = new homePageObject()
 
 describe('Sign In page', () => {
   let user
+  let fakeUser
 
   beforeEach(() => {
     cy.task('db:clear')
     cy.task('generateUser').then((generateUser) => {
       user = generateUser
+    })
+    cy.task('generateUser').then((generateUser) => {
+      fakeUser = generateUser
     })
   })
 
@@ -25,8 +29,6 @@ describe('Sign In page', () => {
     signInPage.typePassword(user.password)
     signInPage.clickSignInBtn()
 
-    homePage.visit()
-
     homePage.assertHeaderContainUsername(user.username)
   })
 
@@ -34,8 +36,8 @@ describe('Sign In page', () => {
     signInPage.visit()
     cy.register(user.email, user.username, user.password)
 
-    signInPage.typeEmail('wrongEmail@gmail.com')
-    signInPage.typePassword('32103210')
+    signInPage.typeEmail(fakeUser.email)
+    signInPage.typePassword(fakeUser.password)
     signInPage.clickSignInBtn()
 
     homePage.assertErrorMessages()

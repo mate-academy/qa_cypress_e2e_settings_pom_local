@@ -58,11 +58,11 @@ describe('Settings page', () => {
 
     settingsPage.visit()
 
-    settingsPage.emailField.should('contain', userForUpdate.email)
+    settingsPage.emailField.should('have.value', userForUpdate.email)
   })
 
   it('should provide an ability to update password', () => {
-    settingsPage.typeEmail(userForUpdate.password)
+    settingsPage.typePassword(userForUpdate.password)
     settingsPage.clickUpdateBtn()
   })
 

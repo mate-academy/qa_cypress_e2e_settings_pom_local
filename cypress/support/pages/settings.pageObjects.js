@@ -36,7 +36,7 @@ export class SettingsPageObject extends PageObject {
   }
 
   typeEmail(email) {
-    this.emailField.type(email)
+    this.emailField.clear().type(email)
   }
 
   typePassword(password) {
