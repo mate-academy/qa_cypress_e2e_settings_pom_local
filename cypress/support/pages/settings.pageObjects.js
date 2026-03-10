@@ -28,7 +28,7 @@ export class SettingsPageObject extends PageObject {
   }
 
   typeUsername(username) {
-    this.usernameField.type(username)
+    this.usernameField.clear().type(username)
   }
 
   typeBio(bio) {
