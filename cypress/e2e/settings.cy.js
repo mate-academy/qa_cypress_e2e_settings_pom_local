@@ -1,13 +1,12 @@
+/// <reference types="cypress" />
+/// <reference types="../support" />
+
 import { faker } from '@faker-js/faker'
-import SignInPage from '../support/pages/signIn.pageObject'
 import SettingsPage from '../support/pages/settings.pageObject'
 
-describe('Settings', () => {
-  const email = faker.internet.email()
-  const password = '123456'
-
+describe('Settings page', () => {
   beforeEach(() => {
-    cy.login(email, password)
+    cy.login()
     SettingsPage.visit()
   })
 
@@ -27,6 +26,24 @@ describe('Settings', () => {
     SettingsPage.saveSettings()
 
     cy.contains(newBio).should('exist')
+  })
+
+  it('should update email', () => {
+    const newEmail = faker.internet.email()
+
+    SettingsPage.updateEmail(newEmail)
+    SettingsPage.saveSettings()
+
+    cy.contains(newEmail).should('exist')
+  })
+
+  it('should update password', () => {
+    const newPassword = faker.internet.password()
+
+    SettingsPage.updatePassword(newPassword)
+    SettingsPage.saveSettings()
+
+    cy.get('[data-cy="password-input"]').should('have.value', newPassword)
   })
 
   it('should provide an ability to log out', () => {
