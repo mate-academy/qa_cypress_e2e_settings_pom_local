@@ -70,6 +70,7 @@ const SettingsForm = () => {
           <fieldset className="form-group">
             <input
               className="form-control form-control-lg"
+              data-cy="username-settings"
               type="text"
               placeholder="Username"
               value={userInfo.username}
@@ -79,6 +80,7 @@ const SettingsForm = () => {
           <fieldset className="form-group">
             <textarea
               className="form-control form-control-lg"
+              data-cy="bio-settings"
               rows={8}
               placeholder="Short bio about you"
               value={userInfo.bio}
@@ -88,6 +90,7 @@ const SettingsForm = () => {
           <fieldset className="form-group">
             <input
               className="form-control form-control-lg"
+              data-cy="email-settings"
               type="email"
               placeholder="Email"
               value={userInfo.email}
@@ -97,6 +100,7 @@ const SettingsForm = () => {
           <fieldset className="form-group">
             <input
               className="form-control form-control-lg"
+              data-cy="password-settings"
               type="password"
               placeholder="New Password"
               value={userInfo.password}
@@ -106,6 +110,7 @@ const SettingsForm = () => {
           </fieldset>
           <button
             className="btn btn-lg btn-primary pull-xs-right"
+            data-cy="btn-settings"
             type="submit"
             disabled={isLoading}
           >

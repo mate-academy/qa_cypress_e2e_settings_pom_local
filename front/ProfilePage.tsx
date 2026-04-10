@@ -45,7 +45,7 @@ const ProfileHoc = (tab) => {
     }
     return (
       <>
-        <div className="profile-page">
+        <div className="profile-page" data-cy="profile-page">
           <div className="user-info">
             <div className="container">
               <div className="row">
@@ -55,8 +55,8 @@ const ProfileHoc = (tab) => {
                     alt="User's profile image"
                     className="user-img"
                   />
-                  <h4>{username}</h4>
-                  <p>{bio}</p>
+                  <h4 data-cy="profile-header">{username}</h4>
+                  <p data-cy="profile-bio">{bio}</p>
                   <EditProfileButton isCurrentUser={isCurrentUser} />
                   <FollowUserButtonContext.Provider
                     value={{ following, setFollowing }}

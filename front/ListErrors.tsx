@@ -1,7 +1,7 @@
 import React from 'react'
 
 const ListErrors = ({ errors }) => (
-  <ul className="error-messages">
+  <ul className="error-messages" data-cy="error-messages">
     {Object.keys(errors).map((key) => {
       return (
         <li key={key}>
