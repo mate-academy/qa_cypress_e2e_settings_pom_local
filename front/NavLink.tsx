@@ -6,7 +6,7 @@ interface NavLinkProps {
   href: string
   onClick?: () => void
   children: React.ReactNode
-  dataCy?: string  // Optional data-cy prop
+  dataCy?: string
 }
 
 const NavLink = ({ href, onClick, children, dataCy }: NavLinkProps) => {
@@ -16,7 +16,7 @@ const NavLink = ({ href, onClick, children, dataCy }: NavLinkProps) => {
   return (
     <Link href={href} passHref>
       <a
-        data-cy={dataCy}  // Assigning the value of dataCy to the data-cy attribute
+        data-cy={dataCy}
         onClick={onClick}
         className={`${
           (encodeURIComponent(asPath) === encodeURIComponent(href) &&
