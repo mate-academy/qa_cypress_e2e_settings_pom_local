@@ -19,20 +19,26 @@ const SettingsForm = () => {
     password: '',
   })
   const loggedInUser = useLoggedInUser()
+
   React.useEffect(() => {
     if (!loggedInUser) return
     setUserInfo((prev) => Object.assign(prev, loggedInUser))
   }, [loggedInUser])
+
   const updateState = (field) => (e) => {
     setUserInfo({ ...userInfo, [field]: e.target.value })
   }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
+
     const user = { ...userInfo }
+
     if (!user.password) {
       delete user.password
     }
+
     const { data, status } = await axios.put(
       `${apiPath}/user`,
       JSON.stringify({ user }),
@@ -43,16 +49,27 @@ const SettingsForm = () => {
         },
       }
     )
+
     setLoading(false)
+
     if (status !== 200) {
       setErrors(data.errors.body)
     }
+
     if (data?.user) {
       await setupUserLocalStorage(data, setErrors)
       Router.push(`/profile/${user.username}`)
     }
   }
+
+  const handleLogout = async () => {
+    window.localStorage.removeItem('user')
+    document.cookie = 'auth=; Max-Age=0; path=/'
+    Router.push('/')
+  }
+
   useCtrlEnterSubmit(handleSubmit)
+
   return (
     <React.Fragment>
       <ListErrors errors={errors} />
@@ -60,6 +77,7 @@ const SettingsForm = () => {
         <fieldset>
           <fieldset className="form-group">
             <input
+              data-cy="image-input"
               className="form-control"
               type="text"
               placeholder="URL of profile picture"
@@ -69,6 +87,7 @@ const SettingsForm = () => {
           </fieldset>
           <fieldset className="form-group">
             <input
+              data-cy="username-input"
               className="form-control form-control-lg"
               type="text"
               placeholder="Username"
@@ -78,15 +97,17 @@ const SettingsForm = () => {
           </fieldset>
           <fieldset className="form-group">
             <textarea
+              data-cy="bio-input"
               className="form-control form-control-lg"
               rows={8}
               placeholder="Short bio about you"
-              value={userInfo.bio}
+              value={userInfo.bio || ''}
               onChange={updateState('bio')}
             />
           </fieldset>
           <fieldset className="form-group">
             <input
+              data-cy="email-input"
               className="form-control form-control-lg"
               type="email"
               placeholder="Email"
@@ -96,6 +117,7 @@ const SettingsForm = () => {
           </fieldset>
           <fieldset className="form-group">
             <input
+              data-cy="password-input"
               className="form-control form-control-lg"
               type="password"
               placeholder="New Password"
@@ -105,6 +127,7 @@ const SettingsForm = () => {
             />
           </fieldset>
           <button
+            data-cy="update-settings-btn"
             className="btn btn-lg btn-primary pull-xs-right"
             type="submit"
             disabled={isLoading}
@@ -113,6 +136,15 @@ const SettingsForm = () => {
           </button>
         </fieldset>
       </form>
+      <hr />
+      <button
+        data-cy="logout-btn"
+        className="btn btn-outline-danger"
+        type="button"
+        onClick={handleLogout}
+      >
+        Or click here to logout.
+      </button>
     </React.Fragment>
   )
 }

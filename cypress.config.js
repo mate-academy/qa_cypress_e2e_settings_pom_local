@@ -2,18 +2,21 @@ import { defineConfig } from 'cypress';
 import { faker } from '@faker-js/faker';
 import { clear } from './dataBase';
 
-module.exports = defineConfig({
+export default defineConfig({
   e2e: {
     baseUrl: 'http://localhost:3000',
-    setupNodeEvents(on, config) {
+    setupNodeEvents(on) {
       on('task', {
         generateUser() {
-          let randomNumber = Math.ceil(Math.random(1000) * 1000);
-          let userName = faker.name.firstName() + `${randomNumber}`;
+          const randomNumber = faker.number.int({ min: 1000, max: 9999 });
+          const username = `user${randomNumber}`;
+          const email = `user${randomNumber}@mail.com`;
+
           return {
-            username: userName.toLowerCase(),
-            email: 'test'+`${randomNumber}`+'@mail.com',
+            username,
+            email,
             password: '12345Qwert!',
+            bio: faker.lorem.sentence(),
           };
         },
         generateArticle() {
@@ -21,11 +24,12 @@ module.exports = defineConfig({
             title: faker.lorem.word(),
             description: faker.lorem.words(),
             body: faker.lorem.words(),
-            tag: faker.lorem.word()
-          };;
+            tag: faker.lorem.word(),
+          };
         },
         'db:clear'() {
           clear();
+
           return null;
         },
       });
