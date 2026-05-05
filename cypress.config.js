@@ -5,14 +5,12 @@ import { clear } from './dataBase';
 module.exports = defineConfig({
   e2e: {
     baseUrl: 'http://localhost:3000',
-    setupNodeEvents(on, config) {
+    setupNodeEvents(on) {
       on('task', {
         generateUser() {
-          let randomNumber = Math.ceil(Math.random(1000) * 1000);
-          let userName = faker.name.firstName() + `${randomNumber}`;
           return {
-            username: userName.toLowerCase(),
-            email: 'test'+`${randomNumber}`+'@mail.com',
+            username: 'user' + faker.string.alphanumeric(5).toLowerCase(),
+            email: faker.internet.email(),
             password: '12345Qwert!',
           };
         },
