@@ -14,7 +14,7 @@
     "dev-demo": "NEXT_PUBLIC_DEMO=true npm run dev",
     "dev-pg": "REALWORLD_PG=true npm run dev",
     "format": "prettier --ignore-path .prettierignore --write .",
-    "lint": "next lint",
+    "lint": "eslint \"cypress/**/*.js\" cypress.config.js --max-warnings=0",
     "seed-prod": "./prod.sh ./bin/generate-demo-data.js --force-production",
     "start": "node --unhandled-rejections=strict ./app.js",
     "start-dev": "NEXT_PUBLIC_NODE_ENV=development NODE_ENV_NEXT_SERVER_ONLY=production node --unhandled-rejections=strict ./app.js",

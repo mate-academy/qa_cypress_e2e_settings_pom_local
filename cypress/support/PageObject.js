@@ -1,6 +1,10 @@
 class PageObject {
+  getByDataCy(selector) {
+    return cy.getByDataCy(selector);
+  }
+
   visit(url) {
-    cy.visit(url || this.url);
+    return cy.visit(url || this.url);
   }
 }
 
