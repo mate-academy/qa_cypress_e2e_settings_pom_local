@@ -20,7 +20,7 @@ class SignInPageObject extends PageObject {
   }
 
   typePassword(password) {
-    this.passwordField.type(password);
+    this.passwordField.type(password, { parseSpecialCharSequences: false });
   }
 
   clickSignInBtn() {

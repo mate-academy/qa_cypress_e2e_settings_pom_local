@@ -8,12 +8,13 @@ module.exports = defineConfig({
     setupNodeEvents(on, config) {
       on('task', {
         generateUser() {
-          let randomNumber = Math.ceil(Math.random(1000) * 1000);
-          let userName = faker.name.firstName() + `${randomNumber}`;
+          const randomNumber = faker.string.alphanumeric(20).toLowerCase();
+          const userName = `user${randomNumber}`;
           return {
             username: userName.toLowerCase(),
-            email: 'test'+`${randomNumber}`+'@mail.com',
-            password: '12345Qwert!',
+            email: `${userName}@example.com`,
+            password: faker.internet.password({ length: 20 }) + 'Aa1!',
+            bio: faker.lorem.sentence(),
           };
         },
         generateArticle() {
@@ -25,8 +26,7 @@ module.exports = defineConfig({
           };;
         },
         'db:clear'() {
-          clear();
-          return null;
+          return clear().then(() => null);
         },
       });
     },
