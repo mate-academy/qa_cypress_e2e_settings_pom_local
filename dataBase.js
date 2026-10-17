@@ -1,29 +1,43 @@
+'use strict';
+
 const { Sequelize } = require('sequelize');
 
-const sequilize = new Sequelize({
+const sequelize = new Sequelize({
   dialect: 'sqlite',
-  storage: './db.sqlite3'
+  storage: './db.sqlite3',
+  logging: false,
 });
 
 async function clear() {
-  const t = await sequilize.transaction();
+  const t = await sequelize.transaction();
 
   try {
-    await sequilize.query('DELETE FROM Article;');
-    await sequilize.query('DELETE FROM User;');
-    await sequilize.query('DELETE FROM Tag;');
-    await sequilize.query('DELETE FROM ArticleTag;');
-    await sequilize.query('DELETE FROM UserFollowUser;');
-    await sequilize.query('DELETE FROM UserFavoriteArticle;');
-    await sequilize.query('DELETE FROM Comment;');
+    await sequelize.query('DELETE FROM ArticleTag;', {
+      transaction: t,
+    });
+    await sequelize.query('DELETE FROM UserFavoriteArticle;', {
+      transaction: t,
+    });
+    await sequelize.query('DELETE FROM UserFollowUser;', {
+      transaction: t,
+    });
+    await sequelize.query('DELETE FROM Comment;', {
+      transaction: t,
+    });
+    await sequelize.query('DELETE FROM Article;', {
+      transaction: t,
+    });
+    await sequelize.query('DELETE FROM Tag;', {
+      transaction: t,
+    });
+    await sequelize.query('DELETE FROM User;', {
+      transaction: t,
+    });
 
     await t.commit();
-
-    console.log('DB was cleared');
   } catch (error) {
     await t.rollback();
-
-    console.log(`Can't clear DB`);
+    throw error;
   }
 }
 
